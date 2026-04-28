@@ -1,0 +1,142 @@
+{
+  "common": {
+    "home": "Inicio",
+    "products": "Productos",
+    "about": "Sobre Nosotros",
+    "contact": "Contacto",
+    "becomePartner": "Conviértase en Nuestro Socio",
+    "viewDetails": "Ver Detalles",
+    "requestQuote": "Solicitar Cotización",
+    "learnMore": "Saber Más"
+  },
+  "nav": {
+    "home": "Inicio",
+    "products": "Productos",
+    "acMistFans": "Ventiladores de Nebulización AC",
+    "dcMistFans": "Ventiladores de Nebulización DC",
+    "outdoorMistFans": "Ventiladores de Nebulización Exteriores",
+    "industrialFans": "Ventiladores Industriales",
+    "about": "Sobre Nosotros",
+    "contact": "Contacto"
+  },
+  "home": {
+    "heroTitle": "Enfriando el Mundo con Niebla de Precisión",
+    "heroSubtitle": "El único especialista de China en ventiladores de nebulización",
+    "advantages": {
+      "title": "Por Qué Elegir HEGU",
+      "specialist": {
+        "title": "El Único Especialista de China",
+        "description": "Enfocado exclusivamente en la tecnología e innovación de ventiladores de nebulización"
+      },
+      "global": {
+        "title": "Alcance Global, Experiencia Local",
+        "description": "Sirviendo a más de 300 marcas en múltiples continentes"
+      },
+      "quality": {
+        "title": "Calidad Certificada",
+        "description": "Certificado CE y estándares compatibles globalmente"
+      },
+      "sourcing": {
+        "title": "Asesoramiento Inteligente de Abastecimiento",
+        "description": "Orientación experta para sus necesidades específicas de enfriamiento"
+      }
+    },
+    "productSeries": {
+      "title": "Nuestras Series de Productos",
+      "acMistFans": {
+        "title": "Ventiladores de Nebulización AC",
+        "description": "Rendimiento confiable para enfriamiento interior"
+      },
+      "dcMistFans": {
+        "title": "Ventiladores de Nebulización DC",
+        "description": "Eficiente energéticamente con características avanzadas"
+      },
+      "outdoorMistFans": {
+        "title": "Ventiladores de Nebulización Exteriores",
+        "description": "Enfriamiento potente para espacios exteriores"
+      }
+    },
+    "featuredProducts": {
+      "title": "Productos Destacados"
+    },
+    "partners": {
+      "title": "Confiado por Socios en Todo el Mundo",
+      "subtitle": "Más de 50 países y creciendo"
+    },
+    "cta": {
+      "title": "¿Listo para Transformar su Experiencia de Enfriamiento?",
+      "subtitle": "Únase a cientos de marcas que confían en HEGU Technology",
+      "button": "Conviértase en Nuestro Socio"
+    }
+  },
+  "products": {
+    "specifications": "Especificaciones",
+    "wattage": "Potencia",
+    "waterCapacity": "Capacidad de Agua",
+    "noiseLevel": "Nivel de Ruido",
+    "speedSettings": "Ajustes de Velocidad",
+    "oscillation": "Oscilación",
+    "timer": "Temporizador",
+    "color": "Color",
+    "dimensions": "Dimensiones",
+    "weight": "Peso",
+    "packingInfo": "Información de Embalaje",
+    "relatedProducts": "Productos Relacionados",
+    "features": {
+      "oscillation": "Oscilación e Inclinación",
+      "humidifier": "Función de Humidificador",
+      "lowNoise": "Bajo Ruido",
+      "energyEfficient": "Eficiente Energéticamente",
+      "remoteControl": "Control Remoto",
+      "largeTank": "Tanque de Agua Grande"
+    }
+  },
+  "about": {
+    "title": "Sobre HEGU Technology",
+    "subtitle": "Su Socio Confiable en Enfriamiento por Nebulización",
+    "description": "HEGU Technology es el especialista líder de China en la fabricación de ventiladores de nebulización. Con años de investigación y desarrollo dedicados, hemos perfeccionado el arte de la tecnología de enfriamiento de precisión.",
+    "mission": {
+      "title": "Nuestra Misión",
+      "description": "Proporcionar soluciones de enfriamiento por nebulización innovadoras y de alta calidad que mejoren la comodidad y la productividad en todo el mundo."
+    },
+    "vision": {
+      "title": "Nuestra Visión",
+      "description": "Ser el líder global en tecnología de ventiladores de nebulización, estableciendo estándares de calidad, innovación y sostenibilidad."
+    },
+    "factory": {
+      "title": "Nuestra Fábrica",
+      "description": "Instalaciones de fabricación de vanguardia con rigurosos procesos de control de calidad."
+    },
+    "timeline": {
+      "title": "Nuestro Viaje"
+    }
+  },
+  "contact": {
+    "title": "Contáctenos",
+    "subtitle": "Comencemos una Conversación",
+    "form": {
+      "name": "Su Nombre",
+      "company": "Nombre de la Empresa",
+      "email": "Dirección de Email",
+      "phone": "Número de Teléfono",
+      "country": "País",
+      "interest": "Productos de Interés",
+      "message": "Su Mensaje",
+      "submit": "Enviar Consulta",
+      "success": "¡Gracias! Su consulta ha sido enviada exitosamente."
+    },
+    "info": {
+      "title": "Información de Contacto",
+      "address": "Dirección",
+      "email": "Email",
+      "phone": "Teléfono"
+    }
+  },
+  "footer": {
+    "description": "Especialista líder de China en tecnología de ventiladores de nebulización, proporcionando soluciones de enfriamiento innovadoras en todo el mundo.",
+    "products": "Productos",
+    "company": "Empresa",
+    "contact": "Contacto",
+    "rights": "Todos los derechos reservados."
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "common": {
+    "home": "Startseite",
+    "products": "Produkte",
+    "about": "Über Uns",
+    "contact": "Kontakt",
+    "becomePartner": "Werden Sie Unser Partner",
+    "viewDetails": "Details Ansehen",
+    "requestQuote": "Angebot Anfordern",
+    "learnMore": "Mehr Erfahren"
+  },
+  "nav": {
+    "home": "Startseite",
+    "products": "Produkte",
+    "acMistFans": "AC-Nebelventilatoren",
+    "dcMistFans": "DC-Nebelventilatoren",
+    "outdoorMistFans": "Außen-Nebelventilatoren",
+    "industrialFans": "Industrieventilatoren",
+    "about": "Über Uns",
+    "contact": "Kontakt"
+  },
+  "home": {
+    "heroTitle": "Die Welt Mit Präzisionsnebel Kühlen",
+    "heroSubtitle": "Chinas einziger Spezialist für Nebelventilatoren",
+    "advantages": {
+      "title": "Warum HEGU Wählen",
+      "specialist": {
+        "title": "Chinas Einziger Spezialist",
+        "description": "Exklusiv auf Nebelventilatortechnologie und Innovation fokussiert"
+      },
+      "global": {
+        "title": "Globale Reichweite, Lokale Expertise",
+        "description": "300+ Marken auf mehreren Kontinenten bedienen"
+      },
+      "quality": {
+        "title": "Zertifizierte Qualität",
+        "description": "CE-zertifiziert und global konforme Standards"
+      },
+      "sourcing": {
+        "title": "Intelligente Beschaffungsberatung",
+        "description": "Expertenberatung für Ihre spezifischen Kühlbedürfnisse"
+      }
+    },
+    "productSeries": {
+      "title": "Unsere Produktreihen",
+      "acMistFans": {
+        "title": "AC-Nebelventilatoren",
+        "description": "Zuverlässige Leistung für die Innenaustattung"
+      },
+      "dcMistFans": {
+        "title": "DC-Nebelventilatoren",
+        "description": "Energieeffizient mit fortschrittlichen Funktionen"
+      },
+      "outdoorMistFans": {
+        "title": "Außen-Nebelventilatoren",
+        "description": "Leistungsstarke Kühlung für Außenbereiche"
+      }
+    },
+    "featuredProducts": {
+      "title": "Ausgewählte Produkte"
+    },
+    "partners": {
+      "title": "Von Partnern Weltweit Vertraut",
+      "subtitle": "50+ Länder und wachsend"
+    },
+    "cta": {
+      "title": "Bereit, Ihre Kühlerfahrung zu Transformieren?",
+      "subtitle": "Schließen Sie sich Hunderten von Marken an, die HEGU Technology vertrauen",
+      "button": "Werden Sie Unser Partner"
+    }
+  },
+  "products": {
+    "specifications": "Spezifikationen",
+    "wattage": "Leistung",
+    "waterCapacity": "Wasserkapazität",
+    "noiseLevel": "Geräuschpegel",
+    "speedSettings": "Geschwindigkeitseinstellungen",
+    "oscillation": "Oszillation",
+    "timer": "Timer",
+    "color": "Farbe",
+    "dimensions": "Abmessungen",
+    "weight": "Gewicht",
+    "packingInfo": "Verpackungsinformationen",
+    "relatedProducts": "Verwandte Produkte",
+    "features": {
+      "oscillation": "Oszillation & Neigung",
+      "humidifier": "Luftbefeuchterfunktion",
+      "lowNoise": "Niedriges Geräusch",
+      "energyEfficient": "Energieeffizient",
+      "remoteControl": "Fernbedienung",
+      "largeTank": "Großer Wassertank"
+    }
+  },
+  "about": {
+    "title": "Über HEGU Technology",
+    "subtitle": "Ihr Vertrauenswürdiger Partner in der Nebelkühlung",
+    "description": "HEGU Technology ist Chinas führender Spezialist in der Herstellung von Nebelventilatoren. Mit Jahren engagierter Forschung und Entwicklung haben wir die Kunst der Präzisionskühltechnologie perfektioniert.",
+    "mission": {
+      "title": "Unsere Mission",
+      "description": "Innovative, hochwertige Nebelkühllösungen bereitzustellen, die Komfort und Produktivität weltweit verbessern."
+    },
+    "vision": {
+      "title": "Unsere Vision",
+      "description": "Der globale Marktführer in der Nebelventilatortechnologie zu sein, Standards für Qualität, Innovation und Nachhaltigkeit zu setzen."
+    },
+    "factory": {
+      "title": "Unsere Fabrik",
+      "description": "Moderne Fertigungsanlagen mit strengen Qualitätskontrollverfahren."
+    },
+    "timeline": {
+      "title": "Unsere Reise"
+    }
+  },
+  "contact": {
+    "title": "Kontaktieren Sie Uns",
+    "subtitle": "Lassen Sie Uns ein Gespräch Beginnen",
+    "form": {
+      "name": "Ihr Name",
+      "company": "Firmenname",
+      "email": "E-Mail-Adresse",
+      "phone": "Telefonnummer",
+      "country": "Land",
+      "interest": "Interessante Produkte",
+      "message": "Ihre Nachricht",
+      "submit": "Anfrage Senden",
+      "success": "Danke! Ihre Anfrage wurde erfolgreich gesendet."
+    },
+    "info": {
+      "title": "Kontaktinformationen",
+      "address": "Adresse",
+      "email": "E-Mail",
+      "phone": "Telefon"
+    }
+  },
+  "footer": {
+    "description": "Chinas führender Spezialist für Nebelventilatortechnologie, der innovative Kühllösungen weltweit bereitstellt.",
+    "products": "Produkte",
+    "company": "Unternehmen",
+    "contact": "Kontakt",
+    "rights": "Alle Rechte vorbehalten."
+  }
+}

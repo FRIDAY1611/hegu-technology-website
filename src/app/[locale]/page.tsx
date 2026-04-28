@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRight, ChevronLeft, ArrowRight, Globe, Award, Lightbulb, Check, Facebook, Linkedin, MessageCircle, Mail, Phone, MapPin } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ArrowRight, Globe, Award, Lightbulb, Check, Facebook, Linkedin, MessageCircle, Mail, Phone, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -13,22 +13,183 @@ import { FadeIn } from '@/components/shared/FadeIn';
 import ProductCard from '@/components/shared/ProductCard';
 import { getFeaturedProducts } from '@/lib/products';
 
+const getPageTexts = (locale: string) => {
+  switch (locale) {
+    case 'zh':
+      return {
+        heroTitle: '用精密喷雾冷却世界',
+        heroSubtitle: '中国唯一专注于喷雾风扇的专家',
+        viewProducts: '查看产品',
+        contactUs: '联系我们',
+        advantagesTitle: '为什么选择合谷科技',
+        specialist: { title: '中国唯一专家', desc: '专注于喷雾风扇技术与创新' },
+        global: { title: '全球视野，本土经验', desc: '服务全球300多个品牌，覆盖多个大洲' },
+        quality: { title: '认证品质', desc: 'CE认证，符合全球标准' },
+        sourcing: { title: '智能采购建议', desc: '为您的特定冷却需求提供专业指导' },
+        productSeriesTitle: '我们的产品系列',
+        ac: { title: '交流电喷雾风扇', desc: '可靠的室内冷却性能' },
+        dc: { title: '直流电喷雾风扇', desc: '节能高效，功能先进' },
+        outdoor: { title: '户外喷雾风扇', desc: '为户外空间提供强劲冷却' },
+        viewDetails: '查看详情',
+        featuredProductsTitle: '精选产品',
+        partnersTitle: '全球合作伙伴信赖之选',
+        partnersSubtitle: '覆盖50多个国家，持续增长中',
+        ctaTitle: '准备好改变您的冷却体验了吗？',
+        ctaSubtitle: '加入数百家信赖合谷科技的品牌',
+        sendInquiry: '发送询盘',
+        yourName: '您的姓名',
+        emailAddress: '邮箱地址',
+        productQuantity: '产品 / 数量',
+        message: '留言',
+        sending: '发送中...',
+        thankYou: '感谢您！',
+        inquirySent: '您的询盘已成功发送。',
+        socialMedia: '社交媒体',
+        socialDesc: '关注我们获取产品目录更新、采购协调和项目沟通。'
+      };
+    case 'es':
+      return {
+        heroTitle: 'Enfriando el Mundo con Niebla de Precisión',
+        heroSubtitle: 'El único especialista de China en ventiladores de nebulización',
+        viewProducts: 'Ver Productos',
+        contactUs: 'Contacto',
+        advantagesTitle: 'Por Qué Elegir HEGU',
+        specialist: { title: 'El Único Especialista de China', desc: 'Enfocado exclusivamente en la tecnología e innovación de ventiladores de nebulización' },
+        global: { title: 'Alcance Global, Experiencia Local', desc: 'Sirviendo a más de 300 marcas en múltiples continentes' },
+        quality: { title: 'Calidad Certificada', desc: 'Certificado CE y estándares compatibles globalmente' },
+        sourcing: { title: 'Asesoramiento Inteligente de Abastecimiento', desc: 'Orientación experta para sus necesidades específicas de enfriamiento' },
+        productSeriesTitle: 'Nuestras Series de Productos',
+        ac: { title: 'Ventiladores de Nebulización AC', desc: 'Rendimiento confiable para enfriamiento interior' },
+        dc: { title: 'Ventiladores de Nebulización DC', desc: 'Eficiente energéticamente con características avanzadas' },
+        outdoor: { title: 'Ventiladores de Nebulización Exteriores', desc: 'Enfriamiento potente para espacios exteriores' },
+        viewDetails: 'Ver Detalles',
+        featuredProductsTitle: 'Productos Destacados',
+        partnersTitle: 'Confiado por Socios en Todo el Mundo',
+        partnersSubtitle: 'Más de 50 países y creciendo',
+        ctaTitle: '¿Listo para Transformar su Experiencia de Enfriamiento?',
+        ctaSubtitle: 'Únase a cientos de marcas que confían en HEGU Technology',
+        sendInquiry: 'Enviar Consulta',
+        yourName: 'Su Nombre',
+        emailAddress: 'Dirección de Email',
+        productQuantity: 'Producto / Cantidad',
+        message: 'Su Mensaje',
+        sending: 'Enviando...',
+        thankYou: '¡Gracias!',
+        inquirySent: 'Su consulta ha sido enviada exitosamente.',
+        socialMedia: 'Redes Sociales',
+        socialDesc: 'Conéctese con nosotros para actualizaciones de catálogos, coordinación de compras y comunicación de proyectos.'
+      };
+    case 'fr':
+      return {
+        heroTitle: 'Refroidir le Monde avec une Brume de Précision',
+        heroSubtitle: 'Le seul spécialiste chinois en ventilateurs à brume',
+        viewProducts: 'Voir les Produits',
+        contactUs: 'Contact',
+        advantagesTitle: 'Pourquoi Choisir HEGU',
+        specialist: { title: 'Le Seul Spécialiste Chinois', desc: 'Exclusivement dédié à la technologie et à l\'innovation des ventilateurs à brume' },
+        global: { title: 'Portée Mondiale, Expertise Locale', desc: 'Servant plus de 300 marques sur plusieurs continents' },
+        quality: { title: 'Qualité Certifiée', desc: 'Certifié CE et normes conformes mondialement' },
+        sourcing: { title: 'Conseil Intelligent en Approvisionnement', desc: 'Conseils d\'experts pour vos besoins spécifiques de refroidissement' },
+        productSeriesTitle: 'Nos Séries de Produits',
+        ac: { title: 'Ventilateurs à Brume AC', desc: 'Performance fiable pour le refroidissement intérieur' },
+        dc: { title: 'Ventilateurs à Brume DC', desc: 'Économe en énergie avec fonctionnalités avancées' },
+        outdoor: { title: 'Ventilateurs à Brume Extérieurs', desc: 'Refroidissement puissant pour les espaces extérieurs' },
+        viewDetails: 'Voir les Détails',
+        featuredProductsTitle: 'Produits Phares',
+        partnersTitle: 'Fait Confiance par des Partenaires du Monde Entier',
+        partnersSubtitle: 'Plus de 50 pays et en croissance',
+        ctaTitle: 'Prêt à Transformer Votre Expérience de Refroidissement?',
+        ctaSubtitle: 'Rejoignez des centaines de marques qui font confiance à HEGU Technology',
+        sendInquiry: 'Envoyer une Demande',
+        yourName: 'Votre Nom',
+        emailAddress: 'Adresse Email',
+        productQuantity: 'Produit / Quantité',
+        message: 'Votre Message',
+        sending: 'Envoi en cours...',
+        thankYou: 'Merci!',
+        inquirySent: 'Votre demande a été envoyée avec succès.',
+        socialMedia: 'Réseaux Sociaux',
+        socialDesc: 'Connectez-vous avec nous pour les mises à jour de catalogue, la coordination des approvisionnements et la communication des projets.'
+      };
+    case 'de':
+      return {
+        heroTitle: 'Die Welt Mit Präzisionsnebel Kühlen',
+        heroSubtitle: 'Chinas einziger Spezialist für Nebelventilatoren',
+        viewProducts: 'Produkte Ansehen',
+        contactUs: 'Kontakt',
+        advantagesTitle: 'Warum HEGU Wählen',
+        specialist: { title: 'Chinas Einziger Spezialist', desc: 'Exklusiv auf Nebelventilatortechnologie und Innovation fokussiert' },
+        global: { title: 'Globale Reichweite, Lokale Expertise', desc: '300+ Marken auf mehreren Kontinenten bedienen' },
+        quality: { title: 'Zertifizierte Qualität', desc: 'CE-zertifiziert und global konforme Standards' },
+        sourcing: { title: 'Intelligente Beschaffungsberatung', desc: 'Expertenberatung für Ihre spezifischen Kühlbedürfnisse' },
+        productSeriesTitle: 'Unsere Produktreihen',
+        ac: { title: 'AC-Nebelventilatoren', desc: 'Zuverlässige Leistung für die Innenaustattung' },
+        dc: { title: 'DC-Nebelventilatoren', desc: 'Energieeffizient mit fortschrittlichen Funktionen' },
+        outdoor: { title: 'Außen-Nebelventilatoren', desc: 'Leistungsstarke Kühlung für Außenbereiche' },
+        viewDetails: 'Details Ansehen',
+        featuredProductsTitle: 'Ausgewählte Produkte',
+        partnersTitle: 'Von Partnern Weltweit Vertraut',
+        partnersSubtitle: '50+ Länder und wachsend',
+        ctaTitle: 'Bereit, Ihre Kühlerfahrung zu Transformieren?',
+        ctaSubtitle: 'Schließen Sie sich Hunderten von Marken an, die HEGU Technology vertrauen',
+        sendInquiry: 'Anfrage Senden',
+        yourName: 'Ihr Name',
+        emailAddress: 'E-Mail-Adresse',
+        productQuantity: 'Produkt / Menge',
+        message: 'Ihre Nachricht',
+        sending: 'Senden...',
+        thankYou: 'Danke!',
+        inquirySent: 'Ihre Anfrage wurde erfolgreich gesendet.',
+        socialMedia: 'Soziale Medien',
+        socialDesc: 'Verbinden Sie sich mit uns für Katalogaktualisierungen, Beschaffungskoordination und Projektkommunikation.'
+      };
+    default:
+      return {
+        heroTitle: 'Cooling the World with Precision Mist',
+        heroSubtitle: 'China\'s only specialist in mist fans',
+        viewProducts: 'View Products',
+        contactUs: 'Contact Us',
+        advantagesTitle: 'Why Choose HEGU',
+        specialist: { title: 'China\'s Only Specialist', desc: 'Focused exclusively on mist fan technology and innovation' },
+        global: { title: 'Global Reach, Local Expertise', desc: 'Serving 300+ brands across multiple continents' },
+        quality: { title: 'Certified Quality', desc: 'CE certified and globally compliant standards' },
+        sourcing: { title: 'Smart Sourcing Advice', desc: 'Expert guidance for your specific cooling needs' },
+        productSeriesTitle: 'Our Product Series',
+        ac: { title: 'AC Mist Fans', desc: 'Reliable performance for indoor cooling' },
+        dc: { title: 'DC Mist Fans', desc: 'Energy-efficient with advanced features' },
+        outdoor: { title: 'Outdoor Mist Fans', desc: 'Powerful cooling for outdoor spaces' },
+        viewDetails: 'View Details',
+        featuredProductsTitle: 'Featured Products',
+        partnersTitle: 'Trusted by Partners Worldwide',
+        partnersSubtitle: '50+ countries and growing',
+        ctaTitle: 'Ready to Transform Your Cooling Experience?',
+        ctaSubtitle: 'Join hundreds of brands who trust HEGU Technology',
+        sendInquiry: 'Submit Inquiry',
+        yourName: 'Your name',
+        emailAddress: 'Email address',
+        productQuantity: 'Product / Quantity',
+        message: 'Message',
+        sending: 'Sending...',
+        thankYou: 'Thank You!',
+        inquirySent: 'Your inquiry has been sent successfully.',
+        socialMedia: 'Social Media',
+        socialDesc: 'Connect with us for catalog updates, procurement coordination, and project communication.'
+      };
+  }
+};
+
 const HeroSlider = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
   const params = useParams();
   const locale = params.locale as string;
-  const isZh = locale === 'zh';
+  const texts = getPageTexts(locale);
 
   const slides = [
     {
-      title: isZh ? '用精密喷雾冷却世界' : 'Cooling the World with Precision Mist',
-      subtitle: isZh ? '中国唯一专注于喷雾风扇的专家' : "China's only specialist in mist fans",
+      title: texts.heroTitle,
+      subtitle: texts.heroSubtitle,
       gradient: 'from-sky-500/20 to-blue-500/10'
     }
   ];
-
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
 
   return (
     <section className="relative h-screen min-h-[700px] flex items-center overflow-hidden">
@@ -63,13 +224,13 @@ const HeroSlider = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="rounded-full text-lg px-8">
                 <Link href={`/${locale}/products/ac-mist-fans`}>
-                  {isZh ? '查看产品' : 'View Products'}
+                  {texts.viewProducts}
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="rounded-full text-lg px-8">
                 <Link href={`/${locale}#contact-section`}>
-                  {isZh ? '联系我们' : 'Contact Us'}
+                  {texts.contactUs}
                 </Link>
               </Button>
             </div>
@@ -83,28 +244,28 @@ const HeroSlider = () => {
 const AdvantagesSection = () => {
   const params = useParams();
   const locale = params.locale as string;
-  const isZh = locale === 'zh';
+  const texts = getPageTexts(locale);
   
   const advantages = [
     {
       icon: Award,
-      title: isZh ? '中国唯一专家' : "China's Only Specialist",
-      description: isZh ? '专注于喷雾风扇技术与创新' : 'Focused exclusively on mist fan technology and innovation'
+      title: texts.specialist.title,
+      description: texts.specialist.desc
     },
     {
       icon: Globe,
-      title: isZh ? '全球视野，本土经验' : 'Global Reach, Local Expertise',
-      description: isZh ? '服务全球300多个品牌，覆盖多个大洲' : 'Serving 300+ brands across multiple continents'
+      title: texts.global.title,
+      description: texts.global.desc
     },
     {
       icon: Award,
-      title: isZh ? '认证品质' : 'Certified Quality',
-      description: isZh ? 'CE认证，符合全球标准' : 'CE certified and globally compliant standards'
+      title: texts.quality.title,
+      description: texts.quality.desc
     },
     {
       icon: Lightbulb,
-      title: isZh ? '智能采购建议' : 'Smart Sourcing Advice',
-      description: isZh ? '为您的特定冷却需求提供专业指导' : 'Expert guidance for your specific cooling needs'
+      title: texts.sourcing.title,
+      description: texts.sourcing.desc
     }
   ];
 
@@ -113,7 +274,7 @@ const AdvantagesSection = () => {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <FadeIn>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-4">
-            {isZh ? '为什么选择合谷科技' : 'Why Choose HEGU'}
+            {texts.advantagesTitle}
           </h2>
         </FadeIn>
         
@@ -142,28 +303,28 @@ const AdvantagesSection = () => {
 const ProductSeriesSection = () => {
   const params = useParams();
   const locale = params.locale as string;
-  const isZh = locale === 'zh';
+  const texts = getPageTexts(locale);
 
   const series = [
     {
       key: 'acMistFans',
       href: `/${locale}/products/ac-mist-fans`,
-      title: isZh ? '交流电喷雾风扇' : 'AC Mist Fans',
-      description: isZh ? '可靠的室内冷却性能' : 'Reliable performance for indoor cooling',
+      title: texts.ac.title,
+      description: texts.ac.desc,
       gradient: 'from-sky-100 to-blue-50'
     },
     {
       key: 'dcMistFans',
       href: `/${locale}/products/dc-mist-fans`,
-      title: isZh ? '直流电喷雾风扇' : 'DC Mist Fans',
-      description: isZh ? '节能高效，功能先进' : 'Energy-efficient with advanced features',
+      title: texts.dc.title,
+      description: texts.dc.desc,
       gradient: 'from-cyan-100 to-teal-50'
     },
     {
       key: 'outdoorMistFans',
       href: `/${locale}/products/outdoor-mist-fans`,
-      title: isZh ? '户外喷雾风扇' : 'Outdoor Mist Fans',
-      description: isZh ? '为户外空间提供强劲冷却' : 'Powerful cooling for outdoor spaces',
+      title: texts.outdoor.title,
+      description: texts.outdoor.desc,
       gradient: 'from-blue-100 to-indigo-50'
     }
   ];
@@ -173,7 +334,7 @@ const ProductSeriesSection = () => {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <FadeIn>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-4">
-            {isZh ? '我们的产品系列' : 'Our Product Series'}
+            {texts.productSeriesTitle}
           </h2>
         </FadeIn>
 
@@ -201,7 +362,7 @@ const ProductSeriesSection = () => {
                       {item.description}
                     </p>
                     <Button variant="default" className="rounded-full group-hover:translate-x-1 transition-transform">
-                      {isZh ? '查看详情' : 'View Details'}
+                      {texts.viewDetails}
                       <ArrowRight className="ml-2 w-4 h-4" />
                     </Button>
                   </div>
@@ -218,7 +379,7 @@ const ProductSeriesSection = () => {
 const FeaturedProductsSection = () => {
   const params = useParams();
   const locale = params.locale as string;
-  const isZh = locale === 'zh';
+  const texts = getPageTexts(locale);
   const featuredProducts = getFeaturedProducts();
 
   return (
@@ -226,7 +387,7 @@ const FeaturedProductsSection = () => {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <FadeIn>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-4">
-            {isZh ? '精选产品' : 'Featured Products'}
+            {texts.featuredProductsTitle}
           </h2>
         </FadeIn>
 
@@ -243,7 +404,7 @@ const FeaturedProductsSection = () => {
 const PartnersSection = () => {
   const params = useParams();
   const locale = params.locale as string;
-  const isZh = locale === 'zh';
+  const texts = getPageTexts(locale);
 
   const countries = ['USA', 'Germany', 'Japan', 'UK', 'Australia', 'Canada', 'France', 'Italy', 'Spain', 'Netherlands', 'Brazil', 'Mexico', 'South Korea', 'India', 'Indonesia', 'Thailand', 'Vietnam', 'Malaysia', 'Philippines', 'Saudi Arabia', 'UAE', 'South Africa', 'Egypt', 'Nigeria', 'Kenya'];
 
@@ -252,10 +413,10 @@ const PartnersSection = () => {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <FadeIn>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-4">
-            {isZh ? '全球合作伙伴信赖之选' : 'Trusted by Partners Worldwide'}
+            {texts.partnersTitle}
           </h2>
           <p className="text-lg text-muted-foreground text-center mb-12">
-            {isZh ? '覆盖50多个国家，持续增长中' : '50+ countries and growing'}
+            {texts.partnersSubtitle}
           </p>
         </FadeIn>
 
@@ -279,7 +440,7 @@ const PartnersSection = () => {
 const ContactSection = () => {
   const params = useParams();
   const locale = params.locale as string;
-  const isZh = locale === 'zh';
+  const texts = getPageTexts(locale);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -332,10 +493,10 @@ const ContactSection = () => {
         <FadeIn>
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-              {isZh ? '准备好改变您的冷却体验了吗？' : 'Ready to Transform Your Cooling Experience?'}
+              {texts.ctaTitle}
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-              {isZh ? '加入数百家信赖合谷科技的品牌' : 'Join hundreds of brands who trust HEGU Technology'}
+              {texts.ctaSubtitle}
             </p>
           </div>
         </FadeIn>
@@ -344,85 +505,11 @@ const ContactSection = () => {
           <FadeIn>
             <Card className="p-8 lg:p-10 h-full bg-card">
               <h3 className="text-2xl font-bold mb-8">
-                {isZh ? '发送询盘' : 'Send Inquiry'}
-              </h3>
-              
-              {isSubmitted ? (
-                <div className="text-center py-16">
-                  <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-green-100 flex items-center justify-center">
-                    <Check className="w-10 h-10 text-green-600" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-3">{isZh ? '感谢您！' : 'Thank You!'}</h3>
-                  <p className="text-muted-foreground text-lg">
-                    {isZh ? '您的询盘已成功发送。' : 'Your inquiry has been sent successfully.'}
-                  </p>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div>
-                    <Input
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder={isZh ? '您的姓名' : 'Your name'}
-                      className="h-14 text-lg rounded-full px-6"
-                    />
-                  </div>
-
-                  <div>
-                    <Input
-                      required
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder={isZh ? '邮箱地址' : 'Email address'}
-                      className="h-14 text-lg rounded-full px-6"
-                    />
-                  </div>
-
-                  <div>
-                    <Input
-                      value={formData.product}
-                      onChange={(e) => setFormData({ ...formData, product: e.target.value })}
-                      placeholder={isZh ? '产品 / 数量' : 'Product / Quantity'}
-                      className="h-14 text-lg rounded-full px-6"
-                    />
-                  </div>
-
-                  <div>
-                    <Textarea
-                      required
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      placeholder={isZh ? '留言' : 'Message'}
-                      rows={6}
-                      className="text-lg rounded-3xl px-6 py-4 resize-y"
-                    />
-                  </div>
-
-                  <Button
-                    type="submit"
-                    size="lg"
-                    className="w-full h-14 text-lg rounded-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? (isZh ? '发送中...' : 'Sending...') : (isZh ? '发送询盘' : 'Submit Inquiry')}
-                  </Button>
-                </form>
-              )}
-            </Card>
-          </FadeIn>
-
-          <FadeIn delay={0.2}>
-            <Card className="p-8 lg:p-10 h-full bg-card">
-              <h3 className="text-2xl font-bold mb-8">
-                {isZh ? '社交媒体' : 'Social Media'}
+                {texts.socialMedia}
               </h3>
               
               <p className="text-xl text-muted-foreground mb-10 leading-relaxed">
-                {isZh 
-                  ? '关注我们获取产品目录更新、采购协调和项目沟通。' 
-                  : 'Connect with us for catalog updates, procurement coordination, and project communication.'}
+                {texts.socialDesc}
               </p>
 
               <div className="space-y-4 mb-12">
@@ -460,6 +547,78 @@ const ContactSection = () => {
                   </div>
                 </div>
               </div>
+            </Card>
+          </FadeIn>
+
+          <FadeIn delay={0.2}>
+            <Card className="p-8 lg:p-10 h-full bg-card">
+              <h3 className="text-2xl font-bold mb-8">
+                {texts.sendInquiry}
+              </h3>
+              
+              {isSubmitted ? (
+                <div className="text-center py-16">
+                  <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-green-100 flex items-center justify-center">
+                    <Check className="w-10 h-10 text-green-600" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-3">{texts.thankYou}</h3>
+                  <p className="text-muted-foreground text-lg">
+                    {texts.inquirySent}
+                  </p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div>
+                    <Input
+                      required
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      placeholder={texts.yourName}
+                      className="h-14 text-lg rounded-full px-6"
+                    />
+                  </div>
+
+                  <div>
+                    <Input
+                      required
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      placeholder={texts.emailAddress}
+                      className="h-14 text-lg rounded-full px-6"
+                    />
+                  </div>
+
+                  <div>
+                    <Input
+                      value={formData.product}
+                      onChange={(e) => setFormData({ ...formData, product: e.target.value })}
+                      placeholder={texts.productQuantity}
+                      className="h-14 text-lg rounded-full px-6"
+                    />
+                  </div>
+
+                  <div>
+                    <Textarea
+                      required
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      placeholder={texts.message}
+                      rows={6}
+                      className="text-lg rounded-3xl px-6 py-4 resize-y"
+                    />
+                  </div>
+
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="w-full h-14 text-lg rounded-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? texts.sending : texts.sendInquiry}
+                  </Button>
+                </form>
+              )}
             </Card>
           </FadeIn>
         </div>

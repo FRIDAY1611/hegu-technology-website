@@ -1,0 +1,142 @@
+{
+  "common": {
+    "home": "Accueil",
+    "products": "Produits",
+    "about": "À Propos",
+    "contact": "Contact",
+    "becomePartner": "Devenez Notre Partenaire",
+    "viewDetails": "Voir les Détails",
+    "requestQuote": "Demander un Devis",
+    "learnMore": "En Savoir Plus"
+  },
+  "nav": {
+    "home": "Accueil",
+    "products": "Produits",
+    "acMistFans": "Ventilateurs à Brume AC",
+    "dcMistFans": "Ventilateurs à Brume DC",
+    "outdoorMistFans": "Ventilateurs à Brume Extérieurs",
+    "industrialFans": "Ventilateurs Industriels",
+    "about": "À Propos",
+    "contact": "Contact"
+  },
+  "home": {
+    "heroTitle": "Refroidir le Monde avec une Brume de Précision",
+    "heroSubtitle": "Le seul spécialiste chinois en ventilateurs à brume",
+    "advantages": {
+      "title": "Pourquoi Choisir HEGU",
+      "specialist": {
+        "title": "Le Seul Spécialiste Chinois",
+        "description": "Exclusivement dédié à la technologie et à l'innovation des ventilateurs à brume"
+      },
+      "global": {
+        "title": "Portée Mondiale, Expertise Locale",
+        "description": "Servant plus de 300 marques sur plusieurs continents"
+      },
+      "quality": {
+        "title": "Qualité Certifiée",
+        "description": "Certifié CE et normes conformes mondialement"
+      },
+      "sourcing": {
+        "title": "Conseil Intelligent en Approvisionnement",
+        "description": "Conseils d'experts pour vos besoins spécifiques de refroidissement"
+      }
+    },
+    "productSeries": {
+      "title": "Nos Séries de Produits",
+      "acMistFans": {
+        "title": "Ventilateurs à Brume AC",
+        "description": "Performance fiable pour le refroidissement intérieur"
+      },
+      "dcMistFans": {
+        "title": "Ventilateurs à Brume DC",
+        "description": "Économe en énergie avec fonctionnalités avancées"
+      },
+      "outdoorMistFans": {
+        "title": "Ventilateurs à Brume Extérieurs",
+        "description": "Refroidissement puissant pour les espaces extérieurs"
+      }
+    },
+    "featuredProducts": {
+      "title": "Produits Phares"
+    },
+    "partners": {
+      "title": "Fait Confiance par des Partenaires du Monde Entier",
+      "subtitle": "Plus de 50 pays et en croissance"
+    },
+    "cta": {
+      "title": "Prêt à Transformer Votre Expérience de Refroidissement?",
+      "subtitle": "Rejoignez des centaines de marques qui font confiance à HEGU Technology",
+      "button": "Devenez Notre Partenaire"
+    }
+  },
+  "products": {
+    "specifications": "Spécifications",
+    "wattage": "Puissance",
+    "waterCapacity": "Capacité en Eau",
+    "noiseLevel": "Niveau de Bruit",
+    "speedSettings": "Réglages de Vitesse",
+    "oscillation": "Oscillation",
+    "timer": "Minuteur",
+    "color": "Couleur",
+    "dimensions": "Dimensions",
+    "weight": "Poids",
+    "packingInfo": "Informations d'Emballage",
+    "relatedProducts": "Produits Connexes",
+    "features": {
+      "oscillation": "Oscillation et Inclinaison",
+      "humidifier": "Fonction Humidificateur",
+      "lowNoise": "Faible Bruit",
+      "energyEfficient": "Économe en Énergie",
+      "remoteControl": "Télécommande",
+      "largeTank": "Grand Réservoir d'Eau"
+    }
+  },
+  "about": {
+    "title": "À Propos de HEGU Technology",
+    "subtitle": "Votre Partenaire de Confiance en Refroidissement par Brume",
+    "description": "HEGU Technology est le spécialiste leader en Chine dans la fabrication de ventilateurs à brume. Avec des années de recherche et développement dédiées, nous avons perfectionné l'art de la technologie de refroidissement de précision.",
+    "mission": {
+      "title": "Notre Mission",
+      "description": "Fournir des solutions de refroidissement par brume innovantes et de haute qualité qui améliorent le confort et la productivité dans le monde entier."
+    },
+    "vision": {
+      "title": "Notre Vision",
+      "description": "Être le leader mondial en technologie de ventilateurs à brume, établissant des normes de qualité, d'innovation et de durabilité."
+    },
+    "factory": {
+      "title": "Notre Usine",
+      "description": "Installations de fabrication de pointe avec des processus rigoureux de contrôle de qualité."
+    },
+    "timeline": {
+      "title": "Notre Parcours"
+    }
+  },
+  "contact": {
+    "title": "Contactez-Nous",
+    "subtitle": "Commençons une Conversation",
+    "form": {
+      "name": "Votre Nom",
+      "company": "Nom de l'Entreprise",
+      "email": "Adresse Email",
+      "phone": "Numéro de Téléphone",
+      "country": "Pays",
+      "interest": "Produits d'Intérêt",
+      "message": "Votre Message",
+      "submit": "Envoyer une Demande",
+      "success": "Merci! Votre demande a été envoyée avec succès."
+    },
+    "info": {
+      "title": "Informations de Contact",
+      "address": "Adresse",
+      "email": "Email",
+      "phone": "Téléphone"
+    }
+  },
+  "footer": {
+    "description": "Spécialiste leader en Chine en technologie de ventilateurs à brume, fournissant des solutions de refroidissement innovantes dans le monde entier.",
+    "products": "Produits",
+    "company": "Entreprise",
+    "contact": "Contact",
+    "rights": "Tous droits réservés."
+  }
+}
