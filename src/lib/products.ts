@@ -27,14 +27,26 @@ export interface Product {
   seriesName: {
     en: string;
     zh: string;
+    es?: string;
+    fr?: string;
+    de?: string;
+    ar?: string;
   };
   title: {
     en: string;
     zh: string;
+    es?: string;
+    fr?: string;
+    de?: string;
+    ar?: string;
   };
   description: {
     en: string;
     zh: string;
+    es?: string;
+    fr?: string;
+    de?: string;
+    ar?: string;
   };
   specs: ProductSpecs;
   packingInfo: PackingInfo;
@@ -91,15 +103,27 @@ export const products: Product[] = [
     series: "AC",
     seriesName: {
       en: "AC Mist Fan",
-      zh: "交流电喷雾风扇"
+      zh: "交流电喷雾风扇",
+      es: "Ventilador de Nebulización AC",
+      fr: "Ventilateur à Brume AC",
+      de: "AC-Nebelventilator",
+      ar: "مراوح ضباب AC"
     },
     title: {
       en: "LB-FS09R 16\" AC Mist Fan with Remote",
-      zh: "LB-FS09R 16英寸带遥控交流电喷雾风扇"
+      zh: "LB-FS09R 16英寸带遥控交流电喷雾风扇",
+      es: "LB-FS09R Ventilador de Nebulización AC 16\" con Control Remoto",
+      fr: "LB-FS09R Ventilateur à Brume AC 16\" avec Télécommande",
+      de: "LB-FS09R AC-Nebelventilator 16\" mit Fernbedienung",
+      ar: "LB-FS09R مراوح ضباب AC 16\" مع ريموت كنترول"
     },
     description: {
       en: "Premium 16-inch AC mist fan with remote control, timer, and 3 operating modes for ultimate convenience.",
-      zh: "高端16英寸交流电喷雾风扇，配备遥控器、定时功能和3种操作模式，提供极致便利。"
+      zh: "高端16英寸交流电喷雾风扇，配备遥控器、定时功能和3种操作模式，提供极致便利。",
+      es: "Ventilador de nebulización AC premium de 16 pulgadas con control remoto, temporizador y 3 modos de funcionamiento para la máxima comodidad.",
+      fr: "Ventilateur à brume AC premium de 16 pouces avec télécommande, minuteur et 3 modes de fonctionnement pour un confort ultime.",
+      de: "Premium AC-Nebelventilator 16\" mit Fernbedienung, Timer und 3 Betriebsarten für höchsten Komfort.",
+      ar: "مراوح ضباب AC فئة 16 بوصة مع ريموت كنترول، مؤقت، و3 أوضاع تشغيل لراحة قصوى."
     },
     specs: {
       wattage: "75W",

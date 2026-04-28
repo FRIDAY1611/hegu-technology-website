@@ -13,13 +13,31 @@ interface ProductCardProps {
   index?: number;
 }
 
+const getProductCardTexts = (locale: string) => {
+  switch (locale) {
+    case 'zh':
+      return { viewDetails: '查看详情' };
+    case 'es':
+      return { viewDetails: 'Ver Detalles' };
+    case 'fr':
+      return { viewDetails: 'Voir les Détails' };
+    case 'de':
+      return { viewDetails: 'Details Ansehen' };
+    case 'ar':
+      return { viewDetails: 'عرض التفاصيل' };
+    default:
+      return { viewDetails: 'View Details' };
+  }
+};
+
 const ProductCard = ({ product, index = 0 }: ProductCardProps) => {
   const params = useParams();
   const locale = params.locale as string;
-  const isZh = locale === 'zh';
+  const texts = getProductCardTexts(locale);
 
-  const title = product.title[locale as 'en' | 'zh'];
-  const description = product.description[locale as 'en' | 'zh'];
+  // 获取对应语言的标题和描述，如果不存在则回退到英文
+  const title = product.title[locale as keyof typeof product.title] || product.title.en;
+  const description = product.description[locale as keyof typeof product.description] || product.description.en;
 
   return (
     <FadeIn delay={index * 0.1}>
@@ -65,7 +83,7 @@ const ProductCard = ({ product, index = 0 }: ProductCardProps) => {
               </div>
               
               <Button variant="default" className="w-full rounded-full">
-                {isZh ? '查看详情' : 'View Details'}
+                {texts.viewDetails}
               </Button>
             </div>
           </Card>
