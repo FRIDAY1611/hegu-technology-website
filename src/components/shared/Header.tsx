@@ -16,6 +16,17 @@ const Header = () => {
   const locale = params.locale as string;
   const isZh = locale === 'zh';
 
+  const handleContactClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsMenuOpen(false);
+    const contactSection = document.getElementById('contact-section');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.location.href = `/${locale}#contact-section`;
+    }
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -27,7 +38,7 @@ const Header = () => {
   const navItems = [
     { key: 'home', label: isZh ? '首页' : 'Home', href: `/${locale}` },
     { key: 'about', label: isZh ? '关于我们' : 'About', href: `/${locale}/about` },
-    { key: 'contact', label: isZh ? '联系我们' : 'Contact', href: `/${locale}/contact` }
+    { key: 'contact', label: isZh ? '联系我们' : 'Contact', href: `/${locale}#contact-section`, onClick: handleContactClick }
   ];
 
   const productItems = [
@@ -63,15 +74,25 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
             {navItems.map((item) => (
-              <Link
-                key={item.key}
-                href={item.href}
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  pathname === item.href ? 'text-primary' : 'text-foreground'
-                }`}
-              >
-                {item.label}
-              </Link>
+              item.onClick ? (
+                <button
+                  key={item.key}
+                  onClick={item.onClick}
+                  className={`text-sm font-medium transition-colors hover:text-primary text-foreground`}
+                >
+                  {item.label}
+                </button>
+              ) : (
+                <Link
+                  key={item.key}
+                  href={item.href}
+                  className={`text-sm font-medium transition-colors hover:text-primary ${
+                    pathname === item.href ? 'text-primary' : 'text-foreground'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              )
             ))}
 
             {/* Products Dropdown */}
@@ -141,7 +162,7 @@ const Header = () => {
 
             {/* CTA Button */}
             <Button asChild className="hidden md:flex rounded-full">
-              <Link href={`/${locale}/contact`}>
+              <Link href={`/${locale}#contact-section`} onClick={handleContactClick}>
                 {isZh ? '联系我们' : 'Contact'}
               </Link>
             </Button>
@@ -162,14 +183,27 @@ const Header = () => {
         <div className="lg:hidden bg-background border-t border-border">
           <div className="max-w-7xl mx-auto px-6 py-4 space-y-4">
             {navItems.map((item) => (
-              <Link
-                key={item.key}
-                href={item.href}
-                className="block py-2 text-lg font-medium text-foreground"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {item.label}
-              </Link>
+              item.onClick ? (
+                <button
+                  key={item.key}
+                  onClick={(e) => {
+                    item.onClick(e);
+                    setIsMenuOpen(false);
+                  }}
+                  className="block py-2 text-lg font-medium text-foreground w-full text-left"
+                >
+                  {item.label}
+                </button>
+              ) : (
+                <Link
+                  key={item.key}
+                  href={item.href}
+                  className="block py-2 text-lg font-medium text-foreground"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              )
             ))}
             
             <div className="border-t border-border pt-4">
@@ -204,7 +238,7 @@ const Header = () => {
             </div>
 
             <Button asChild className="w-full rounded-full">
-              <Link href={`/${locale}/contact`} onClick={() => setIsMenuOpen(false)}>
+              <Link href={`/${locale}#contact-section`} onClick={handleContactClick}>
                 {isZh ? '联系我们' : 'Contact'}
               </Link>
             </Button>

@@ -4,9 +4,11 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRight, ChevronLeft, ArrowRight, Globe, Award, Lightbulb } from 'lucide-react';
+import { ChevronRight, ChevronLeft, ArrowRight, Globe, Award, Lightbulb, Check, Facebook, Linkedin, MessageCircle, Mail, Phone, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { FadeIn } from '@/components/shared/FadeIn';
 import ProductCard from '@/components/shared/ProductCard';
 import { getFeaturedProducts } from '@/lib/products';
@@ -22,25 +24,8 @@ const HeroSlider = () => {
       title: isZh ? '用精密喷雾冷却世界' : 'Cooling the World with Precision Mist',
       subtitle: isZh ? '中国唯一专注于喷雾风扇的专家' : "China's only specialist in mist fans",
       gradient: 'from-sky-500/20 to-blue-500/10'
-    },
-    {
-      title: isZh ? '用精密喷雾冷却世界' : 'Cooling the World with Precision Mist',
-      subtitle: isZh ? '中国唯一专注于喷雾风扇的专家' : "China's only specialist in mist fans",
-      gradient: 'from-cyan-500/20 to-teal-500/10'
-    },
-    {
-      title: isZh ? '用精密喷雾冷却世界' : 'Cooling the World with Precision Mist',
-      subtitle: isZh ? '中国唯一专注于喷雾风扇的专家' : "China's only specialist in mist fans",
-      gradient: 'from-blue-500/20 to-indigo-500/10'
     }
   ];
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [slides.length]);
 
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
@@ -49,80 +34,47 @@ const HeroSlider = () => {
     <section className="relative h-screen min-h-[700px] flex items-center overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-muted/50 to-background" />
       
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentSlide}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.8 }}
-          className={`absolute inset-0 bg-gradient-to-br ${slides[currentSlide].gradient}`}
-        />
-      </AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        className={`absolute inset-0 bg-gradient-to-br ${slides[0].gradient}`}
+      />
 
       <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentSlide}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -30 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-          >
-            <FadeIn>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground mb-6">
-                {slides[currentSlide].title}
-              </h1>
-            </FadeIn>
-            <FadeIn delay={0.2}>
-              <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-10">
-                {slides[currentSlide].subtitle}
-              </p>
-            </FadeIn>
-            <FadeIn delay={0.4}>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button asChild size="lg" className="rounded-full text-lg px-8">
-                  <Link href={`/${locale}/products/ac-mist-fans`}>
-                    {isZh ? '查看产品' : 'View Products'}
-                    <ArrowRight className="ml-2 w-5 h-5" />
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" size="lg" className="rounded-full text-lg px-8">
-                  <Link href={`/${locale}/contact`}>
-                    {isZh ? '联系我们' : 'Contact Us'}
-                  </Link>
-                </Button>
-              </div>
-            </FadeIn>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      <button
-        onClick={prevSlide}
-        className="absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 p-2 rounded-full bg-background/50 backdrop-blur-sm hover:bg-background/80 transition-colors"
-      >
-        <ChevronLeft className="w-6 h-6" />
-      </button>
-      <button
-        onClick={nextSlide}
-        className="absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 p-2 rounded-full bg-background/50 backdrop-blur-sm hover:bg-background/80 transition-colors"
-      >
-        <ChevronRight className="w-6 h-6" />
-      </button>
-
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-2">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentSlide(index)}
-            className={`w-2 h-2 rounded-full transition-all ${
-              currentSlide === index ? 'w-8 bg-primary' : 'bg-muted-foreground/30'
-            }`}
-          />
-        ))}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+        >
+          <FadeIn>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground mb-6">
+              {slides[0].title}
+            </h1>
+          </FadeIn>
+          <FadeIn delay={0.2}>
+            <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-10">
+              {slides[0].subtitle}
+            </p>
+          </FadeIn>
+          <FadeIn delay={0.4}>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button asChild size="lg" className="rounded-full text-lg px-8">
+                <Link href={`/${locale}/products/ac-mist-fans`}>
+                  {isZh ? '查看产品' : 'View Products'}
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="lg" className="rounded-full text-lg px-8">
+                <Link href={`/${locale}#contact-section`}>
+                  {isZh ? '联系我们' : 'Contact Us'}
+                </Link>
+              </Button>
+            </div>
+          </FadeIn>
+        </motion.div>
       </div>
     </section>
   );
@@ -324,28 +276,193 @@ const PartnersSection = () => {
   );
 };
 
-const CTASection = () => {
+const ContactSection = () => {
   const params = useParams();
   const locale = params.locale as string;
   const isZh = locale === 'zh';
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    product: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    setIsSubmitting(false);
+    setIsSubmitted(true);
+    setFormData({
+      name: '',
+      email: '',
+      product: '',
+      message: ''
+    });
+  };
+
+  const socialLinks = [
+    {
+      icon: Facebook,
+      name: 'Facebook',
+      href: 'https://facebook.com/hegu-tech',
+      color: 'text-blue-600'
+    },
+    {
+      icon: Linkedin,
+      name: 'LinkedIn',
+      href: 'https://linkedin.com/company/hegu-tech',
+      color: 'text-blue-700'
+    },
+    {
+      icon: MessageCircle,
+      name: 'WhatsApp',
+      href: 'https://wa.me/861234567890',
+      color: 'text-green-600'
+    }
+  ];
 
   return (
-    <section className="py-24 lg:py-32 bg-gradient-to-br from-primary/5 to-primary/10">
-      <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+    <section id="contact-section" className="py-24 lg:py-32 bg-gradient-to-br from-primary/5 to-primary/10">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <FadeIn>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-            {isZh ? '准备好改变您的冷却体验了吗？' : 'Ready to Transform Your Cooling Experience?'}
-          </h2>
-          <p className="text-lg md:text-xl text-muted-foreground mb-10">
-            {isZh ? '加入数百家信赖合谷科技的品牌' : 'Join hundreds of brands who trust HEGU Technology'}
-          </p>
-          <Button asChild size="lg" className="rounded-full text-lg px-10">
-            <Link href={`/${locale}/contact`}>
-              {isZh ? '成为我们的合作伙伴' : 'Become Our Partner'}
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Link>
-          </Button>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+              {isZh ? '准备好改变您的冷却体验了吗？' : 'Ready to Transform Your Cooling Experience?'}
+            </h2>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
+              {isZh ? '加入数百家信赖合谷科技的品牌' : 'Join hundreds of brands who trust HEGU Technology'}
+            </p>
+          </div>
         </FadeIn>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <FadeIn>
+            <Card className="p-8 lg:p-10 h-full bg-card">
+              <h3 className="text-2xl font-bold mb-8">
+                {isZh ? '发送询盘' : 'Send Inquiry'}
+              </h3>
+              
+              {isSubmitted ? (
+                <div className="text-center py-16">
+                  <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-green-100 flex items-center justify-center">
+                    <Check className="w-10 h-10 text-green-600" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-3">{isZh ? '感谢您！' : 'Thank You!'}</h3>
+                  <p className="text-muted-foreground text-lg">
+                    {isZh ? '您的询盘已成功发送。' : 'Your inquiry has been sent successfully.'}
+                  </p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div>
+                    <Input
+                      required
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      placeholder={isZh ? '您的姓名' : 'Your name'}
+                      className="h-14 text-lg rounded-full px-6"
+                    />
+                  </div>
+
+                  <div>
+                    <Input
+                      required
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      placeholder={isZh ? '邮箱地址' : 'Email address'}
+                      className="h-14 text-lg rounded-full px-6"
+                    />
+                  </div>
+
+                  <div>
+                    <Input
+                      value={formData.product}
+                      onChange={(e) => setFormData({ ...formData, product: e.target.value })}
+                      placeholder={isZh ? '产品 / 数量' : 'Product / Quantity'}
+                      className="h-14 text-lg rounded-full px-6"
+                    />
+                  </div>
+
+                  <div>
+                    <Textarea
+                      required
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      placeholder={isZh ? '留言' : 'Message'}
+                      rows={6}
+                      className="text-lg rounded-3xl px-6 py-4 resize-y"
+                    />
+                  </div>
+
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="w-full h-14 text-lg rounded-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (isZh ? '发送中...' : 'Sending...') : (isZh ? '发送询盘' : 'Submit Inquiry')}
+                  </Button>
+                </form>
+              )}
+            </Card>
+          </FadeIn>
+
+          <FadeIn delay={0.2}>
+            <Card className="p-8 lg:p-10 h-full bg-card">
+              <h3 className="text-2xl font-bold mb-8">
+                {isZh ? '社交媒体' : 'Social Media'}
+              </h3>
+              
+              <p className="text-xl text-muted-foreground mb-10 leading-relaxed">
+                {isZh 
+                  ? '关注我们获取产品目录更新、采购协调和项目沟通。' 
+                  : 'Connect with us for catalog updates, procurement coordination, and project communication.'}
+              </p>
+
+              <div className="space-y-4 mb-12">
+                {socialLinks.map((social, index) => (
+                  <a
+                    key={index}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-4 p-5 rounded-3xl border border-border hover:border-primary/50 hover:bg-muted/50 transition-all group"
+                  >
+                    <div className={`w-10 h-10 rounded-2xl bg-muted flex items-center justify-center group-hover:scale-110 transition-transform ${social.color}`}>
+                      <social.icon className="w-6 h-6" />
+                    </div>
+                    <span className="text-lg font-medium">{social.name}</span>
+                  </a>
+                ))}
+              </div>
+
+              <div className="border-t border-border pt-8">
+                <div className="flex flex-wrap justify-center gap-8">
+                  <div className="flex items-center space-x-2">
+                    <Mail className="w-5 h-5 text-muted-foreground" />
+                    <a href="mailto:info@hegu-tech.com" className="text-muted-foreground hover:text-primary transition-colors">
+                      info@hegu-tech.com
+                    </a>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Phone className="w-5 h-5 text-muted-foreground" />
+                    <span className="text-muted-foreground">+86 760 1234 5678</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <MapPin className="w-5 h-5 text-muted-foreground" />
+                    <span className="text-muted-foreground">Zhongshan, Guangdong, China</span>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </FadeIn>
+        </div>
       </div>
     </section>
   );
@@ -359,7 +476,7 @@ export default function HomePage() {
       <ProductSeriesSection />
       <FeaturedProductsSection />
       <PartnersSection />
-      <CTASection />
+      <ContactSection />
     </div>
   );
 }
