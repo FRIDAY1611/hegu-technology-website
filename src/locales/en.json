@@ -1,0 +1,142 @@
+{
+  "common": {
+    "home": "Home",
+    "products": "Products",
+    "about": "About Us",
+    "contact": "Contact",
+    "becomePartner": "Become Our Partner",
+    "viewDetails": "View Details",
+    "requestQuote": "Request Quote",
+    "learnMore": "Learn More"
+  },
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "acMistFans": "AC Mist Fans",
+    "dcMistFans": "DC Mist Fans",
+    "outdoorMistFans": "Outdoor Mist Fans",
+    "industrialFans": "Industrial Fans",
+    "about": "About Us",
+    "contact": "Contact"
+  },
+  "home": {
+    "heroTitle": "Cooling the World with Precision Mist",
+    "heroSubtitle": "China's only specialist in mist fans",
+    "advantages": {
+      "title": "Why Choose HEGU",
+      "specialist": {
+        "title": "China's Only Specialist",
+        "description": "Focused exclusively on mist fan technology and innovation"
+      },
+      "global": {
+        "title": "Global Reach, Local Expertise",
+        "description": "Serving 300+ brands across multiple continents"
+      },
+      "quality": {
+        "title": "Certified Quality",
+        "description": "CE certified and globally compliant standards"
+      },
+      "sourcing": {
+        "title": "Smart Sourcing Advice",
+        "description": "Expert guidance for your specific cooling needs"
+      }
+    },
+    "productSeries": {
+      "title": "Our Product Series",
+      "acMistFans": {
+        "title": "AC Mist Fans",
+        "description": "Reliable performance for indoor cooling"
+      },
+      "dcMistFans": {
+        "title": "DC Mist Fans",
+        "description": "Energy-efficient with advanced features"
+      },
+      "outdoorMistFans": {
+        "title": "Outdoor Mist Fans",
+        "description": "Powerful cooling for outdoor spaces"
+      }
+    },
+    "featuredProducts": {
+      "title": "Featured Products"
+    },
+    "partners": {
+      "title": "Trusted by Partners Worldwide",
+      "subtitle": "50+ countries and growing"
+    },
+    "cta": {
+      "title": "Ready to Transform Your Cooling Experience?",
+      "subtitle": "Join hundreds of brands who trust HEGU Technology",
+      "button": "Become Our Partner"
+    }
+  },
+  "products": {
+    "specifications": "Specifications",
+    "wattage": "Wattage",
+    "waterCapacity": "Water Capacity",
+    "noiseLevel": "Noise Level",
+    "speedSettings": "Speed Settings",
+    "oscillation": "Oscillation",
+    "timer": "Timer",
+    "color": "Color",
+    "dimensions": "Dimensions",
+    "weight": "Weight",
+    "packingInfo": "Packing Information",
+    "relatedProducts": "Related Products",
+    "features": {
+      "oscillation": "Oscillation & Tilt",
+      "humidifier": "Humidifier Function",
+      "lowNoise": "Low Noise",
+      "energyEfficient": "Energy Efficient",
+      "remoteControl": "Remote Control",
+      "largeTank": "Large Water Tank"
+    }
+  },
+  "about": {
+    "title": "About HEGU Technology",
+    "subtitle": "Your Trusted Partner in Mist Cooling",
+    "description": "HEGU Technology is China's leading specialist in mist fan manufacturing. With years of dedicated research and development, we have perfected the art of precision cooling technology.",
+    "mission": {
+      "title": "Our Mission",
+      "description": "To provide innovative, high-quality mist cooling solutions that enhance comfort and productivity worldwide."
+    },
+    "vision": {
+      "title": "Our Vision",
+      "description": "To be the global leader in mist fan technology, setting standards for quality, innovation, and sustainability."
+    },
+    "factory": {
+      "title": "Our Factory",
+      "description": "State-of-the-art manufacturing facilities with rigorous quality control processes."
+    },
+    "timeline": {
+      "title": "Our Journey"
+    }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Let's Start a Conversation",
+    "form": {
+      "name": "Your Name",
+      "company": "Company Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "country": "Country",
+      "interest": "Interested Products",
+      "message": "Your Message",
+      "submit": "Send Inquiry",
+      "success": "Thank you! Your inquiry has been sent successfully."
+    },
+    "info": {
+      "title": "Contact Information",
+      "address": "Address",
+      "email": "Email",
+      "phone": "Phone"
+    }
+  },
+  "footer": {
+    "description": "China's leading specialist in mist fan technology, providing innovative cooling solutions worldwide.",
+    "products": "Products",
+    "company": "Company",
+    "contact": "Contact",
+    "rights": "All rights reserved."
+  }
+}

@@ -1,4 +1,8 @@
-# 项目上下文
+# 合谷科技官网项目 (HEGU Technology)
+
+## 项目概览
+
+合谷科技（HEGU Technology）官网是一个高端品牌独立站，采用苹果官网风格的设计，为中国喷雾风扇制造商打造。
 
 ### 版本技术栈
 
@@ -7,34 +11,46 @@
 - **Language**: TypeScript 5
 - **UI 组件**: shadcn/ui (基于 Radix UI)
 - **Styling**: Tailwind CSS 4
+- **动画**: Framer Motion
 
 ## 目录结构
 
 ```
 ├── public/                 # 静态资源
-├── scripts/                # 构建与启动脚本
-│   ├── build.sh            # 构建脚本
-│   ├── dev.sh              # 开发环境启动脚本
-│   ├── prepare.sh          # 预处理脚本
-│   └── start.sh            # 生产环境启动脚本
 ├── src/
 │   ├── app/                # 页面路由与布局
-│   ├── components/ui/      # Shadcn UI 组件库
-│   ├── hooks/              # 自定义 Hooks
-│   ├── lib/                # 工具库
-│   │   └── utils.ts        # 通用工具函数 (cn)
-│   └── server.ts           # 自定义服务端入口
-├── next.config.ts          # Next.js 配置
-├── package.json            # 项目依赖管理
-└── tsconfig.json           # TypeScript 配置
+│   │   ├── [locale]/       # 多语言路由
+│   │   │   ├── page.tsx            # 首页
+│   │   │   ├── layout.tsx          # 语言布局
+│   │   │   ├── about/page.tsx      # 关于我们
+│   │   │   ├── contact/page.tsx    # 联系我们
+│   │   │   └── products/           # 产品页面
+│   │   ├── layout.tsx       # 根布局
+│   │   ├── page.tsx         # 重定向到默认语言
+│   │   └── globals.css      # 全局样式
+│   ├── components/
+│   │   ├── ui/              # Shadcn UI 组件库
+│   │   └── shared/          # 共享组件
+│   │       ├── Header.tsx   # 头部导航
+│   │       ├── Footer.tsx   # 页脚
+│   │       ├── FadeIn.tsx   # 淡入动画组件
+│   │       └── ProductCard.tsx  # 产品卡片
+│   ├── lib/                 # 工具库
+│   │   ├── products.ts      # 产品数据
+│   │   └── utils.ts         # 通用工具函数
+│   └── locales/             # 语言文件
+│       ├── en.json          # 英文
+│       └── zh.json          # 中文
+├── .coze                    # 配置文件
+├── package.json             # 项目依赖管理
+└── tsconfig.json            # TypeScript 配置
 ```
-
-- 项目文件（如 app 目录、pages 目录、components 等）默认初始化到 `src/` 目录下。
 
 ## 包管理规范
 
 **仅允许使用 pnpm** 作为包管理器，**严禁使用 npm 或 yarn**。
-**常用命令**：
+
+常用命令：
 - 安装依赖：`pnpm add <package>`
 - 安装开发依赖：`pnpm add -D <package>`
 - 安装所有依赖：`pnpm install`
@@ -47,19 +63,101 @@
 - 默认按 TypeScript `strict` 心智写代码；优先复用当前作用域已声明的变量、函数、类型和导入，禁止引用未声明标识符或拼错变量名。
 - 禁止隐式 `any` 和 `as any`；函数参数、返回值、解构项、事件对象、`catch` 错误在使用前应有明确类型或先完成类型收窄，并清理未使用的变量和导入。
 
-### next.config 配置规范
+### 多语言支持
 
-- 配置的路径不要写死绝对路径，必须使用 path.resolve(__dirname, ...)、import.meta.dirname 或 process.cwd() 动态拼接。
+- 支持英文 (en) 和中文 (zh) 两种语言
+- 路由格式：`/en/...` 和 `/zh/...`
+- 语言切换通过 Header 组件中的 Globe 图标实现
 
-### Hydration 问题防范
+### 产品数据
 
-1. 严禁在 JSX 渲染逻辑中直接使用 typeof window、Date.now()、Math.random() 等动态数据。**必须使用 'use client' 并配合 useEffect + useState 确保动态内容仅在客户端挂载后渲染**；同时严禁非法 HTML 嵌套（如 <p> 嵌套 <div>）。
-2. **禁止使用 head 标签**，优先使用 metadata，详见文档：https://nextjs.org/docs/app/api-reference/functions/generate-metadata
-   1. 三方 CSS、字体等资源可在 `globals.css` 中顶部通过 `@import` 引入或使用 next/font
-   2. preload, preconnect, dns-prefetch 通过 ReactDOM 的 preload、preconnect、dns-prefetch 方法引入
-   3. json-ld 可阅读 https://nextjs.org/docs/app/guides/json-ld
+产品数据存储在 `src/lib/products.ts` 中，包含：
+- 13 款产品，分为 4 个系列：AC, DC, Outdoor, Industrial
+- 完整的规格参数、包装信息、功能特点
+- 产品图片使用占位符，可在后续替换为真实图片
 
-## UI 设计与组件规范 (UI & Styling Standards)
+## UI 设计与组件规范
 
-- 模板默认预装核心组件库 `shadcn/ui`，位于`src/components/ui/`目录下
-- Next.js 项目**必须默认**采用 shadcn/ui 组件、风格和规范，**除非用户指定用其他的组件和规范。**
+- 项目采用 shadcn/ui 组件、风格和规范
+- 主题配色使用 sky 色系，呼应喷雾风扇的冷却功能
+- 字体采用 business 风格，圆角 lg，阴影 cool
+
+### 设计风格
+
+- **苹果式高端风格**: 大量留白、大图小字、极细字重与大字号对比
+- **配色**: 纯白背景、浅灰辅助、水蓝色强调
+- **动效**: Framer Motion 实现滚动淡入、悬停放大等效果
+- **组件**: 圆角 20px 卡片、胶囊型按钮、毛玻璃导航栏
+
+## 页面结构
+
+### 首页 (Home)
+- Hero 轮播：3 张场景图自动轮播
+- 公司优势：4 大模块卡片展示
+- 产品系列：3 个大卡片导航
+- 精选产品：明星产品展示
+- 合作伙伴：国家网格展示
+- CTA 区域：引导联系
+
+### 产品分类页
+- 系列标题 + 描述
+- 产品网格卡片展示
+- 每个卡片包含型号、简介、规格
+
+### 产品详情页
+- 产品图片占位
+- 型号、系列标签、描述
+- 规格参数表格
+- 功能特点图标展示
+- 包装信息表
+- 相关产品推荐
+- 报价弹窗表单
+
+### 关于我们
+- 公司介绍
+- 使命与愿景
+- 发展历程时间线
+- 工厂展示占位
+- 数据统计卡片
+
+### 联系我们
+- 询盘表单（姓名、公司、邮箱、电话、国家、感兴趣产品、留言）
+- 公司信息（地址、邮箱、电话）
+- Google Maps 占位
+
+## 构建和测试命令
+
+```bash
+# 开发环境
+pnpm install
+pnpm dev
+
+# 生产构建
+pnpm build
+pnpm start
+
+# 代码检查
+pnpm ts-check
+pnpm lint
+```
+
+## 性能优化
+
+- 使用 Next.js 16 App Router
+- Framer Motion 动画使用 Intersection Observer 触发
+- 组件按需加载
+- 图片懒加载（占位符准备）
+
+## 快速修改指南
+
+### 修改产品数据
+编辑 `src/lib/products.ts` 文件，添加或修改产品信息。
+
+### 修改语言内容
+编辑 `src/locales/en.json` 和 `src/locales/zh.json` 文件。
+
+### 修改主题配色
+主题已通过 Shadcn 主题脚本配置，如需调整可修改 `src/app/globals.css` 中的 CSS 变量。
+
+### 添加新页面
+在 `src/app/[locale]/` 目录下创建新的页面文件夹和 `page.tsx` 文件。

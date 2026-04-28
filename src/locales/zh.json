@@ -1,0 +1,142 @@
+{
+  "common": {
+    "home": "首页",
+    "products": "产品中心",
+    "about": "关于我们",
+    "contact": "联系我们",
+    "becomePartner": "成为我们的合作伙伴",
+    "viewDetails": "查看详情",
+    "requestQuote": "获取报价",
+    "learnMore": "了解更多"
+  },
+  "nav": {
+    "home": "首页",
+    "products": "产品中心",
+    "acMistFans": "交流电喷雾风扇",
+    "dcMistFans": "直流电喷雾风扇",
+    "outdoorMistFans": "户外喷雾风扇",
+    "industrialFans": "工业风扇",
+    "about": "关于我们",
+    "contact": "联系我们"
+  },
+  "home": {
+    "heroTitle": "用精密喷雾冷却世界",
+    "heroSubtitle": "中国唯一专注于喷雾风扇的专家",
+    "advantages": {
+      "title": "为什么选择合谷科技",
+      "specialist": {
+        "title": "中国唯一专家",
+        "description": "专注于喷雾风扇技术与创新"
+      },
+      "global": {
+        "title": "全球视野，本土经验",
+        "description": "服务全球300多个品牌，覆盖多个大洲"
+      },
+      "quality": {
+        "title": "认证品质",
+        "description": "CE认证，符合全球标准"
+      },
+      "sourcing": {
+        "title": "智能采购建议",
+        "description": "为您的特定冷却需求提供专业指导"
+      }
+    },
+    "productSeries": {
+      "title": "我们的产品系列",
+      "acMistFans": {
+        "title": "交流电喷雾风扇",
+        "description": "可靠的室内冷却性能"
+      },
+      "dcMistFans": {
+        "title": "直流电喷雾风扇",
+        "description": "节能高效，功能先进"
+      },
+      "outdoorMistFans": {
+        "title": "户外喷雾风扇",
+        "description": "为户外空间提供强劲冷却"
+      }
+    },
+    "featuredProducts": {
+      "title": "精选产品"
+    },
+    "partners": {
+      "title": "全球合作伙伴信赖之选",
+      "subtitle": "覆盖50多个国家，持续增长中"
+    },
+    "cta": {
+      "title": "准备好改变您的冷却体验了吗？",
+      "subtitle": "加入数百家信赖合谷科技的品牌",
+      "button": "成为我们的合作伙伴"
+    }
+  },
+  "products": {
+    "specifications": "规格参数",
+    "wattage": "功率",
+    "waterCapacity": "水箱容量",
+    "noiseLevel": "噪音水平",
+    "speedSettings": "风速设置",
+    "oscillation": "摇头功能",
+    "timer": "定时功能",
+    "color": "颜色",
+    "dimensions": "尺寸",
+    "weight": "重量",
+    "packingInfo": "包装信息",
+    "relatedProducts": "相关产品",
+    "features": {
+      "oscillation": "摇头与俯仰",
+      "humidifier": "加湿功能",
+      "lowNoise": "低噪音",
+      "energyEfficient": "节能环保",
+      "remoteControl": "遥控控制",
+      "largeTank": "大水箱"
+    }
+  },
+  "about": {
+    "title": "关于合谷科技",
+    "subtitle": "您值得信赖的喷雾冷却合作伙伴",
+    "description": "合谷科技是中国领先的喷雾风扇制造专家。凭借多年的专注研发，我们已完善了精密冷却技术的艺术。",
+    "mission": {
+      "title": "我们的使命",
+      "description": "提供创新、高品质的喷雾冷却解决方案，提升全球的舒适度和生产力。"
+    },
+    "vision": {
+      "title": "我们的愿景",
+      "description": "成为喷雾风扇技术的全球领导者，为质量、创新和可持续性树立标准。"
+    },
+    "factory": {
+      "title": "我们的工厂",
+      "description": "拥有最先进的制造设施和严格的质量控制流程。"
+    },
+    "timeline": {
+      "title": "我们的历程"
+    }
+  },
+  "contact": {
+    "title": "联系我们",
+    "subtitle": "让我们开始对话",
+    "form": {
+      "name": "您的姓名",
+      "company": "公司名称",
+      "email": "电子邮箱",
+      "phone": "电话号码",
+      "country": "国家",
+      "interest": "感兴趣的产品",
+      "message": "您的留言",
+      "submit": "发送询盘",
+      "success": "感谢您！您的询盘已成功发送。"
+    },
+    "info": {
+      "title": "联系信息",
+      "address": "地址",
+      "email": "邮箱",
+      "phone": "电话"
+    }
+  },
+  "footer": {
+    "description": "中国领先的喷雾风扇技术专家，为全球提供创新的冷却解决方案。",
+    "products": "产品中心",
+    "company": "公司信息",
+    "contact": "联系我们",
+    "rights": "保留所有权利。"
+  }
+}
