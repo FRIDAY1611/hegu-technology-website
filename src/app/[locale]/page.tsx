@@ -12,6 +12,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { FadeIn } from '@/components/shared/FadeIn';
 import ProductCard from '@/components/shared/ProductCard';
 import { getFeaturedProducts } from '@/lib/products';
+import { useSettings } from '@/contexts/SettingsContext';
 
 const getPageTexts = (locale: string) => {
   switch (locale) {
@@ -690,6 +691,7 @@ const ContactSection = () => {
   const params = useParams();
   const locale = params.locale as string;
   const texts = getPageTexts(locale);
+  const { settings, isLoading } = useSettings();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -715,23 +717,28 @@ const ContactSection = () => {
     });
   };
 
+  // 如果设置还在加载中，不显示内容
+  if (isLoading) {
+    return null;
+  }
+
   const socialLinks = [
     {
       icon: Facebook,
       name: 'Facebook',
-      href: 'https://facebook.com/hegu-tech',
+      href: settings.socialLinks.facebook,
       color: 'text-blue-600'
     },
     {
       icon: Linkedin,
       name: 'LinkedIn',
-      href: 'https://linkedin.com/company/hegu-tech',
+      href: settings.socialLinks.linkedin,
       color: 'text-blue-700'
     },
     {
       icon: MessageCircle,
       name: 'WhatsApp',
-      href: 'https://wa.me/861234567890',
+      href: settings.socialLinks.whatsapp,
       color: 'text-green-600'
     }
   ];
@@ -782,17 +789,19 @@ const ContactSection = () => {
                 <div className="flex flex-wrap justify-center gap-8">
                   <div className="flex items-center space-x-2">
                     <Mail className="w-5 h-5 text-muted-foreground" />
-                    <a href="mailto:info@hegu-tech.com" className="text-muted-foreground hover:text-primary transition-colors">
-                      info@hegu-tech.com
+                    <a href={`mailto:${settings.contactEmail}`} className="text-muted-foreground hover:text-primary transition-colors">
+                      {settings.contactEmail}
                     </a>
                   </div>
                   <div className="flex items-center space-x-2">
                     <Phone className="w-5 h-5 text-muted-foreground" />
-                    <span className="text-muted-foreground">+86 760 1234 5678</span>
+                    <a href={`tel:${settings.contactPhone}`} className="text-muted-foreground hover:text-primary transition-colors">
+                      {settings.contactPhone}
+                    </a>
                   </div>
                   <div className="flex items-center space-x-2">
                     <MapPin className="w-5 h-5 text-muted-foreground" />
-                    <span className="text-muted-foreground">Zhongshan, Guangdong, China</span>
+                    <span className="text-muted-foreground">{settings.address}</span>
                   </div>
                 </div>
               </div>
