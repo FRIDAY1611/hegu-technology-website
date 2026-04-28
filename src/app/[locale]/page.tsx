@@ -477,56 +477,20 @@ const CertificationsSection = () => {
   const locale = params.locale as string;
   const texts = getPageTexts(locale);
 
-  // 所有资质认证数据
-  const allCertifications = [
-    { 
-      name: 'ISO 9001', 
-      description: 'Quality Management System',
-      gradient: 'from-blue-500 to-blue-600',
-      icon: 'quality'
-    },
-    { 
-      name: 'ISO 14001', 
-      description: 'Environmental Management',
-      gradient: 'from-green-500 to-emerald-600',
-      icon: 'environment'
-    },
-    { 
-      name: 'BSCI', 
-      description: 'Business Social Compliance',
-      gradient: 'from-purple-500 to-violet-600',
-      icon: 'social'
-    },
-    { 
-      name: 'Sedex', 
-      description: 'Ethical Trade Audit',
-      gradient: 'from-orange-500 to-amber-600',
-      icon: 'audit'
-    },
-    { 
-      name: 'CE', 
-      description: 'European Conformity',
-      gradient: 'from-sky-500 to-cyan-600',
-      icon: 'certificate'
-    },
-    { 
-      name: 'ETL', 
-      description: 'Electrical Testing Labs',
-      gradient: 'from-rose-500 to-pink-600',
-      icon: 'electrical'
-    },
-    { 
-      name: 'RoHS', 
-      description: 'Restriction of Hazardous Substances',
-      gradient: 'from-teal-500 to-cyan-600',
-      icon: 'safety'
-    },
-    { 
-      name: 'FCC', 
-      description: 'Federal Communications Commission',
-      gradient: 'from-indigo-500 to-purple-600',
-      icon: 'communication'
-    }
+  // 工厂资质数据
+  const factoryQualifications = [
+    { name: 'ISO 9001', description: 'Quality Management System' },
+    { name: 'ISO 14001', description: 'Environmental Management' },
+    { name: 'BSCI', description: 'Business Social Compliance' },
+    { name: 'Sedex', description: 'Ethical Trade Audit' }
+  ];
+
+  // 产品认证数据
+  const productCertifications = [
+    { name: 'CE', description: 'European Conformity' },
+    { name: 'CB', description: 'Certification Bodies' },
+    { name: 'REACH', description: 'Registration, Evaluation, Authorization and Restriction of Chemicals' },
+    { name: 'RoHS', description: 'Restriction of Hazardous Substances' }
   ];
 
   return (
@@ -543,76 +507,141 @@ const CertificationsSection = () => {
           </div>
         </FadeIn>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {allCertifications.map((cert, index) => (
-            <FadeIn key={index} delay={index * 0.08}>
-              <div className="group">
-                <div className={`relative overflow-hidden rounded-3xl bg-gradient-to-br ${cert.gradient} p-6 lg:p-8 aspect-square shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2`}>
-                  {/* 背景装饰 */}
-                  <div className="absolute inset-0 opacity-10">
-                    <svg className="w-full h-full" viewBox="0 0 100 100">
-                      <circle cx="80" cy="20" r="40" fill="white" />
-                      <circle cx="20" cy="80" r="30" fill="white" />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* 左侧 - 工厂资质 */}
+          <FadeIn>
+            <div>
+              <h3 className="text-2xl lg:text-3xl font-bold mb-3 text-green-600">
+                FACTORY QUALIFICATIONS
+              </h3>
+              <p className="text-muted-foreground mb-8">
+                With distribution partners around the world, our products can be found in over 50 countries. 
+                We pride ourselves in providing reliable mist fan to ensure customer satisfaction.
+              </p>
+
+              {/* 认证标志 */}
+              <div className="flex flex-wrap items-center gap-6 mb-8">
+                <div className="w-20 h-20 bg-card border border-border rounded-xl flex items-center justify-center text-2xl font-bold">
+                  中
+                </div>
+                <div className="w-20 h-20 bg-card border border-border rounded-xl flex items-center justify-center text-2xl font-bold">
+                  IP
+                </div>
+                <div className="w-20 h-20 bg-card border border-border rounded-xl flex items-center justify-center text-xl font-bold">
+                  ISO 9001
+                </div>
+                <div className="w-24 h-20 bg-card border border-border rounded-xl flex items-center justify-center text-xl font-bold text-green-600">
+                  BSCI
+                </div>
+              </div>
+
+              {/* 证书图片网格 */}
+              <div className="grid grid-cols-2 gap-4">
+                {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                  <div
+                    key={i}
+                    className="aspect-[3/4] bg-gradient-to-br from-amber-50 to-amber-100 border-2 border-amber-200 rounded-lg flex items-center justify-center p-4"
+                  >
+                    <div className="text-center">
+                      <div className="w-12 h-12 mx-auto mb-2 bg-red-100 rounded-full flex items-center justify-center">
+                        <svg className="w-6 h-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 01-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                        </svg>
+                      </div>
+                      <p className="text-xs text-amber-800">Certificate {i}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </FadeIn>
+
+          {/* 中间装饰 */}
+          <div className="hidden lg:flex items-center justify-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+            <div className="relative">
+              <div className="absolute -top-20 left-1/2 -translate-x-1/2">
+                <div className="w-80 h-40 bg-gradient-to-b from-pink-200/50 to-transparent -skew-x-12"></div>
+              </div>
+              <div className="absolute -top-20 left-1/2 -translate-x-1/2">
+                <div className="w-80 h-40 bg-gradient-to-b from-pink-200/50 to-transparent skew-x-12"></div>
+              </div>
+              <div className="w-64 h-64 flex items-center justify-center">
+                <div className="relative">
+                  {[0, 72, 144, 216, 288].map((angle, i) => (
+                    <div
+                      key={i}
+                      className="absolute w-20 h-20 bg-gradient-to-br from-white to-gray-100 rounded-full shadow-lg flex items-center justify-center"
+                      style={{
+                        transform: `rotate(${angle}deg) translateY(-40px)`,
+                      }}
+                    >
+                      <svg className="w-10 h-10 text-yellow-300" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                      </svg>
+                    </div>
+                  ))}
+                  <div className="w-20 h-20 bg-gradient-to-br from-white to-gray-100 rounded-full shadow-xl flex items-center justify-center z-10">
+                    <svg className="w-10 h-10 text-yellow-300" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                     </svg>
-                  </div>
-                  
-                  {/* 图标 */}
-                  <div className="relative z-10 w-14 h-14 lg:w-16 lg:h-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                    {cert.icon === 'quality' && (
-                      <svg className="w-7 h-7 lg:w-8 lg:h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 01-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                      </svg>
-                    )}
-                    {cert.icon === 'environment' && (
-                      <svg className="w-7 h-7 lg:w-8 lg:h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    )}
-                    {cert.icon === 'social' && (
-                      <svg className="w-7 h-7 lg:w-8 lg:h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                      </svg>
-                    )}
-                    {cert.icon === 'audit' && (
-                      <svg className="w-7 h-7 lg:w-8 lg:h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                      </svg>
-                    )}
-                    {cert.icon === 'certificate' && (
-                      <svg className="w-7 h-7 lg:w-8 lg:h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                      </svg>
-                    )}
-                    {cert.icon === 'electrical' && (
-                      <svg className="w-7 h-7 lg:w-8 lg:h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                      </svg>
-                    )}
-                    {cert.icon === 'safety' && (
-                      <svg className="w-7 h-7 lg:w-8 lg:h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                      </svg>
-                    )}
-                    {cert.icon === 'communication' && (
-                      <svg className="w-7 h-7 lg:w-8 lg:h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
-                      </svg>
-                    )}
-                  </div>
-                  
-                  {/* 内容 */}
-                  <div className="relative z-10">
-                    <h3 className="text-lg lg:text-xl font-bold text-white mb-1">
-                      {cert.name}
-                    </h3>
-                    <p className="text-sm text-white/80 leading-relaxed">
-                      {cert.description}
-                    </p>
                   </div>
                 </div>
               </div>
-            </FadeIn>
-          ))}
+            </div>
+          </div>
+
+          {/* 右侧 - 产品认证 */}
+          <FadeIn delay={0.1}>
+            <div>
+              <h3 className="text-2xl lg:text-3xl font-bold mb-3 text-green-600">
+                PRODUCT CERTIFICATIONS
+              </h3>
+              <p className="text-muted-foreground mb-8">
+                Through continuous innovation, we now have more than 100 patents on humidifiers and mist fan. 
+                Our manufacturing facility is ISO 9001 certified for quality management. Besides, we are approved 
+                by numerous certifying bodies around the globe like BSCI, CE(ERP, EMC, LVD), CB(IEC), SAA and RoHs.
+              </p>
+
+              {/* 认证标志 */}
+              <div className="flex flex-wrap items-center gap-6 mb-8">
+                <div className="w-20 h-20 bg-card border border-border rounded-xl flex items-center justify-center text-3xl font-bold">
+                  CE
+                </div>
+                <div className="w-20 h-20 bg-card border border-border rounded-xl flex items-center justify-center text-3xl font-bold">
+                  CB
+                </div>
+                <div className="w-24 h-20 bg-card border border-border rounded-xl flex items-center justify-center text-2xl font-bold">
+                  REACH
+                </div>
+                <div className="w-20 h-20 bg-card border border-border rounded-xl flex items-center justify-center text-2xl font-bold">
+                  SNI
+                </div>
+                <div className="w-24 h-20 bg-card border border-border rounded-xl flex items-center justify-center text-2xl font-bold">
+                  <svg className="w-12 h-8" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                  </svg>
+                  <span className="ml-1">RoHS</span>
+                </div>
+              </div>
+
+              {/* 证书图片网格 */}
+              <div className="grid grid-cols-2 gap-4">
+                {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                  <div
+                    key={i}
+                    className="aspect-[3/4] bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200 rounded-lg flex items-center justify-center p-4"
+                  >
+                    <div className="text-center">
+                      <div className="w-12 h-12 mx-auto mb-2 bg-gray-200 rounded flex items-center justify-center">
+                        <span className="text-lg font-bold text-gray-600">CE</span>
+                      </div>
+                      <p className="text-xs text-gray-600">Test Report {i}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </FadeIn>
         </div>
       </div>
     </section>
