@@ -36,12 +36,12 @@ const Header = () => {
 
   const getNavLabel = () => {
     switch (locale) {
-      case 'zh': return { home: '首页', about: '关于我们', contact: '联系我们', products: '产品中心' };
-      case 'es': return { home: 'Inicio', about: 'Sobre Nosotros', contact: 'Contacto', products: 'Productos' };
-      case 'fr': return { home: 'Accueil', about: 'À Propos', contact: 'Contact', products: 'Produits' };
-      case 'de': return { home: 'Startseite', about: 'Über Uns', contact: 'Kontakt', products: 'Produkte' };
-      case 'ar': return { home: 'الرئيسية', about: 'من نحن', contact: 'اتصل بنا', products: 'المنتجات' };
-      default: return { home: 'Home', about: 'About', contact: 'Contact', products: 'Products' };
+      case 'zh': return { home: '首页', about: '关于我们', contact: '联系我们', products: '产品中心', allProducts: '全部产品' };
+      case 'es': return { home: 'Inicio', about: 'Sobre Nosotros', contact: 'Contacto', products: 'Productos', allProducts: 'Todos los Productos' };
+      case 'fr': return { home: 'Accueil', about: 'À Propos', contact: 'Contact', products: 'Produits', allProducts: 'Tous les Produits' };
+      case 'de': return { home: 'Startseite', about: 'Über Uns', contact: 'Kontakt', products: 'Produkte', allProducts: 'Alle Produkte' };
+      case 'ar': return { home: 'الرئيسية', about: 'من نحن', contact: 'اتصل بنا', products: 'المنتجات', allProducts: 'جميع المنتجات' };
+      default: return { home: 'Home', about: 'About', contact: 'Contact', products: 'Products', allProducts: 'All Products' };
     }
   };
 
@@ -66,10 +66,11 @@ const Header = () => {
   ];
 
   const productItems = [
-    { key: 'acMistFans', label: productLabel.ac, href: `/${locale}/products/ac-mist-fans` },
-    { key: 'dcMistFans', label: productLabel.dc, href: `/${locale}/products/dc-mist-fans` },
-    { key: 'outdoorMistFans', label: productLabel.outdoor, href: `/${locale}/products/outdoor-mist-fans` },
-    { key: 'industrialFans', label: productLabel.industrial, href: `/${locale}/products/industrial-fans` }
+    { key: 'allProducts', label: navLabel.allProducts, href: `/${locale}/products` },
+    { key: 'acMistFans', label: productLabel.ac, href: `/${locale}/products?series=AC` },
+    { key: 'dcMistFans', label: productLabel.dc, href: `/${locale}/products?series=DC` },
+    { key: 'outdoorMistFans', label: productLabel.outdoor, href: `/${locale}/products?series=Outdoor` },
+    { key: 'industrialFans', label: productLabel.industrial, href: `/${locale}/products?series=Industrial` }
   ];
 
   const switchLocale = (newLocale: string) => {

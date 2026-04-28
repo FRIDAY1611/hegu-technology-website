@@ -112,10 +112,10 @@ const Footer = () => {
 
   const productLinks = [
     { label: texts.allProducts, href: `/${locale}/products` },
-    { label: texts.acMistFans, href: `/${locale}/products/ac-mist-fans` },
-    { label: texts.dcMistFans, href: `/${locale}/products/dc-mist-fans` },
-    { label: texts.outdoorMistFans, href: `/${locale}/products/outdoor-mist-fans` },
-    { label: texts.industrialFans, href: `/${locale}/products/industrial-fans` }
+    { label: texts.acMistFans, href: `/${locale}/products?series=AC` },
+    { label: texts.dcMistFans, href: `/${locale}/products?series=DC` },
+    { label: texts.outdoorMistFans, href: `/${locale}/products?series=Outdoor` },
+    { label: texts.industrialFans, href: `/${locale}/products?series=Industrial` }
   ];
 
   const companyLinks = [

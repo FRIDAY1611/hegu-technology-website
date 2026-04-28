@@ -346,21 +346,21 @@ const ProductSeriesSection = () => {
   const series = [
     {
       key: 'acMistFans',
-      href: `/${locale}/products/ac-mist-fans`,
+      href: `/${locale}/products?series=AC`,
       title: texts.ac.title,
       description: texts.ac.desc,
       gradient: 'from-sky-100 to-blue-50'
     },
     {
       key: 'dcMistFans',
-      href: `/${locale}/products/dc-mist-fans`,
+      href: `/${locale}/products?series=DC`,
       title: texts.dc.title,
       description: texts.dc.desc,
       gradient: 'from-cyan-100 to-teal-50'
     },
     {
       key: 'outdoorMistFans',
-      href: `/${locale}/products/outdoor-mist-fans`,
+      href: `/${locale}/products?series=Outdoor`,
       title: texts.outdoor.title,
       description: texts.outdoor.desc,
       gradient: 'from-blue-100 to-indigo-50'
