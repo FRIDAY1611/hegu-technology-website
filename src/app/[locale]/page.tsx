@@ -143,6 +143,38 @@ const getPageTexts = (locale: string) => {
         socialMedia: 'Soziale Medien',
         socialDesc: 'Verbinden Sie sich mit uns für Katalogaktualisierungen, Beschaffungskoordination und Projektkommunikation.'
       };
+    case 'ar':
+      return {
+        heroTitle: 'تبريد العالم بضباب دقيق',
+        heroSubtitle: 'المتخصص الوحيد في الصين في مراوح الضباب',
+        viewProducts: 'عرض المنتجات',
+        contactUs: 'اتصل بنا',
+        advantagesTitle: 'لماذا تختار HEGU',
+        specialist: { title: 'المتخصص الوحيد في الصين', desc: 'نركز حصرًا على تكنولوجيا وابتكارات مراوح الضباب' },
+        global: { title: 'تواجد عالمي، خبرة محلية', desc: 'نخدم أكثر من 300 علامة تجارية في قارات متعددة' },
+        quality: { title: 'جودة معتمدة', desc: 'معتمد CE ومعايير متوافقة عالميًا' },
+        sourcing: { title: 'نصائح ذكية للتوريد', desc: 'إرشادات خبراء لاحتياجات التبريد المحددة الخاصة بك' },
+        productSeriesTitle: 'سلسلة منتجاتنا',
+        ac: { title: 'مراوح الضباب AC', desc: 'أداء موثوق للتبريد الداخلي' },
+        dc: { title: 'مراوح الضباب DC', desc: 'موفرة للطاقة مع ميزات متقدمة' },
+        outdoor: { title: 'مراوح الضباب الخارجية', desc: 'تبريد قوي للمساحات الخارجية' },
+        viewDetails: 'عرض التفاصيل',
+        featuredProductsTitle: 'المنتجات المميزة',
+        partnersTitle: 'موثوق من قبل شركاء حول العالم',
+        partnersSubtitle: 'أكثر من 50 دولة وينمو',
+        ctaTitle: 'جاهز لتحويل تجربة التبريد لديك؟',
+        ctaSubtitle: 'انضم إلى مئات العلامات التجارية التي تثق في HEGU Technology',
+        sendInquiry: 'إرسال استفسار',
+        yourName: 'اسمك',
+        emailAddress: 'البريد الإلكتروني',
+        productQuantity: 'المنتج / الكمية',
+        message: 'رسالتك',
+        sending: 'جارٍ الإرسال...',
+        thankYou: 'شكرًا لك!',
+        inquirySent: 'تم إرسال استفسارك بنجاح.',
+        socialMedia: 'وسائل التواصل الاجتماعي',
+        socialDesc: 'تواصل معنا للحصول على تحديثات الكتالوج، وتنسيق التوريد، وتواصل المشاريع.'
+      };
     default:
       return {
         heroTitle: 'Cooling the World with Precision Mist',

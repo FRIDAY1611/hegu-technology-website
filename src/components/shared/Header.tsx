@@ -40,6 +40,7 @@ const Header = () => {
       case 'es': return { home: 'Inicio', about: 'Sobre Nosotros', contact: 'Contacto', products: 'Productos' };
       case 'fr': return { home: 'Accueil', about: 'À Propos', contact: 'Contact', products: 'Produits' };
       case 'de': return { home: 'Startseite', about: 'Über Uns', contact: 'Kontakt', products: 'Produkte' };
+      case 'ar': return { home: 'الرئيسية', about: 'من نحن', contact: 'اتصل بنا', products: 'المنتجات' };
       default: return { home: 'Home', about: 'About', contact: 'Contact', products: 'Products' };
     }
   };
@@ -50,6 +51,7 @@ const Header = () => {
       case 'es': return { ac: 'Ventiladores de Nebulización AC', dc: 'Ventiladores de Nebulización DC', outdoor: 'Ventiladores de Nebulización Exteriores', industrial: 'Ventiladores Industriales' };
       case 'fr': return { ac: 'Ventilateurs à Brume AC', dc: 'Ventilateurs à Brume DC', outdoor: 'Ventilateurs à Brume Extérieurs', industrial: 'Ventilateurs Industriels' };
       case 'de': return { ac: 'AC-Nebelventilatoren', dc: 'DC-Nebelventilatoren', outdoor: 'Außen-Nebelventilatoren', industrial: 'Industrieventilatoren' };
+      case 'ar': return { ac: 'مراوح الضباب AC', dc: 'مراوح الضباب DC', outdoor: 'مراوح الضباب الخارجية', industrial: 'مراوح صناعية' };
       default: return { ac: 'AC Mist Fans', dc: 'DC Mist Fans', outdoor: 'Outdoor Mist Fans', industrial: 'Industrial Fans' };
     }
   };
@@ -163,7 +165,7 @@ const Header = () => {
               </button>
               
               {isLangOpen && (
-                <div className="absolute top-full right-0 mt-2 w-36 bg-card border border-border rounded-xl shadow-lg overflow-hidden">
+                <div className="absolute top-full right-0 mt-2 w-40 bg-card border border-border rounded-xl shadow-lg overflow-hidden">
                   <Link
                     href={switchLocale('en')}
                     className={`block px-4 py-2 text-sm ${locale === 'en' ? 'bg-muted text-primary' : 'text-foreground hover:bg-muted'}`}
@@ -198,6 +200,13 @@ const Header = () => {
                     onClick={() => setIsLangOpen(false)}
                   >
                     Deutsch
+                  </Link>
+                  <Link
+                    href={switchLocale('ar')}
+                    className={`block px-4 py-2 text-sm ${locale === 'ar' ? 'bg-muted text-primary' : 'text-foreground hover:bg-muted'}`}
+                    onClick={() => setIsLangOpen(false)}
+                  >
+                    العربية
                   </Link>
                 </div>
               )}
@@ -296,10 +305,17 @@ const Header = () => {
                 </Link>
                 <Link
                   href={switchLocale('de')}
-                  className={`text-sm font-medium px-3 py-2 rounded-lg col-span-2 ${locale === 'de' ? 'bg-muted text-primary' : 'text-muted-foreground hover:bg-muted'}`}
+                  className={`text-sm font-medium px-3 py-2 rounded-lg ${locale === 'de' ? 'bg-muted text-primary' : 'text-muted-foreground hover:bg-muted'}`}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Deutsch
+                </Link>
+                <Link
+                  href={switchLocale('ar')}
+                  className={`text-sm font-medium px-3 py-2 rounded-lg col-span-2 ${locale === 'ar' ? 'bg-muted text-primary' : 'text-muted-foreground hover:bg-muted'}`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  العربية
                 </Link>
               </div>
             </div>
