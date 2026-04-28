@@ -32,6 +32,7 @@ const getPageTexts = (locale: string) => {
         outdoor: { title: '户外喷雾风扇', desc: '为户外空间提供强劲冷却' },
         viewDetails: '查看详情',
         featuredProductsTitle: '精选产品',
+        viewAllProducts: '查看全部产品',
         partnersTitle: '全球合作伙伴信赖之选',
         partnersSubtitle: '覆盖50多个国家，持续增长中',
         ctaTitle: '准备好改变您的冷却体验了吗？',
@@ -64,6 +65,7 @@ const getPageTexts = (locale: string) => {
         outdoor: { title: 'Ventiladores de Nebulización Exteriores', desc: 'Enfriamiento potente para espacios exteriores' },
         viewDetails: 'Ver Detalles',
         featuredProductsTitle: 'Productos Destacados',
+        viewAllProducts: 'Ver Todos los Productos',
         partnersTitle: 'Confiado por Socios en Todo el Mundo',
         partnersSubtitle: 'Más de 50 países y creciendo',
         ctaTitle: '¿Listo para Transformar su Experiencia de Enfriamiento?',
@@ -96,6 +98,7 @@ const getPageTexts = (locale: string) => {
         outdoor: { title: 'Ventilateurs à Brume Extérieurs', desc: 'Refroidissement puissant pour les espaces extérieurs' },
         viewDetails: 'Voir les Détails',
         featuredProductsTitle: 'Produits Phares',
+        viewAllProducts: 'Voir Tous les Produits',
         partnersTitle: 'Fait Confiance par des Partenaires du Monde Entier',
         partnersSubtitle: 'Plus de 50 pays et en croissance',
         ctaTitle: 'Prêt à Transformer Votre Expérience de Refroidissement?',
@@ -128,6 +131,7 @@ const getPageTexts = (locale: string) => {
         outdoor: { title: 'Außen-Nebelventilatoren', desc: 'Leistungsstarke Kühlung für Außenbereiche' },
         viewDetails: 'Details Ansehen',
         featuredProductsTitle: 'Ausgewählte Produkte',
+        viewAllProducts: 'Alle Produkte Ansehen',
         partnersTitle: 'Von Partnern Weltweit Vertraut',
         partnersSubtitle: '50+ Länder und wachsend',
         ctaTitle: 'Bereit, Ihre Kühlerfahrung zu Transformieren?',
@@ -160,6 +164,7 @@ const getPageTexts = (locale: string) => {
         outdoor: { title: 'مراوح الضباب الخارجية', desc: 'تبريد قوي للمساحات الخارجية' },
         viewDetails: 'عرض التفاصيل',
         featuredProductsTitle: 'المنتجات المميزة',
+        viewAllProducts: 'عرض جميع المنتجات',
         partnersTitle: 'موثوق من قبل شركاء حول العالم',
         partnersSubtitle: 'أكثر من 50 دولة وينمو',
         ctaTitle: 'جاهز لتحويل تجربة التبريد لديك؟',
@@ -192,6 +197,7 @@ const getPageTexts = (locale: string) => {
         outdoor: { title: 'Outdoor Mist Fans', desc: 'Powerful cooling for outdoor spaces' },
         viewDetails: 'View Details',
         featuredProductsTitle: 'Featured Products',
+        viewAllProducts: 'View All Products',
         partnersTitle: 'Trusted by Partners Worldwide',
         partnersSubtitle: '50+ countries and growing',
         ctaTitle: 'Ready to Transform Your Cooling Experience?',
@@ -418,9 +424,18 @@ const FeaturedProductsSection = () => {
     <section className="py-24 lg:py-32 bg-background">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <FadeIn>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-4">
-            {texts.featuredProductsTitle}
-          </h2>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
+              {texts.featuredProductsTitle}
+            </h2>
+            <Link
+              href={`/${locale}/products/ac-mist-fans`}
+              className="mt-4 sm:mt-0 text-primary hover:text-primary/80 font-medium flex items-center gap-2 transition-colors"
+            >
+              {texts.viewAllProducts}
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
         </FadeIn>
 
         <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
