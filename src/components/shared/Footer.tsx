@@ -9,6 +9,7 @@ const getFooterTexts = (locale: string) => {
       return {
         tagline: '中国领先的喷雾风扇技术专家，为全球提供创新的冷却解决方案。',
         products: '产品中心',
+        allProducts: '全部产品',
         company: '公司信息',
         contact: '联系我们',
         acMistFans: '交流电喷雾风扇',
@@ -24,6 +25,7 @@ const getFooterTexts = (locale: string) => {
       return {
         tagline: 'El especialista líder de China en tecnología de ventiladores de nebulización, proporcionando soluciones de enfriamiento innovadoras en todo el mundo.',
         products: 'Productos',
+        allProducts: 'Todos los Productos',
         company: 'Empresa',
         contact: 'Contacto',
         acMistFans: 'Ventiladores de Nebulización AC',
@@ -39,6 +41,7 @@ const getFooterTexts = (locale: string) => {
       return {
         tagline: 'Le spécialiste leader en technologie de ventilateurs à brume en Chine, fournissant des solutions de refroidissement innovantes dans le monde entier.',
         products: 'Produits',
+        allProducts: 'Tous les Produits',
         company: 'Entreprise',
         contact: 'Contact',
         acMistFans: 'Ventilateurs à Brume AC',
@@ -54,6 +57,7 @@ const getFooterTexts = (locale: string) => {
       return {
         tagline: 'Der führende Spezialist für Nebelventilatortechnologie in China, der innovative Kühlösungen weltweit bereitstellt.',
         products: 'Produkte',
+        allProducts: 'Alle Produkte',
         company: 'Unternehmen',
         contact: 'Kontakt',
         acMistFans: 'AC-Nebelventilatoren',
@@ -69,6 +73,7 @@ const getFooterTexts = (locale: string) => {
       return {
         tagline: 'المتخصص الرائد في الصين في تكنولوجيا مراوح الضباب، يوفر حلول تبريد مبتكرة حول العالم.',
         products: 'المنتجات',
+        allProducts: 'جميع المنتجات',
         company: 'الشركة',
         contact: 'اتصل بنا',
         acMistFans: 'مراوح الضباب AC',
@@ -84,6 +89,7 @@ const getFooterTexts = (locale: string) => {
       return {
         tagline: "China's leading specialist in mist fan technology, providing innovative cooling solutions worldwide.",
         products: 'Products',
+        allProducts: 'All Products',
         company: 'Company',
         contact: 'Contact',
         acMistFans: 'AC Mist Fans',
@@ -105,6 +111,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const productLinks = [
+    { label: texts.allProducts, href: `/${locale}/products` },
     { label: texts.acMistFans, href: `/${locale}/products/ac-mist-fans` },
     { label: texts.dcMistFans, href: `/${locale}/products/dc-mist-fans` },
     { label: texts.outdoorMistFans, href: `/${locale}/products/outdoor-mist-fans` },

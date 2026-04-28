@@ -429,7 +429,7 @@ const FeaturedProductsSection = () => {
               {texts.featuredProductsTitle}
             </h2>
             <Link
-              href={`/${locale}/products/ac-mist-fans`}
+              href={`/${locale}/products`}
               className="mt-4 sm:mt-0 text-primary hover:text-primary/80 font-medium flex items-center gap-2 transition-colors"
             >
               {texts.viewAllProducts}

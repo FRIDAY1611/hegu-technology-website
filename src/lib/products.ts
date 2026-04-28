@@ -598,3 +598,7 @@ export function getProductsBySeries(series: "AC" | "DC" | "Outdoor" | "Industria
 export function getFeaturedProducts(): Product[] {
   return products.filter(p => p.isFeatured);
 }
+
+export function getAllProducts(): Product[] {
+  return products;
+}
