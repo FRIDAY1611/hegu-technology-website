@@ -477,20 +477,56 @@ const CertificationsSection = () => {
   const locale = params.locale as string;
   const texts = getPageTexts(locale);
 
-  // 工厂资质数据
-  const factoryQualifications = [
-    { name: 'ISO 9001', description: 'Quality Management System' },
-    { name: 'ISO 14001', description: 'Environmental Management' },
-    { name: 'BSCI', description: 'Business Social Compliance' },
-    { name: 'Sedex', description: 'Ethical Trade Audit' }
-  ];
-
-  // 产品认证数据
-  const productCertifications = [
-    { name: 'CE', description: 'European Conformity' },
-    { name: 'ETL', description: 'Electrical Testing Labs' },
-    { name: 'RoHS', description: 'Restriction of Hazardous Substances' },
-    { name: 'FCC', description: 'Federal Communications Commission' }
+  // 所有资质认证数据
+  const allCertifications = [
+    { 
+      name: 'ISO 9001', 
+      description: 'Quality Management System',
+      gradient: 'from-blue-500 to-blue-600',
+      icon: 'quality'
+    },
+    { 
+      name: 'ISO 14001', 
+      description: 'Environmental Management',
+      gradient: 'from-green-500 to-emerald-600',
+      icon: 'environment'
+    },
+    { 
+      name: 'BSCI', 
+      description: 'Business Social Compliance',
+      gradient: 'from-purple-500 to-violet-600',
+      icon: 'social'
+    },
+    { 
+      name: 'Sedex', 
+      description: 'Ethical Trade Audit',
+      gradient: 'from-orange-500 to-amber-600',
+      icon: 'audit'
+    },
+    { 
+      name: 'CE', 
+      description: 'European Conformity',
+      gradient: 'from-sky-500 to-cyan-600',
+      icon: 'certificate'
+    },
+    { 
+      name: 'ETL', 
+      description: 'Electrical Testing Labs',
+      gradient: 'from-rose-500 to-pink-600',
+      icon: 'electrical'
+    },
+    { 
+      name: 'RoHS', 
+      description: 'Restriction of Hazardous Substances',
+      gradient: 'from-teal-500 to-cyan-600',
+      icon: 'safety'
+    },
+    { 
+      name: 'FCC', 
+      description: 'Federal Communications Commission',
+      gradient: 'from-indigo-500 to-purple-600',
+      icon: 'communication'
+    }
   ];
 
   return (
@@ -507,56 +543,76 @@ const CertificationsSection = () => {
           </div>
         </FadeIn>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* 工厂资质 */}
-          <FadeIn>
-            <div className="bg-muted/30 rounded-3xl p-8 lg:p-10">
-              <h3 className="text-xl font-semibold mb-8 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                  </svg>
-                </div>
-                {texts.factoryQualifications}
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {factoryQualifications.map((cert, index) => (
-                  <div
-                    key={index}
-                    className="bg-card border border-border rounded-2xl p-5 hover:border-primary/50 hover:shadow-md transition-all"
-                  >
-                    <div className="font-semibold text-foreground">{cert.name}</div>
-                    <div className="text-sm text-muted-foreground mt-1">{cert.description}</div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {allCertifications.map((cert, index) => (
+            <FadeIn key={index} delay={index * 0.08}>
+              <div className="group">
+                <div className={`relative overflow-hidden rounded-3xl bg-gradient-to-br ${cert.gradient} p-6 lg:p-8 aspect-square shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2`}>
+                  {/* 背景装饰 */}
+                  <div className="absolute inset-0 opacity-10">
+                    <svg className="w-full h-full" viewBox="0 0 100 100">
+                      <circle cx="80" cy="20" r="40" fill="white" />
+                      <circle cx="20" cy="80" r="30" fill="white" />
+                    </svg>
                   </div>
-                ))}
-              </div>
-            </div>
-          </FadeIn>
-
-          {/* 产品认证 */}
-          <FadeIn delay={0.1}>
-            <div className="bg-muted/30 rounded-3xl p-8 lg:p-10">
-              <h3 className="text-xl font-semibold mb-8 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                  </svg>
-                </div>
-                {texts.productCertifications}
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {productCertifications.map((cert, index) => (
-                  <div
-                    key={index}
-                    className="bg-card border border-border rounded-2xl p-5 hover:border-primary/50 hover:shadow-md transition-all"
-                  >
-                    <div className="font-semibold text-foreground">{cert.name}</div>
-                    <div className="text-sm text-muted-foreground mt-1">{cert.description}</div>
+                  
+                  {/* 图标 */}
+                  <div className="relative z-10 w-14 h-14 lg:w-16 lg:h-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                    {cert.icon === 'quality' && (
+                      <svg className="w-7 h-7 lg:w-8 lg:h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 01-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                      </svg>
+                    )}
+                    {cert.icon === 'environment' && (
+                      <svg className="w-7 h-7 lg:w-8 lg:h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    )}
+                    {cert.icon === 'social' && (
+                      <svg className="w-7 h-7 lg:w-8 lg:h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                      </svg>
+                    )}
+                    {cert.icon === 'audit' && (
+                      <svg className="w-7 h-7 lg:w-8 lg:h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                      </svg>
+                    )}
+                    {cert.icon === 'certificate' && (
+                      <svg className="w-7 h-7 lg:w-8 lg:h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                      </svg>
+                    )}
+                    {cert.icon === 'electrical' && (
+                      <svg className="w-7 h-7 lg:w-8 lg:h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    )}
+                    {cert.icon === 'safety' && (
+                      <svg className="w-7 h-7 lg:w-8 lg:h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                      </svg>
+                    )}
+                    {cert.icon === 'communication' && (
+                      <svg className="w-7 h-7 lg:w-8 lg:h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
+                      </svg>
+                    )}
                   </div>
-                ))}
+                  
+                  {/* 内容 */}
+                  <div className="relative z-10">
+                    <h3 className="text-lg lg:text-xl font-bold text-white mb-1">
+                      {cert.name}
+                    </h3>
+                    <p className="text-sm text-white/80 leading-relaxed">
+                      {cert.description}
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </FadeIn>
+            </FadeIn>
+          ))}
         </div>
       </div>
     </section>
