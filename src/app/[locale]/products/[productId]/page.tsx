@@ -11,7 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { FadeIn } from '@/components/shared/FadeIn';
-import { getProductById, products, Product } from '@/lib/products';
+import { useProducts } from '@/contexts/ProductsContext';
 
 const FeatureIcon = ({ feature }: { feature: string }) => {
   const iconMap: Record<string, React.ReactNode> = {
@@ -42,18 +42,27 @@ export default function ProductDetailPage() {
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
 
-  const product = getProductById(productId);
+  const { getProduct, products } = useProducts();
+  const product = getProduct(productId);
   
   if (!product) {
     return (
       <div className="pt-32 pb-24 min-h-screen">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-          <h1 className="text-4xl font-bold mb-4">{isZh ? '产品未找到' : 'Product Not Found'}</h1>
-          <Button asChild>
-            <Link href={`/${locale}/products/ac-mist-fans`}>
-              {isZh ? '返回产品' : 'Back to Products'}
+          <Button variant="ghost" className="mb-8 -ml-2" asChild>
+            <Link href={`/${locale}/products`}>
+              <ArrowLeft className="mr-2 w-4 h-4" />
+              {isZh ? '返回产品列表' : 'Back to Products'}
             </Link>
           </Button>
+          <div className="py-16">
+            <h2 className="text-2xl font-bold mb-4">
+              {isZh ? '产品未找到' : 'Product Not Found'}
+            </h2>
+            <p className="text-muted-foreground mb-8">
+              {isZh ? '您访问的产品不存在' : 'The product you are looking for does not exist'}
+            </p>
+          </div>
         </div>
       </div>
     );
@@ -63,7 +72,7 @@ export default function ProductDetailPage() {
   const description = product.description[locale as 'en' | 'zh'];
   const seriesName = product.seriesName[locale as 'en' | 'zh'];
 
-  const relatedProducts = products.filter(p => p.series === product.series && p.id !== product.id).slice(0, 3);
+  const relatedProducts = products.filter((p: any) => p.series === product.series && p.id !== product.id).slice(0, 3);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -156,9 +165,9 @@ export default function ProductDetailPage() {
                     if (value && value !== 'N/A') {
                       const label = specLabels[key] || key;
                       return (
-                        <div key={key} className="flex justify-between py-2 border-b border-border">
+                        <div key={key} className="flex justify-between py-2 border-b border-border last:border-0">
                           <span className="text-muted-foreground">{label}</span>
-                          <span className="font-medium">{typeof value === 'boolean' ? (value ? (isZh ? '是' : 'Yes') : (isZh ? '否' : 'No')) : value}</span>
+                          <span className="font-medium">{value}</span>
                         </div>
                       );
                     }
@@ -167,210 +176,202 @@ export default function ProductDetailPage() {
                 </div>
               </div>
 
-              <div className="mb-8">
-                <h3 className="text-lg font-semibold mb-4">{isZh ? '功能特点' : 'Features'}</h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  {product.features.map((feature) => (
-                    <div key={feature} className="flex items-center space-x-2 p-3 bg-muted rounded-xl">
-                      <div className="text-primary">
-                        <FeatureIcon feature={feature} />
-                      </div>
-                      <span className="text-sm">{featureLabels[feature] || feature}</span>
-                    </div>
-                  ))}
-                </div>
+              <div className="flex gap-4">
+                <Button size="lg" className="rounded-full flex-1" onClick={() => setIsQuoteDialogOpen(true)}>
+                  {isZh ? '获取报价' : 'Get Quote'}
+                </Button>
+                <Button variant="ghost" size="lg" className="rounded-full" asChild>
+                  <Link href={`/${locale}/contact`}>
+                    {isZh ? '联系我们' : 'Contact Us'}
+                  </Link>
+                </Button>
               </div>
-
-              <Button size="lg" className="rounded-full w-full sm:w-auto" onClick={() => setIsQuoteDialogOpen(true)}>
-                {isZh ? '获取报价' : 'Request Quote'}
-              </Button>
             </div>
           </FadeIn>
         </div>
 
-        <FadeIn>
-          <div className="mb-20">
-            <h2 className="text-2xl md:text-3xl font-bold mb-8">{isZh ? '包装信息' : 'Packing Information'}</h2>
-            <Card className="overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-muted">
-                    <tr>
-                      <th className="px-6 py-4 text-left text-sm font-semibold">{isZh ? '集装箱' : 'Container'}</th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold">{isZh ? '数量' : 'Quantity'}</th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold">{isZh ? '纸箱尺寸' : 'Carton Size'}</th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold">{isZh ? '毛重' : 'G.W'}</th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold">{isZh ? '净重' : 'N.W'}</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-border">
-                    <tr>
-                      <td className="px-6 py-4 font-medium">20GP</td>
-                      <td className="px-6 py-4">{product.packingInfo['20GP']} pcs</td>
-                      <td className="px-6 py-4">{product.packingInfo.cartonSize}</td>
-                      <td className="px-6 py-4">{product.packingInfo.grossWeight}</td>
-                      <td className="px-6 py-4">{product.packingInfo.netWeight}</td>
-                    </tr>
-                    <tr>
-                      <td className="px-6 py-4 font-medium">40GP</td>
-                      <td className="px-6 py-4">{product.packingInfo['40GP']} pcs</td>
-                      <td className="px-6 py-4">{product.packingInfo.cartonSize}</td>
-                      <td className="px-6 py-4">{product.packingInfo.grossWeight}</td>
-                      <td className="px-6 py-4">{product.packingInfo.netWeight}</td>
-                    </tr>
-                    <tr>
-                      <td className="px-6 py-4 font-medium">40HQ</td>
-                      <td className="px-6 py-4">{product.packingInfo['40HQ']} pcs</td>
-                      <td className="px-6 py-4">{product.packingInfo.cartonSize}</td>
-                      <td className="px-6 py-4">{product.packingInfo.grossWeight}</td>
-                      <td className="px-6 py-4">{product.packingInfo.netWeight}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </Card>
-          </div>
-        </FadeIn>
+        {/* Features Section */}
+        {product.features.length > 0 && (
+          <section className="mb-20">
+            <FadeIn>
+              <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+                {isZh ? '核心功能' : 'Key Features'}
+              </h2>
+            </FadeIn>
 
-        {relatedProducts.length > 0 && (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              {product.features.map((feature, index) => (
+                <FadeIn key={feature} delay={index * 0.1}>
+                  <Card className="p-6 text-center hover:shadow-lg transition-shadow">
+                    <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
+                      <FeatureIcon feature={feature} />
+                    </div>
+                    <p className="font-medium">{featureLabels[feature] || feature}</p>
+                  </Card>
+                </FadeIn>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Packing Info Section */}
+        <section className="mb-20">
           <FadeIn>
-            <div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-8">{isZh ? '相关产品' : 'Related Products'}</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {relatedProducts.map((relatedProduct, index) => (
-                  <ProductCard key={relatedProduct.id} product={relatedProduct} index={index} />
-                ))}
-              </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+              {isZh ? '包装信息' : 'Packing Information'}
+            </h2>
+          </FadeIn>
+
+          <FadeIn>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              <Card className="p-6 text-center">
+                <p className="text-4xl font-bold text-primary mb-2">
+                  {product.packingInfo['20GP']}
+                </p>
+                <p className="text-muted-foreground">20GP</p>
+              </Card>
+              <Card className="p-6 text-center">
+                <p className="text-4xl font-bold text-primary mb-2">
+                  {product.packingInfo['40GP']}
+                </p>
+                <p className="text-muted-foreground">40GP</p>
+              </Card>
+              <Card className="p-6 text-center">
+                <p className="text-4xl font-bold text-primary mb-2">
+                  {product.packingInfo['40HQ']}
+                </p>
+                <p className="text-muted-foreground">40HQ</p>
+              </Card>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Card className="p-4">
+                <p className="text-sm text-muted-foreground mb-1">{isZh ? '外箱尺寸' : 'Carton Size'}</p>
+                <p className="font-medium">{product.packingInfo.cartonSize}</p>
+              </Card>
+              <Card className="p-4">
+                <p className="text-sm text-muted-foreground mb-1">{isZh ? '毛重' : 'Gross Weight'}</p>
+                <p className="font-medium">{product.packingInfo.grossWeight}</p>
+              </Card>
+              <Card className="p-4">
+                <p className="text-sm text-muted-foreground mb-1">{isZh ? '净重' : 'Net Weight'}</p>
+                <p className="font-medium">{product.packingInfo.netWeight}</p>
+              </Card>
             </div>
           </FadeIn>
+        </section>
+
+        {/* Related Products */}
+        {relatedProducts.length > 0 && (
+          <section>
+            <FadeIn>
+              <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+                {isZh ? '相关产品' : 'Related Products'}
+              </h2>
+            </FadeIn>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {relatedProducts.map((relatedProduct: any, index: number) => (
+                <FadeIn key={relatedProduct.id} delay={index * 0.15}>
+                  <Link href={`/${locale}/products/${relatedProduct.id}`}>
+                    <Card className="overflow-hidden h-full group hover:shadow-xl transition-all duration-300">
+                      <div className="aspect-square bg-muted/30 flex items-center justify-center">
+                        <div className="text-center">
+                          <p className="text-lg font-semibold text-primary">{relatedProduct.model}</p>
+                        </div>
+                      </div>
+                      <div className="p-6">
+                        <span className="inline-block px-2 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full mb-2">
+                          {relatedProduct.seriesName[locale as 'en' | 'zh']}
+                        </span>
+                        <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
+                          {relatedProduct.model}
+                        </h3>
+                        <p className="text-muted-foreground text-sm line-clamp-2">
+                          {relatedProduct.description[locale as 'en' | 'zh']}
+                        </p>
+                      </div>
+                    </Card>
+                  </Link>
+                </FadeIn>
+              ))}
+            </div>
+          </section>
         )}
       </div>
 
+      {/* Quote Dialog */}
       <Dialog open={isQuoteDialogOpen} onOpenChange={setIsQuoteDialogOpen}>
-        <DialogContent className="sm:max-w-lg">
+        <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>{isZh ? '获取报价' : 'Request Quote'}</DialogTitle>
+            <DialogTitle>
+              {isZh ? '获取报价' : 'Get Quote'}
+            </DialogTitle>
             <DialogDescription>
-              {isZh ? `为 ${product.model} 获取报价` : `Request a quote for ${product.model}`}
+              {isZh 
+                ? '填写以下信息，我们的团队将尽快与您联系。' 
+                : 'Fill out the form below and our team will contact you shortly.'}
             </DialogDescription>
           </DialogHeader>
-          
+
           {formSubmitted ? (
             <div className="text-center py-8">
               <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-100 flex items-center justify-center">
                 <Check className="w-8 h-8 text-green-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">{isZh ? '感谢您！' : 'Thank you!'}</h3>
-              <p className="text-muted-foreground">{isZh ? '您的报价请求已成功提交。' : 'Your quote request has been submitted successfully.'}</p>
+              <h3 className="text-xl font-semibold mb-2">
+                {isZh ? '感谢您的咨询！' : 'Thank you for your inquiry!'}
+              </h3>
+              <p className="text-muted-foreground">
+                {isZh 
+                  ? '我们将在24小时内与您联系。' 
+                  : 'We will get back to you within 24 hours.'}
+              </p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-2">{isZh ? '姓名' : 'Name'}</label>
                 <Input
                   required
+                  placeholder={isZh ? '您的姓名' : 'Your Name'}
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder={isZh ? '您的姓名' : 'Your name'}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">{isZh ? '邮箱' : 'Email'}</label>
                 <Input
                   required
                   type="email"
+                  placeholder={isZh ? '邮箱地址' : 'Email Address'}
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  placeholder="your@email.com"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">{isZh ? '公司' : 'Company'}</label>
                 <Input
+                  placeholder={isZh ? '公司名称' : 'Company Name'}
                   value={formData.company}
                   onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                  placeholder={isZh ? '您的公司' : 'Your company'}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">{isZh ? '留言' : 'Message'}</label>
                 <Textarea
                   required
+                  placeholder={isZh ? '请告诉我们您的需求...' : 'Tell us about your requirements...'}
+                  rows={4}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder={isZh ? '告诉我们您的需求...' : 'Tell us about your requirements...'}
-                  rows={4}
                 />
               </div>
-              <Button type="submit" className="w-full rounded-full">
-                {isZh ? '发送报价请求' : 'Send Quote Request'}
-              </Button>
+              <div className="pt-4">
+                <Button type="submit" className="w-full">
+                  {isZh ? '发送' : 'Send'}
+                </Button>
+              </div>
             </form>
           )}
         </DialogContent>
       </Dialog>
     </div>
-  );
-}
-
-// 添加 ProductCard 组件的简化版本以避免导入问题
-function ProductCard({ product, index = 0 }: { product: Product; index?: number }) {
-  const params = useParams();
-  const locale = params.locale as string;
-  const isZh = locale === 'zh';
-
-  const description = product.description[locale as 'en' | 'zh'];
-
-  return (
-    <FadeIn delay={index * 0.1}>
-      <Link href={`/${locale}/products/${product.id}`}>
-        <motion.div
-          whileHover={{ y: -8 }}
-          transition={{ duration: 0.3, ease: 'easeOut' }}
-        >
-          <Card className="overflow-hidden h-full bg-card hover:shadow-xl transition-shadow duration-300">
-            <div className="aspect-[4/3] bg-muted relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-muted-foreground/10 flex items-center justify-center">
-                    <svg className="w-8 h-8 text-muted-foreground/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <p className="text-xs text-muted-foreground/40 font-medium">{product.model}</p>
-                </div>
-              </div>
-              <div className="absolute top-3 right-3">
-                <span className="px-2.5 py-1 text-xs font-medium bg-background/80 backdrop-blur-sm rounded-full text-muted-foreground">
-                  {product.model}
-                </span>
-              </div>
-            </div>
-            
-            <div className="p-6">
-              <h3 className="text-lg font-semibold text-foreground mb-2">
-                {product.model}
-              </h3>
-              <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                {description}
-              </p>
-              
-              <div className="flex flex-wrap gap-2 mb-4">
-                <span className="text-xs px-2 py-1 bg-muted rounded-md text-muted-foreground">
-                  {product.specs.wattage}
-                </span>
-                <span className="text-xs px-2 py-1 bg-muted rounded-md text-muted-foreground">
-                  {product.specs.waterCapacity}
-                </span>
-              </div>
-              
-              <Button variant="default" className="w-full rounded-full">
-                {isZh ? '查看详情' : 'View Details'}
-              </Button>
-            </div>
-          </Card>
-        </motion.div>
-      </Link>
-    </FadeIn>
   );
 }

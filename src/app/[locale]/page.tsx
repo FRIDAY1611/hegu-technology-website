@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { FadeIn } from '@/components/shared/FadeIn';
 import ProductCard from '@/components/shared/ProductCard';
-import { getFeaturedProducts } from '@/lib/products';
+import { useProducts } from '@/contexts/ProductsContext';
 import { useSettings } from '@/contexts/SettingsContext';
 
 const getPageTexts = (locale: string) => {
@@ -467,6 +467,7 @@ const FeaturedProductsSection = () => {
   const params = useParams();
   const locale = params.locale as string;
   const texts = getPageTexts(locale);
+  const { getFeaturedProducts } = useProducts();
   const featuredProducts = getFeaturedProducts();
 
   return (

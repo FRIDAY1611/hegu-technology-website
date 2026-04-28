@@ -56,7 +56,8 @@ export interface Product {
   createdAt: Date;
 }
 
-export const products: Product[] = [
+// 默认产品数据（硬编码）
+const defaultProducts: Product[] = [
   {
     id: "lb-fs09m",
     model: "LB-FS09M",
@@ -587,18 +588,51 @@ export const products: Product[] = [
   }
 ];
 
+// 从localStorage读取产品数据的函数
+function loadProducts(): Product[] {
+  if (typeof window === 'undefined') {
+    return defaultProducts;
+  }
+  
+  const stored = localStorage.getItem('hegu_admin_products');
+  if (stored) {
+    try {
+      const parsed = JSON.parse(stored, (key, value) => {
+        if (key === 'createdAt') {
+          return new Date(value);
+        }
+        return value;
+      });
+      return parsed;
+    } catch (error) {
+      console.error('解析产品数据失败:', error);
+      return defaultProducts;
+    }
+  }
+  return defaultProducts;
+}
+
+// 当前产品数据（优先从localStorage读取）
+let currentProducts: Product[] = typeof window !== 'undefined' ? loadProducts() : defaultProducts;
+
+// 导出当前产品数据
+export const products: Product[] = currentProducts;
+
 export function getProductById(id: string): Product | undefined {
-  return products.find(p => p.id === id);
+  const productsToUse = typeof window !== 'undefined' ? loadProducts() : defaultProducts;
+  return productsToUse.find(p => p.id === id);
 }
 
 export function getProductsBySeries(series: "AC" | "DC" | "Outdoor" | "Industrial"): Product[] {
-  return products.filter(p => p.series === series);
+  const productsToUse = typeof window !== 'undefined' ? loadProducts() : defaultProducts;
+  return productsToUse.filter(p => p.series === series);
 }
 
 export function getFeaturedProducts(): Product[] {
-  return products.filter(p => p.isFeatured);
+  const productsToUse = typeof window !== 'undefined' ? loadProducts() : defaultProducts;
+  return productsToUse.filter(p => p.isFeatured);
 }
 
 export function getAllProducts(): Product[] {
-  return products;
+  return typeof window !== 'undefined' ? loadProducts() : defaultProducts;
 }

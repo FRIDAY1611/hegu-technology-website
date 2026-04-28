@@ -179,6 +179,10 @@ export function updateProduct(id: string, updates: Partial<Product>): boolean {
   if (index !== -1) {
     products[index] = { ...products[index], ...updates };
     localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(products));
+    
+    // 触发产品数据更新事件
+    window.dispatchEvent(new CustomEvent('productsUpdated'));
+    
     return true;
   }
   return false;
