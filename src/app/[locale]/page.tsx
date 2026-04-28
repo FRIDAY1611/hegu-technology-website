@@ -33,6 +33,10 @@ const getPageTexts = (locale: string) => {
         viewDetails: '查看详情',
         featuredProductsTitle: '精选产品',
         viewAllProducts: '查看全部产品',
+        certificationsTitle: '工厂资质与产品认证',
+        certificationsSubtitle: '严格的质量控制，完善的认证体系',
+        factoryQualifications: '工厂资质',
+        productCertifications: '产品认证',
         partnersTitle: '全球合作伙伴信赖之选',
         partnersSubtitle: '覆盖50多个国家，持续增长中',
         ctaTitle: '准备好改变您的冷却体验了吗？',
@@ -66,6 +70,10 @@ const getPageTexts = (locale: string) => {
         viewDetails: 'Ver Detalles',
         featuredProductsTitle: 'Productos Destacados',
         viewAllProducts: 'Ver Todos los Productos',
+        certificationsTitle: 'Calificaciones de Fábrica y Certificaciones de Productos',
+        certificationsSubtitle: 'Control de calidad estricto, sistema de certificación completo',
+        factoryQualifications: 'Calificaciones de Fábrica',
+        productCertifications: 'Certificaciones de Productos',
         partnersTitle: 'Confiado por Socios en Todo el Mundo',
         partnersSubtitle: 'Más de 50 países y creciendo',
         ctaTitle: '¿Listo para Transformar su Experiencia de Enfriamiento?',
@@ -99,6 +107,10 @@ const getPageTexts = (locale: string) => {
         viewDetails: 'Voir les Détails',
         featuredProductsTitle: 'Produits Phares',
         viewAllProducts: 'Voir Tous les Produits',
+        certificationsTitle: 'Qualifications d\'Usine et Certifications de Produits',
+        certificationsSubtitle: 'Contrôle de qualité strict, système de certification complet',
+        factoryQualifications: 'Qualifications d\'Usine',
+        productCertifications: 'Certifications de Produits',
         partnersTitle: 'Fait Confiance par des Partenaires du Monde Entier',
         partnersSubtitle: 'Plus de 50 pays et en croissance',
         ctaTitle: 'Prêt à Transformer Votre Expérience de Refroidissement?',
@@ -132,6 +144,10 @@ const getPageTexts = (locale: string) => {
         viewDetails: 'Details Ansehen',
         featuredProductsTitle: 'Ausgewählte Produkte',
         viewAllProducts: 'Alle Produkte Ansehen',
+        certificationsTitle: 'Werkzeugqualifikationen und Produktzertifizierungen',
+        certificationsSubtitle: 'Strenge Qualitätskontrolle, umfassendes Zertifizierungssystem',
+        factoryQualifications: 'Werkzeugqualifikationen',
+        productCertifications: 'Produktzertifizierungen',
         partnersTitle: 'Von Partnern Weltweit Vertraut',
         partnersSubtitle: '50+ Länder und wachsend',
         ctaTitle: 'Bereit, Ihre Kühlerfahrung zu Transformieren?',
@@ -165,6 +181,10 @@ const getPageTexts = (locale: string) => {
         viewDetails: 'عرض التفاصيل',
         featuredProductsTitle: 'المنتجات المميزة',
         viewAllProducts: 'عرض جميع المنتجات',
+        certificationsTitle: 'مؤهلات المصنع وشهادات المنتجات',
+        certificationsSubtitle: 'رقابة جودة صارمة، نظام شهادة كامل',
+        factoryQualifications: 'مؤهلات المصنع',
+        productCertifications: 'شهادات المنتجات',
         partnersTitle: 'موثوق من قبل شركاء حول العالم',
         partnersSubtitle: 'أكثر من 50 دولة وينمو',
         ctaTitle: 'جاهز لتحويل تجربة التبريد لديك؟',
@@ -198,6 +218,10 @@ const getPageTexts = (locale: string) => {
         viewDetails: 'View Details',
         featuredProductsTitle: 'Featured Products',
         viewAllProducts: 'View All Products',
+        certificationsTitle: 'Factory Qualifications & Product Certifications',
+        certificationsSubtitle: 'Strict quality control, comprehensive certification system',
+        factoryQualifications: 'Factory Qualifications',
+        productCertifications: 'Product Certifications',
         partnersTitle: 'Trusted by Partners Worldwide',
         partnersSubtitle: '50+ countries and growing',
         ctaTitle: 'Ready to Transform Your Cooling Experience?',
@@ -448,6 +472,97 @@ const FeaturedProductsSection = () => {
   );
 };
 
+const CertificationsSection = () => {
+  const params = useParams();
+  const locale = params.locale as string;
+  const texts = getPageTexts(locale);
+
+  // 工厂资质数据
+  const factoryQualifications = [
+    { name: 'ISO 9001', description: 'Quality Management System' },
+    { name: 'ISO 14001', description: 'Environmental Management' },
+    { name: 'BSCI', description: 'Business Social Compliance' },
+    { name: 'Sedex', description: 'Ethical Trade Audit' }
+  ];
+
+  // 产品认证数据
+  const productCertifications = [
+    { name: 'CE', description: 'European Conformity' },
+    { name: 'ETL', description: 'Electrical Testing Labs' },
+    { name: 'RoHS', description: 'Restriction of Hazardous Substances' },
+    { name: 'FCC', description: 'Federal Communications Commission' }
+  ];
+
+  return (
+    <section id="certifications-section" className="py-24 lg:py-32 bg-background">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <FadeIn>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+              {texts.certificationsTitle}
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              {texts.certificationsSubtitle}
+            </p>
+          </div>
+        </FadeIn>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* 工厂资质 */}
+          <FadeIn>
+            <div className="bg-muted/30 rounded-3xl p-8 lg:p-10">
+              <h3 className="text-xl font-semibold mb-8 flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                  <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                </div>
+                {texts.factoryQualifications}
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {factoryQualifications.map((cert, index) => (
+                  <div
+                    key={index}
+                    className="bg-card border border-border rounded-2xl p-5 hover:border-primary/50 hover:shadow-md transition-all"
+                  >
+                    <div className="font-semibold text-foreground">{cert.name}</div>
+                    <div className="text-sm text-muted-foreground mt-1">{cert.description}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </FadeIn>
+
+          {/* 产品认证 */}
+          <FadeIn delay={0.1}>
+            <div className="bg-muted/30 rounded-3xl p-8 lg:p-10">
+              <h3 className="text-xl font-semibold mb-8 flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                  <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                  </svg>
+                </div>
+                {texts.productCertifications}
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {productCertifications.map((cert, index) => (
+                  <div
+                    key={index}
+                    className="bg-card border border-border rounded-2xl p-5 hover:border-primary/50 hover:shadow-md transition-all"
+                  >
+                    <div className="font-semibold text-foreground">{cert.name}</div>
+                    <div className="text-sm text-muted-foreground mt-1">{cert.description}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const PartnersSection = () => {
   const params = useParams();
   const locale = params.locale as string;
@@ -681,6 +796,7 @@ export default function HomePage() {
       <AdvantagesSection />
       <ProductSeriesSection />
       <FeaturedProductsSection />
+      <CertificationsSection />
       <PartnersSection />
       <ContactSection />
     </div>

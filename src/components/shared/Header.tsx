@@ -26,6 +26,17 @@ const Header = () => {
     }
   };
 
+  const handleCertificationsClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsMenuOpen(false);
+    const certificationsSection = document.getElementById('certifications-section');
+    if (certificationsSection) {
+      certificationsSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.location.href = `/${locale}#certifications-section`;
+    }
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -36,12 +47,12 @@ const Header = () => {
 
   const getNavLabel = () => {
     switch (locale) {
-      case 'zh': return { home: '首页', about: '关于我们', contact: '联系我们', products: '产品中心', allProducts: '全部产品' };
-      case 'es': return { home: 'Inicio', about: 'Sobre Nosotros', contact: 'Contacto', products: 'Productos', allProducts: 'Todos los Productos' };
-      case 'fr': return { home: 'Accueil', about: 'À Propos', contact: 'Contact', products: 'Produits', allProducts: 'Tous les Produits' };
-      case 'de': return { home: 'Startseite', about: 'Über Uns', contact: 'Kontakt', products: 'Produkte', allProducts: 'Alle Produkte' };
-      case 'ar': return { home: 'الرئيسية', about: 'من نحن', contact: 'اتصل بنا', products: 'المنتجات', allProducts: 'جميع المنتجات' };
-      default: return { home: 'Home', about: 'About', contact: 'Contact', products: 'Products', allProducts: 'All Products' };
+      case 'zh': return { home: '首页', about: '关于我们', contact: '联系我们', products: '产品中心', allProducts: '全部产品', certifications: '资质认证' };
+      case 'es': return { home: 'Inicio', about: 'Sobre Nosotros', contact: 'Contacto', products: 'Productos', allProducts: 'Todos los Productos', certifications: 'Certificaciones' };
+      case 'fr': return { home: 'Accueil', about: 'À Propos', contact: 'Contact', products: 'Produits', allProducts: 'Tous les Produits', certifications: 'Certifications' };
+      case 'de': return { home: 'Startseite', about: 'Über Uns', contact: 'Kontakt', products: 'Produkte', allProducts: 'Alle Produkte', certifications: 'Zertifizierungen' };
+      case 'ar': return { home: 'الرئيسية', about: 'من نحن', contact: 'اتصل بنا', products: 'المنتجات', allProducts: 'جميع المنتجات', certifications: 'الشهادات' };
+      default: return { home: 'Home', about: 'About', contact: 'Contact', products: 'Products', allProducts: 'All Products', certifications: 'Certifications' };
     }
   };
 
@@ -62,6 +73,7 @@ const Header = () => {
   const navItems = [
     { key: 'home', label: navLabel.home, href: `/${locale}` },
     { key: 'about', label: navLabel.about, href: `/${locale}/about` },
+    { key: 'certifications', label: navLabel.certifications, href: `/${locale}#certifications-section`, onClick: handleCertificationsClick },
     { key: 'contact', label: navLabel.contact, href: `/${locale}#contact-section`, onClick: handleContactClick }
   ];
 
