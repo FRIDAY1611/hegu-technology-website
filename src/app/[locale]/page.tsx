@@ -532,27 +532,27 @@ const CertificationsSection = () => {
           <FadeIn>
             <div className="relative h-full">
               <div className="absolute -inset-4 bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-3xl blur-2xl opacity-50"></div>
-              <div className="relative bg-card/80 backdrop-blur-xl border border-border/50 rounded-3xl p-8 lg:p-10 shadow-xl h-full">
+              <div className="relative bg-card/80 backdrop-blur-xl border border-border/50 rounded-3xl p-8 lg:p-10 shadow-xl flex flex-col h-full">
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-lg">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-lg shrink-0">
                     <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                     </svg>
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <h3 className="text-2xl lg:text-3xl font-bold text-green-600">
                       {texts.factoryQualifications}
                     </h3>
-                    <p className="text-sm text-muted-foreground mt-1">{texts.factoryQualificationsSub}</p>
+                    <p className="text-sm text-muted-foreground mt-1 line-clamp-1">{texts.factoryQualificationsSub}</p>
                   </div>
                 </div>
                 
-                <p className="text-muted-foreground mb-8 leading-relaxed">
+                <p className="text-muted-foreground mb-8 leading-relaxed min-h-[4.5rem]">
                   {texts.factoryQualificationsDesc}
                 </p>
 
                 {/* 认证标志 - 占位符 */}
-                <div className="grid grid-cols-4 gap-4 mb-10">
+                <div className="grid grid-cols-4 gap-4 mb-10 mt-auto">
                   {['factory-1', 'factory-2', 'factory-3', 'factory-4'].map((name, i) => (
                     <div key={i} className="aspect-square bg-muted/30 rounded-2xl flex items-center justify-center border border-dashed border-border hover:border-primary/50 hover:scale-105 transition-all cursor-pointer overflow-hidden">
                       {/* 后台替换：将这里换成 <img src="/certifications/{name}.png" alt={name} className="w-full h-full object-contain" /> */}
@@ -591,27 +591,27 @@ const CertificationsSection = () => {
           <FadeIn delay={0.1}>
             <div className="relative h-full">
               <div className="absolute -inset-4 bg-gradient-to-l from-blue-500/10 to-sky-500/10 rounded-3xl blur-2xl opacity-50"></div>
-              <div className="relative bg-card/80 backdrop-blur-xl border border-border/50 rounded-3xl p-8 lg:p-10 shadow-xl h-full">
+              <div className="relative bg-card/80 backdrop-blur-xl border border-border/50 rounded-3xl p-8 lg:p-10 shadow-xl flex flex-col h-full">
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center shadow-lg">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center shadow-lg shrink-0">
                     <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 01-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                     </svg>
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <h3 className="text-2xl lg:text-3xl font-bold text-sky-600">
                       {texts.productCertifications}
                     </h3>
-                    <p className="text-sm text-muted-foreground mt-1">{texts.productCertificationsSub}</p>
+                    <p className="text-sm text-muted-foreground mt-1 line-clamp-1">{texts.productCertificationsSub}</p>
                   </div>
                 </div>
                 
-                <p className="text-muted-foreground mb-8 leading-relaxed">
+                <p className="text-muted-foreground mb-8 leading-relaxed min-h-[4.5rem]">
                   {texts.productCertificationsDesc}
                 </p>
 
                 {/* 认证标志 - 占位符 */}
-                <div className="grid grid-cols-4 gap-4 mb-10">
+                <div className="grid grid-cols-4 gap-4 mb-10 mt-auto">
                   {['product-1', 'product-2', 'product-3', 'product-4'].map((name, i) => (
                     <div key={i} className="aspect-square bg-muted/30 rounded-2xl flex items-center justify-center border border-dashed border-border hover:border-primary/50 hover:scale-105 transition-all cursor-pointer overflow-hidden">
                       {/* 后台替换：将这里换成 <img src="/certifications/{name}.png" alt={name} className="w-full h-full object-contain" /> */}
