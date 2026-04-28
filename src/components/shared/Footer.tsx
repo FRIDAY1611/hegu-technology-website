@@ -12,6 +12,7 @@ const getFooterTexts = (locale: string) => {
         allProducts: '全部产品',
         company: '公司信息',
         contact: '联系我们',
+        admin: '后台管理',
         acMistFans: '交流电喷雾风扇',
         dcMistFans: '直流电喷雾风扇',
         outdoorMistFans: '户外喷雾风扇',
@@ -28,6 +29,7 @@ const getFooterTexts = (locale: string) => {
         allProducts: 'Todos los Productos',
         company: 'Empresa',
         contact: 'Contacto',
+        admin: 'Panel de Administración',
         acMistFans: 'Ventiladores de Nebulización AC',
         dcMistFans: 'Ventiladores de Nebulización DC',
         outdoorMistFans: 'Ventiladores de Nebulización Exteriores',
@@ -44,6 +46,7 @@ const getFooterTexts = (locale: string) => {
         allProducts: 'Tous les Produits',
         company: 'Entreprise',
         contact: 'Contact',
+        admin: 'Panneau d\'Administration',
         acMistFans: 'Ventilateurs à Brume AC',
         dcMistFans: 'Ventilateurs à Brume DC',
         outdoorMistFans: 'Ventilateurs à Brume Extérieurs',
@@ -60,6 +63,7 @@ const getFooterTexts = (locale: string) => {
         allProducts: 'Alle Produkte',
         company: 'Unternehmen',
         contact: 'Kontakt',
+        admin: 'Administrationspanel',
         acMistFans: 'AC-Nebelventilatoren',
         dcMistFans: 'DC-Nebelventilatoren',
         outdoorMistFans: 'Außen-Nebelventilatoren',
@@ -76,6 +80,7 @@ const getFooterTexts = (locale: string) => {
         allProducts: 'جميع المنتجات',
         company: 'الشركة',
         contact: 'اتصل بنا',
+        admin: 'لوحة الإدارة',
         acMistFans: 'مراوح الضباب AC',
         dcMistFans: 'مراوح الضباب DC',
         outdoorMistFans: 'مراوح الضباب الخارجية',
@@ -92,6 +97,7 @@ const getFooterTexts = (locale: string) => {
         allProducts: 'All Products',
         company: 'Company',
         contact: 'Contact',
+        admin: 'Admin Dashboard',
         acMistFans: 'AC Mist Fans',
         dcMistFans: 'DC Mist Fans',
         outdoorMistFans: 'Outdoor Mist Fans',
@@ -121,7 +127,8 @@ const Footer = () => {
   const companyLinks = [
     { label: texts.home, href: `/${locale}` },
     { label: texts.about, href: `/${locale}/about` },
-    { label: texts.contactLink, href: `/${locale}/contact` }
+    { label: texts.contactLink, href: `/${locale}/contact` },
+    { label: texts.admin, href: '/admin' }
   ];
 
   return (
