@@ -528,39 +528,34 @@ const CertificationsSection = () => {
                   We pride ourselves in providing reliable mist fan to ensure customer satisfaction.
                 </p>
 
-                {/* 认证标志 */}
+                {/* 认证标志 - 占位符 */}
                 <div className="grid grid-cols-4 gap-4 mb-10">
-                  {[
-                    { label: '中国', color: 'text-red-500', bg: 'bg-red-50' },
-                    { label: 'IP', color: 'text-blue-500', bg: 'bg-blue-50' },
-                    { label: 'ISO', color: 'text-sky-500', bg: 'bg-sky-50' },
-                    { label: 'BSCI', color: 'text-green-500', bg: 'bg-green-50' }
-                  ].map((item, i) => (
-                    <div key={i} className={`aspect-square ${item.bg} rounded-2xl flex items-center justify-center border border-border/50 hover:scale-105 transition-transform cursor-pointer`}>
-                      <span className={`font-bold ${item.color} ${item.label.length > 3 ? 'text-sm' : 'text-xl'}`}>
-                        {item.label}
-                      </span>
+                  {['factory-1', 'factory-2', 'factory-3', 'factory-4'].map((name, i) => (
+                    <div key={i} className="aspect-square bg-muted/30 rounded-2xl flex items-center justify-center border border-dashed border-border hover:border-primary/50 hover:scale-105 transition-all cursor-pointer overflow-hidden">
+                      {/* 后台替换：将这里换成 <img src="/certifications/{name}.png" alt={name} className="w-full h-full object-contain" /> */}
+                      <div className="text-center text-muted-foreground/50">
+                        <svg className="w-8 h-8 mx-auto mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <span className="text-xs">{name}</span>
+                      </div>
                     </div>
                   ))}
                 </div>
 
-                {/* 证书图片网格 */}
+                {/* 证书图片网格 - 占位符 */}
                 <div className="grid grid-cols-4 gap-3">
-                  {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                  {['cert-1', 'cert-2', 'cert-3', 'cert-4', 'cert-5', 'cert-6', 'cert-7', 'cert-8'].map((name, i) => (
                     <div
                       key={i}
-                      className="aspect-[3/4] bg-gradient-to-br from-amber-50 via-amber-100/50 to-amber-50 border border-amber-200 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer group overflow-hidden"
+                      className="aspect-[3/4] bg-muted/30 border border-dashed border-border rounded-xl hover:border-primary/50 hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer overflow-hidden group"
                     >
-                      <div className="absolute inset-0 bg-gradient-to-t from-amber-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                      <div className="h-full flex flex-col items-center justify-center p-2">
-                        <div className="w-8 h-8 mb-1 bg-red-100 rounded-full flex items-center justify-center shadow-sm">
-                          <svg className="w-4 h-4 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4" />
-                          </svg>
-                        </div>
-                        <div className="w-full h-0.5 bg-amber-300/50 rounded-full mb-1"></div>
-                        <div className="w-full h-0.5 bg-amber-300/30 rounded-full mb-1"></div>
-                        <div className="w-2/3 h-0.5 bg-amber-300/20 rounded-full"></div>
+                      {/* 后台替换：将这里换成 <img src="/certificates/factory/{name}.jpg" alt={name} className="w-full h-full object-cover" /> */}
+                      <div className="h-full flex flex-col items-center justify-center p-2 text-muted-foreground/50">
+                        <svg className="w-8 h-8 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        <span className="text-xs">{name}</span>
                       </div>
                     </div>
                   ))}
@@ -593,37 +588,34 @@ const CertificationsSection = () => {
                   Our manufacturing facility is ISO 9001 certified for quality management.
                 </p>
 
-                {/* 认证标志 */}
+                {/* 认证标志 - 占位符 */}
                 <div className="grid grid-cols-4 gap-4 mb-10">
-                  {[
-                    { label: 'CE', color: 'text-gray-700', bg: 'bg-gray-50' },
-                    { label: 'CB', color: 'text-gray-700', bg: 'bg-gray-50' },
-                    { label: 'REACH', color: 'text-gray-700', bg: 'bg-gray-50' },
-                    { label: 'RoHS', color: 'text-gray-700', bg: 'bg-gray-50' }
-                  ].map((item, i) => (
-                    <div key={i} className={`aspect-square ${item.bg} rounded-2xl flex items-center justify-center border border-border/50 hover:scale-105 transition-transform cursor-pointer`}>
-                      <span className={`font-bold ${item.color} ${item.label.length > 3 ? 'text-sm' : 'text-xl'}`}>
-                        {item.label}
-                      </span>
+                  {['product-1', 'product-2', 'product-3', 'product-4'].map((name, i) => (
+                    <div key={i} className="aspect-square bg-muted/30 rounded-2xl flex items-center justify-center border border-dashed border-border hover:border-primary/50 hover:scale-105 transition-all cursor-pointer overflow-hidden">
+                      {/* 后台替换：将这里换成 <img src="/certifications/{name}.png" alt={name} className="w-full h-full object-contain" /> */}
+                      <div className="text-center text-muted-foreground/50">
+                        <svg className="w-8 h-8 mx-auto mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <span className="text-xs">{name}</span>
+                      </div>
                     </div>
                   ))}
                 </div>
 
-                {/* 证书图片网格 */}
+                {/* 证书图片网格 - 占位符 */}
                 <div className="grid grid-cols-4 gap-3">
-                  {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                  {['cert-9', 'cert-10', 'cert-11', 'cert-12', 'cert-13', 'cert-14', 'cert-15', 'cert-16'].map((name, i) => (
                     <div
                       key={i}
-                      className="aspect-[3/4] bg-gradient-to-br from-slate-50 via-slate-100/50 to-slate-50 border border-slate-200 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer group overflow-hidden"
+                      className="aspect-[3/4] bg-muted/30 border border-dashed border-border rounded-xl hover:border-primary/50 hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer overflow-hidden group"
                     >
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                      <div className="h-full flex flex-col items-center justify-center p-2">
-                        <div className="w-10 h-6 mb-1 bg-slate-200 rounded flex items-center justify-center shadow-sm">
-                          <span className="text-sm font-bold text-slate-600">CE</span>
-                        </div>
-                        <div className="w-full h-0.5 bg-slate-300/50 rounded-full mb-1"></div>
-                        <div className="w-full h-0.5 bg-slate-300/30 rounded-full mb-1"></div>
-                        <div className="w-2/3 h-0.5 bg-slate-300/20 rounded-full"></div>
+                      {/* 后台替换：将这里换成 <img src="/certificates/product/{name}.jpg" alt={name} className="w-full h-full object-cover" /> */}
+                      <div className="h-full flex flex-col items-center justify-center p-2 text-muted-foreground/50">
+                        <svg className="w-8 h-8 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        <span className="text-xs">{name}</span>
                       </div>
                     </div>
                   ))}
@@ -636,7 +628,6 @@ const CertificationsSection = () => {
     </section>
   );
 };
-
 const PartnersSection = () => {
   const params = useParams();
   const locale = params.locale as string;
