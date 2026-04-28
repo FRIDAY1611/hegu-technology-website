@@ -477,171 +477,190 @@ const CertificationsSection = () => {
   const locale = params.locale as string;
   const texts = getPageTexts(locale);
 
-  // 工厂资质数据
-  const factoryQualifications = [
-    { name: 'ISO 9001', description: 'Quality Management System' },
-    { name: 'ISO 14001', description: 'Environmental Management' },
-    { name: 'BSCI', description: 'Business Social Compliance' },
-    { name: 'Sedex', description: 'Ethical Trade Audit' }
-  ];
-
-  // 产品认证数据
-  const productCertifications = [
-    { name: 'CE', description: 'European Conformity' },
-    { name: 'CB', description: 'Certification Bodies' },
-    { name: 'REACH', description: 'Registration, Evaluation, Authorization and Restriction of Chemicals' },
-    { name: 'RoHS', description: 'Restriction of Hazardous Substances' }
-  ];
-
   return (
-    <section id="certifications-section" className="py-24 lg:py-32 bg-background">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <section id="certifications-section" className="py-24 lg:py-36 bg-gradient-to-b from-background via-muted/20 to-background relative overflow-hidden">
+      {/* 背景装饰 */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-green-500/5 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         <FadeIn>
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-6">
+              <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 01-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+              </svg>
+              <span className="text-sm font-medium text-primary">Global Certifications</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight">
               {texts.certificationsTitle}
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               {texts.certificationsSubtitle}
             </p>
           </div>
         </FadeIn>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* 左侧 - 工厂资质 */}
-          <FadeIn>
-            <div>
-              <h3 className="text-2xl lg:text-3xl font-bold mb-3 text-green-600">
-                FACTORY QUALIFICATIONS
-              </h3>
-              <p className="text-muted-foreground mb-8">
-                With distribution partners around the world, our products can be found in over 50 countries. 
-                We pride ourselves in providing reliable mist fan to ensure customer satisfaction.
-              </p>
-
-              {/* 认证标志 */}
-              <div className="flex flex-wrap items-center gap-6 mb-8">
-                <div className="w-20 h-20 bg-card border border-border rounded-xl flex items-center justify-center text-2xl font-bold">
-                  中
-                </div>
-                <div className="w-20 h-20 bg-card border border-border rounded-xl flex items-center justify-center text-2xl font-bold">
-                  IP
-                </div>
-                <div className="w-20 h-20 bg-card border border-border rounded-xl flex items-center justify-center text-xl font-bold">
-                  ISO 9001
-                </div>
-                <div className="w-24 h-20 bg-card border border-border rounded-xl flex items-center justify-center text-xl font-bold text-green-600">
-                  BSCI
-                </div>
-              </div>
-
-              {/* 证书图片网格 */}
-              <div className="grid grid-cols-2 gap-4">
-                {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-                  <div
-                    key={i}
-                    className="aspect-[3/4] bg-gradient-to-br from-amber-50 to-amber-100 border-2 border-amber-200 rounded-lg flex items-center justify-center p-4"
-                  >
-                    <div className="text-center">
-                      <div className="w-12 h-12 mx-auto mb-2 bg-red-100 rounded-full flex items-center justify-center">
-                        <svg className="w-6 h-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 01-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                        </svg>
-                      </div>
-                      <p className="text-xs text-amber-800">Certificate {i}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </FadeIn>
-
-          {/* 中间装饰 */}
-          <div className="hidden lg:flex items-center justify-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-            <div className="relative">
-              <div className="absolute -top-20 left-1/2 -translate-x-1/2">
-                <div className="w-80 h-40 bg-gradient-to-b from-pink-200/50 to-transparent -skew-x-12"></div>
-              </div>
-              <div className="absolute -top-20 left-1/2 -translate-x-1/2">
-                <div className="w-80 h-40 bg-gradient-to-b from-pink-200/50 to-transparent skew-x-12"></div>
-              </div>
-              <div className="w-64 h-64 flex items-center justify-center">
-                <div className="relative">
-                  {[0, 72, 144, 216, 288].map((angle, i) => (
-                    <div
-                      key={i}
-                      className="absolute w-20 h-20 bg-gradient-to-br from-white to-gray-100 rounded-full shadow-lg flex items-center justify-center"
-                      style={{
-                        transform: `rotate(${angle}deg) translateY(-40px)`,
-                      }}
-                    >
-                      <svg className="w-10 h-10 text-yellow-300" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+        <div className="relative">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            {/* 左侧 - 工厂资质 */}
+            <FadeIn className="lg:col-span-5">
+              <div className="relative">
+                <div className="absolute -inset-4 bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-3xl blur-2xl opacity-50"></div>
+                <div className="relative bg-card/80 backdrop-blur-xl border border-border/50 rounded-3xl p-8 lg:p-10 shadow-xl">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-lg">
+                      <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                       </svg>
                     </div>
-                  ))}
-                  <div className="w-20 h-20 bg-gradient-to-br from-white to-gray-100 rounded-full shadow-xl flex items-center justify-center z-10">
-                    <svg className="w-10 h-10 text-yellow-300" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* 右侧 - 产品认证 */}
-          <FadeIn delay={0.1}>
-            <div>
-              <h3 className="text-2xl lg:text-3xl font-bold mb-3 text-green-600">
-                PRODUCT CERTIFICATIONS
-              </h3>
-              <p className="text-muted-foreground mb-8">
-                Through continuous innovation, we now have more than 100 patents on humidifiers and mist fan. 
-                Our manufacturing facility is ISO 9001 certified for quality management. Besides, we are approved 
-                by numerous certifying bodies around the globe like BSCI, CE(ERP, EMC, LVD), CB(IEC), SAA and RoHs.
-              </p>
-
-              {/* 认证标志 */}
-              <div className="flex flex-wrap items-center gap-6 mb-8">
-                <div className="w-20 h-20 bg-card border border-border rounded-xl flex items-center justify-center text-3xl font-bold">
-                  CE
-                </div>
-                <div className="w-20 h-20 bg-card border border-border rounded-xl flex items-center justify-center text-3xl font-bold">
-                  CB
-                </div>
-                <div className="w-24 h-20 bg-card border border-border rounded-xl flex items-center justify-center text-2xl font-bold">
-                  REACH
-                </div>
-                <div className="w-20 h-20 bg-card border border-border rounded-xl flex items-center justify-center text-2xl font-bold">
-                  SNI
-                </div>
-                <div className="w-24 h-20 bg-card border border-border rounded-xl flex items-center justify-center text-2xl font-bold">
-                  <svg className="w-12 h-8" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-                  </svg>
-                  <span className="ml-1">RoHS</span>
-                </div>
-              </div>
-
-              {/* 证书图片网格 */}
-              <div className="grid grid-cols-2 gap-4">
-                {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-                  <div
-                    key={i}
-                    className="aspect-[3/4] bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200 rounded-lg flex items-center justify-center p-4"
-                  >
-                    <div className="text-center">
-                      <div className="w-12 h-12 mx-auto mb-2 bg-gray-200 rounded flex items-center justify-center">
-                        <span className="text-lg font-bold text-gray-600">CE</span>
-                      </div>
-                      <p className="text-xs text-gray-600">Test Report {i}</p>
+                    <div>
+                      <h3 className="text-2xl lg:text-3xl font-bold text-green-600">
+                        FACTORY QUALIFICATIONS
+                      </h3>
+                      <p className="text-sm text-muted-foreground mt-1">Professional Standards</p>
                     </div>
                   </div>
-                ))}
+                  
+                  <p className="text-muted-foreground mb-8 leading-relaxed">
+                    With distribution partners around the world, our products can be found in over 50 countries. 
+                    We pride ourselves in providing reliable mist fan to ensure customer satisfaction.
+                  </p>
+
+                  {/* 认证标志 */}
+                  <div className="grid grid-cols-4 gap-4 mb-10">
+                    {[
+                      { label: '中国', color: 'text-red-500', bg: 'bg-red-50' },
+                      { label: 'IP', color: 'text-blue-500', bg: 'bg-blue-50' },
+                      { label: 'ISO', color: 'text-sky-500', bg: 'bg-sky-50' },
+                      { label: 'BSCI', color: 'text-green-500', bg: 'bg-green-50' }
+                    ].map((item, i) => (
+                      <div key={i} className={`aspect-square ${item.bg} rounded-2xl flex items-center justify-center border border-border/50 hover:scale-105 transition-transform cursor-pointer`}>
+                        <span className={`font-bold ${item.color} ${item.label.length > 3 ? 'text-sm' : 'text-xl'}`}>
+                          {item.label}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* 证书图片网格 */}
+                  <div className="grid grid-cols-4 gap-3">
+                    {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                      <div
+                        key={i}
+                        className="aspect-[3/4] bg-gradient-to-br from-amber-50 via-amber-100/50 to-amber-50 border border-amber-200 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer group overflow-hidden"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-t from-amber-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div className="h-full flex flex-col items-center justify-center p-2">
+                          <div className="w-8 h-8 mb-1 bg-red-100 rounded-full flex items-center justify-center shadow-sm">
+                            <svg className="w-4 h-4 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4" />
+                            </svg>
+                          </div>
+                          <div className="w-full h-0.5 bg-amber-300/50 rounded-full mb-1"></div>
+                          <div className="w-full h-0.5 bg-amber-300/30 rounded-full mb-1"></div>
+                          <div className="w-2/3 h-0.5 bg-amber-300/20 rounded-full"></div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* 中间徽章 */}
+            <div className="hidden lg:flex lg:col-span-2 items-center justify-center">
+              <div className="relative">
+                {/* 外圈 */}
+                <div className="w-48 h-48 rounded-full bg-gradient-to-br from-yellow-400 to-amber-500 shadow-2xl flex items-center justify-center animate-pulse">
+                  <div className="w-40 h-40 rounded-full bg-gradient-to-br from-yellow-300 to-amber-400 flex items-center justify-center">
+                    <div className="w-32 h-32 rounded-full bg-gradient-to-br from-white to-yellow-50 flex items-center justify-center shadow-inner">
+                      {/* 内圈内容 */}
+                      <div className="text-center">
+                        <div className="flex justify-center -space-x-2 mb-2">
+                          {[0, 1, 2, 3, 4].map((i) => (
+                            <svg key={i} className="w-5 h-5 text-yellow-400 drop-shadow-sm" fill="currentColor" viewBox="0 0 24 24" style={{ transform: `rotate(${i * 15 - 30}deg)` }}>
+                              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                            </svg>
+                          ))}
+                        </div>
+                        <p className="text-xs font-bold text-amber-600 uppercase tracking-wider">Excellence</p>
+                        <p className="text-2xl font-black text-amber-700">CERTIFIED</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* 飘带装饰 */}
+                <div className="absolute -left-8 top-1/2 -translate-y-1/2">
+                  <div className="w-12 h-24 bg-gradient-to-b from-rose-400 to-rose-600 -skew-y-12 rounded-l-lg shadow-lg"></div>
+                </div>
+                <div className="absolute -right-8 top-1/2 -translate-y-1/2">
+                  <div className="w-12 h-24 bg-gradient-to-b from-rose-400 to-rose-600 skew-y-12 rounded-r-lg shadow-lg"></div>
+                </div>
               </div>
             </div>
-          </FadeIn>
+
+            {/* 右侧 - 产品认证 */}
+            <FadeIn delay={0.1} className="lg:col-span-5">
+              <div className="relative">
+                <div className="absolute -inset-4 bg-gradient-to-l from-blue-500/10 to-sky-500/10 rounded-3xl blur-2xl opacity-50"></div>
+                <div className="relative bg-card/80 backdrop-blur-xl border border-border/50 rounded-3xl p-8 lg:p-10 shadow-xl">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center shadow-lg">
+                      <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 01-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-2xl lg:text-3xl font-bold text-sky-600">
+                        PRODUCT CERTIFICATIONS
+                      </h3>
+                      <p className="text-sm text-muted-foreground mt-1">Global Standards</p>
+                    </div>
+                  </div>
+                  
+                  <p className="text-muted-foreground mb-8 leading-relaxed">
+                    Through continuous innovation, we now have more than 100 patents on humidifiers and mist fan. 
+                    Our manufacturing facility is ISO 9001 certified for quality management.
+                  </p>
+
+                  {/* 认证标志 */}
+                  <div className="flex flex-wrap items-center justify-center gap-4 mb-10">
+                    {['CE', 'CB', 'REACH', 'SNI', 'RoHS'].map((label, i) => (
+                      <div key={i} className="aspect-square w-16 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl flex items-center justify-center border border-gray-200 shadow-sm hover:shadow-md hover:scale-110 transition-all cursor-pointer">
+                        <span className={`font-bold text-gray-700 ${label.length > 3 ? 'text-xs' : 'text-2xl'}`}>
+                          {label}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* 证书图片网格 */}
+                  <div className="grid grid-cols-4 gap-3">
+                    {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                      <div
+                        key={i}
+                        className="aspect-[3/4] bg-gradient-to-br from-slate-50 via-slate-100/50 to-slate-50 border border-slate-200 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer group overflow-hidden"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div className="h-full flex flex-col items-center justify-center p-2">
+                          <div className="w-10 h-6 mb-1 bg-slate-200 rounded flex items-center justify-center shadow-sm">
+                            <span className="text-sm font-bold text-slate-600">CE</span>
+                          </div>
+                          <div className="w-full h-0.5 bg-slate-300/50 rounded-full mb-1"></div>
+                          <div className="w-full h-0.5 bg-slate-300/30 rounded-full mb-1"></div>
+                          <div className="w-2/3 h-0.5 bg-slate-300/20 rounded-full"></div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </FadeIn>
+          </div>
         </div>
       </div>
     </section>
