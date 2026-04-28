@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { useSettings } from '@/contexts/SettingsContext';
 
 const getFooterTexts = (locale: string) => {
   switch (locale) {
@@ -114,6 +115,7 @@ const Footer = () => {
   const params = useParams();
   const locale = params.locale as string;
   const texts = getFooterTexts(locale);
+  const { settings, isLoading } = useSettings();
   const currentYear = new Date().getFullYear();
 
   const productLinks = [
@@ -131,6 +133,11 @@ const Footer = () => {
     { label: texts.admin, href: '/admin' }
   ];
 
+  // 如果设置还在加载中，显示默认值
+  if (isLoading) {
+    return null;
+  }
+
   return (
     <footer className="bg-muted/30 border-t border-border">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -141,9 +148,11 @@ const Footer = () => {
             <div className="lg:col-span-4">
               <Link href={`/${locale}`} className="inline-block">
                 <span className="text-2xl font-bold tracking-tight text-foreground">
-                  HEGU
+                  {settings.siteName.split(' ')[0]}
                 </span>
-                <span className="text-sm text-muted-foreground ml-2">Technology</span>
+                <span className="text-sm text-muted-foreground ml-2">
+                  {settings.siteName.split(' ').slice(1).join(' ')}
+                </span>
               </Link>
               <p className="mt-4 text-sm text-muted-foreground leading-relaxed max-w-sm">
                 {texts.tagline}
@@ -194,12 +203,22 @@ const Footer = () => {
               <address className="not-italic">
                 <ul className="space-y-3 text-sm text-muted-foreground">
                   <li>
-                    <p>Zhongshan, Guangdong</p>
-                    <p>China</p>
+                    <p>{settings.address}</p>
                   </li>
                   <li>
-                    <a href="mailto:info@hegu-tech.com" className="hover:text-primary transition-colors">
-                      info@hegu-tech.com
+                    <a 
+                      href={`mailto:${settings.contactEmail}`} 
+                      className="hover:text-primary transition-colors"
+                    >
+                      {settings.contactEmail}
+                    </a>
+                  </li>
+                  <li>
+                    <a 
+                      href={`tel:${settings.contactPhone}`} 
+                      className="hover:text-primary transition-colors"
+                    >
+                      {settings.contactPhone}
                     </a>
                   </li>
                 </ul>
@@ -212,7 +231,7 @@ const Footer = () => {
         <div className="border-t border-border py-8">
           <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
             <p className="text-sm text-muted-foreground">
-              © {currentYear} HEGU Technology. {texts.rights}
+              © {currentYear} {settings.siteName}. {texts.rights}
             </p>
           </div>
         </div>

@@ -8,12 +8,28 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ArrowLeft, Save, CheckCircle2, Bell, Lock, Database, Palette, Globe, Shield } from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { getSettings, updateSettings, type AdminSettings } from '@/lib/admin-data';
+import { ArrowLeft, Save, CheckCircle2, Bell, Palette, Globe, Shield, Database } from 'lucide-react';
 
 const AdminSettings = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [settings, setSettings] = useState<AdminSettings>({
+    siteName: 'HEGU Technology',
+    siteDescription: '专业喷雾风扇制造商',
+    contactEmail: 'info@hegu-tech.com',
+    contactPhone: '+86-757-12345678',
+    defaultLanguage: 'en',
+    address: 'Zhongshan, Guangdong, China',
+    socialLinks: {
+      facebook: 'https://facebook.com/hegu-tech',
+      linkedin: 'https://linkedin.com/company/hegu-tech',
+      whatsapp: 'https://wa.me/861234567890'
+    }
+  });
   const router = useRouter();
 
   useEffect(() => {
@@ -22,16 +38,44 @@ const AdminSettings = () => {
       router.push('/admin');
     } else {
       setIsLoggedIn(true);
+      loadSettings();
     }
   }, [router]);
 
-  const handleSave = () => {
+  const loadSettings = () => {
+    const savedSettings = getSettings();
+    setSettings(savedSettings);
+  };
+
+  const handleSave = async () => {
     setIsSaving(true);
-    setTimeout(() => {
-      setIsSaving(false);
+    
+    try {
+      updateSettings(settings);
       setSaveSuccess(true);
-      setTimeout(() => setSaveSuccess(false), 3000);
-    }, 1000);
+      
+      setTimeout(() => {
+        setSaveSuccess(false);
+      }, 3000);
+    } catch (error) {
+      console.error('保存设置失败:', error);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleChange = (key: keyof AdminSettings, value: any) => {
+    setSettings(prev => ({ ...prev, [key]: value }));
+  };
+
+  const handleSocialChange = (platform: keyof AdminSettings['socialLinks'], value: string) => {
+    setSettings(prev => ({
+      ...prev,
+      socialLinks: {
+        ...prev.socialLinks,
+        [platform]: value
+      }
+    }));
   };
 
   if (!isLoggedIn) return null;
@@ -49,7 +93,7 @@ const AdminSettings = () => {
               </Button>
               <div>
                 <h1 className="text-2xl font-bold">系统设置</h1>
-                <p className="text-gray-500">配置网站的系统设置</p>
+                <p className="text-gray-500">配置网站的系统设置，修改后将立即生效</p>
               </div>
             </div>
             <Button onClick={handleSave} disabled={isSaving}>
@@ -58,7 +102,7 @@ const AdminSettings = () => {
               ) : saveSuccess ? (
                 <>
                   <CheckCircle2 className="w-4 h-4 mr-2" />
-                  已保存
+                  已保存！
                 </>
               ) : (
                 <>
@@ -71,6 +115,17 @@ const AdminSettings = () => {
         </div>
       </div>
 
+      {saveSuccess && (
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <Alert className="bg-green-50 border-green-200">
+            <CheckCircle2 className="h-4 w-4 text-green-600" />
+            <AlertDescription className="text-green-700">
+              设置已成功保存！前端页面将立即显示更新后的内容。
+            </AlertDescription>
+          </Alert>
+        </div>
+      )}
+
       <div className="max-w-7xl mx-auto px-6 py-8">
         <Tabs defaultValue="general" className="w-full">
           <TabsList className="mb-8">
@@ -78,17 +133,17 @@ const AdminSettings = () => {
               <Globe className="w-4 h-4" />
               基本设置
             </TabsTrigger>
-            <TabsTrigger value="notifications" className="flex items-center gap-2">
+            <TabsTrigger value="contact" className="flex items-center gap-2">
+              <Shield className="w-4 h-4" />
+              联系信息
+            </TabsTrigger>
+            <TabsTrigger value="social" className="flex items-center gap-2">
               <Bell className="w-4 h-4" />
-              通知设置
+              社交媒体
             </TabsTrigger>
             <TabsTrigger value="appearance" className="flex items-center gap-2">
               <Palette className="w-4 h-4" />
               外观设置
-            </TabsTrigger>
-            <TabsTrigger value="security" className="flex items-center gap-2">
-              <Shield className="w-4 h-4" />
-              安全设置
             </TabsTrigger>
             <TabsTrigger value="backup" className="flex items-center gap-2">
               <Database className="w-4 h-4" />
@@ -96,88 +151,143 @@ const AdminSettings = () => {
             </TabsTrigger>
           </TabsList>
 
-          {/* General Settings */}
+          {/* 基本设置 */}
           <TabsContent value="general">
-            <div className="grid gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>基本信息</CardTitle>
-                  <CardDescription>配置网站的基本信息</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="siteName">网站名称</Label>
-                    <Input id="siteName" defaultValue="HEGU Technology" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="siteDescription">网站描述</Label>
-                    <Input id="siteDescription" defaultValue="专业喷雾风扇制造商" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="contactEmail">联系邮箱</Label>
-                    <Input id="contactEmail" type="email" defaultValue="info@hegu-tech.com" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="contactPhone">联系电话</Label>
-                    <Input id="contactPhone" defaultValue="+86-757-12345678" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="defaultLanguage">默认语言</Label>
-                    <select id="defaultLanguage" className="w-full px-4 py-2 border rounded-lg">
-                      <option value="zh">中文</option>
-                      <option value="en">English</option>
-                      <option value="es">Español</option>
-                      <option value="fr">Français</option>
-                      <option value="de">Deutsch</option>
-                      <option value="ar">العربية</option>
-                    </select>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-
-          {/* Notification Settings */}
-          <TabsContent value="notifications">
             <Card>
               <CardHeader>
-                <CardTitle>通知设置</CardTitle>
-                <CardDescription>配置系统通知和提醒</CardDescription>
+                <CardTitle>网站基本信息</CardTitle>
+                <CardDescription>这些信息将显示在网站的各个位置</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <Label>新询盘邮件通知</Label>
-                    <p className="text-sm text-gray-500">收到新询盘时发送邮件通知</p>
-                  </div>
-                  <Switch checked={true} />
+                <div className="space-y-2">
+                  <Label htmlFor="siteName">网站名称</Label>
+                  <Input
+                    id="siteName"
+                    value={settings.siteName}
+                    onChange={(e) => handleChange('siteName', e.target.value)}
+                    placeholder="输入网站名称"
+                  />
+                  <p className="text-sm text-gray-500">显示在浏览器标签页和网站标题中</p>
                 </div>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <Label>询盘回复提醒</Label>
-                    <p className="text-sm text-gray-500">提醒您及时回复询盘</p>
-                  </div>
-                  <Switch checked={true} />
+
+                <div className="space-y-2">
+                  <Label htmlFor="siteDescription">网站描述</Label>
+                  <Input
+                    id="siteDescription"
+                    value={settings.siteDescription}
+                    onChange={(e) => handleChange('siteDescription', e.target.value)}
+                    placeholder="输入网站描述"
+                  />
+                  <p className="text-sm text-gray-500">简短描述网站的主要业务</p>
                 </div>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <Label>系统更新通知</Label>
-                    <p className="text-sm text-gray-500">系统有更新时发送通知</p>
-                  </div>
-                  <Switch checked={false} />
-                </div>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <Label>备份完成通知</Label>
-                    <p className="text-sm text-gray-500">数据备份完成后发送通知</p>
-                  </div>
-                  <Switch checked={true} />
+
+                <div className="space-y-2">
+                  <Label htmlFor="defaultLanguage">默认语言</Label>
+                  <select
+                    id="defaultLanguage"
+                    value={settings.defaultLanguage}
+                    onChange={(e) => handleChange('defaultLanguage', e.target.value)}
+                    className="w-full px-4 py-2 border rounded-lg"
+                  >
+                    <option value="zh">中文</option>
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                    <option value="ar">العربية</option>
+                  </select>
+                  <p className="text-sm text-gray-500">新访问者看到的默认语言</p>
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
 
-          {/* Appearance Settings */}
+          {/* 联系信息 */}
+          <TabsContent value="contact">
+            <Card>
+              <CardHeader>
+                <CardTitle>联系信息</CardTitle>
+                <CardDescription>这些信息将显示在Footer和联系页面</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="contactEmail">联系邮箱</Label>
+                    <Input
+                      id="contactEmail"
+                      type="email"
+                      value={settings.contactEmail}
+                      onChange={(e) => handleChange('contactEmail', e.target.value)}
+                      placeholder="info@example.com"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="contactPhone">联系电话</Label>
+                    <Input
+                      id="contactPhone"
+                      value={settings.contactPhone}
+                      onChange={(e) => handleChange('contactPhone', e.target.value)}
+                      placeholder="+86-xxx-xxxxxxxx"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="address">公司地址</Label>
+                  <Input
+                    id="address"
+                    value={settings.address}
+                    onChange={(e) => handleChange('address', e.target.value)}
+                    placeholder="输入公司地址"
+                  />
+                  <p className="text-sm text-gray-500">显示在Footer和联系页面</p>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* 社交媒体 */}
+          <TabsContent value="social">
+            <Card>
+              <CardHeader>
+                <CardTitle>社交媒体链接</CardTitle>
+                <CardDescription>配置您的社交媒体账号链接</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="facebook">Facebook</Label>
+                  <Input
+                    id="facebook"
+                    value={settings.socialLinks.facebook}
+                    onChange={(e) => handleSocialChange('facebook', e.target.value)}
+                    placeholder="https://facebook.com/your-page"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="linkedin">LinkedIn</Label>
+                  <Input
+                    id="linkedin"
+                    value={settings.socialLinks.linkedin}
+                    onChange={(e) => handleSocialChange('linkedin', e.target.value)}
+                    placeholder="https://linkedin.com/company/your-company"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="whatsapp">WhatsApp</Label>
+                  <Input
+                    id="whatsapp"
+                    value={settings.socialLinks.whatsapp}
+                    onChange={(e) => handleSocialChange('whatsapp', e.target.value)}
+                    placeholder="https://wa.me/861234567890"
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* 外观设置 */}
           <TabsContent value="appearance">
             <Card>
               <CardHeader>
@@ -185,17 +295,22 @@ const AdminSettings = () => {
                 <CardDescription>自定义网站的外观和主题</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="space-y-2">
+                <div className="space-y-4">
                   <Label>主题配色</Label>
                   <div className="flex gap-4">
-                    {['sky', 'blue', 'green', 'purple', 'orange'].map((color) => (
+                    {['sky', 'blue', 'green', 'orange'].map((color) => (
                       <button
                         key={color}
-                        className={`w-12 h-12 rounded-full bg-${color}-500 border-2 ${color === 'sky' ? 'border-gray-800' : 'border-transparent'}`}
+                        className={`w-12 h-12 rounded-full border-2 ${
+                          color === 'sky' ? 'border-gray-800 ring-2 ring-offset-2 ring-sky-500' : 'border-transparent'
+                        } bg-${color === 'sky' ? 'sky' : color === 'blue' ? 'blue' : color === 'green' ? 'green' : 'orange'}-500`}
                       />
                     ))}
                   </div>
                 </div>
+
+                <Separator />
+
                 <div className="flex items-center justify-between">
                   <div>
                     <Label>深色模式</Label>
@@ -207,42 +322,7 @@ const AdminSettings = () => {
             </Card>
           </TabsContent>
 
-          {/* Security Settings */}
-          <TabsContent value="security">
-            <Card>
-              <CardHeader>
-                <CardTitle>安全设置</CardTitle>
-                <CardDescription>管理账户安全和访问权限</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="space-y-4">
-                  <h4 className="font-medium">修改管理员密码</h4>
-                  <div className="space-y-2">
-                    <Label htmlFor="currentPassword">当前密码</Label>
-                    <Input id="currentPassword" type="password" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="newPassword">新密码</Label>
-                    <Input id="newPassword" type="password" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="confirmPassword">确认新密码</Label>
-                    <Input id="confirmPassword" type="password" />
-                  </div>
-                  <Button>修改密码</Button>
-                </div>
-                <div className="flex items-center justify-between pt-4 border-t">
-                  <div>
-                    <Label>两步验证</Label>
-                    <p className="text-sm text-gray-500">增强账户安全性</p>
-                  </div>
-                  <Switch checked={false} />
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* Backup & Restore */}
+          {/* 备份与恢复 */}
           <TabsContent value="backup">
             <Card>
               <CardHeader>
@@ -250,40 +330,31 @@ const AdminSettings = () => {
                 <CardDescription>管理数据备份和恢复</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="grid gap-4">
-                  <div className="flex items-center justify-between p-4 border rounded-lg">
-                    <div>
-                      <h4 className="font-medium">创建新备份</h4>
-                      <p className="text-sm text-gray-500">备份所有数据和配置</p>
-                    </div>
-                    <Button>立即备份</Button>
+                <div className="flex items-center justify-between p-4 border rounded-lg">
+                  <div>
+                    <h4 className="font-medium">创建新备份</h4>
+                    <p className="text-sm text-gray-500">备份所有数据和配置</p>
                   </div>
-                  <div className="flex items-center justify-between p-4 border rounded-lg">
-                    <div>
-                      <h4 className="font-medium">自动备份</h4>
-                      <p className="text-sm text-gray-500">每周自动创建数据备份</p>
-                    </div>
-                    <Switch checked={true} />
-                  </div>
+                  <Button>立即备份</Button>
                 </div>
 
-                <div className="pt-4">
+                <div className="flex items-center justify-between p-4 border rounded-lg">
+                  <div>
+                    <h4 className="font-medium">自动备份</h4>
+                    <p className="text-sm text-gray-500">每周自动创建数据备份</p>
+                  </div>
+                  <Switch checked={true} />
+                </div>
+
+                <Separator />
+
+                <div>
                   <h4 className="font-medium mb-4">备份历史</h4>
                   <div className="space-y-2">
                     <div className="flex items-center justify-between p-3 border rounded-lg">
                       <div>
                         <p className="font-medium">2024-01-15 - 完整备份</p>
                         <p className="text-sm text-gray-500">大小: 2.4 MB</p>
-                      </div>
-                      <div className="flex gap-2">
-                        <Button variant="ghost" size="sm">下载</Button>
-                        <Button variant="ghost" size="sm">恢复</Button>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between p-3 border rounded-lg">
-                      <div>
-                        <p className="font-medium">2024-01-08 - 完整备份</p>
-                        <p className="text-sm text-gray-500">大小: 2.3 MB</p>
                       </div>
                       <div className="flex gap-2">
                         <Button variant="ghost" size="sm">下载</Button>

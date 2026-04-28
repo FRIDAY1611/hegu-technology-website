@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { ClientLayout } from './client-layout';
 
 export const metadata: Metadata = {
   title: {
@@ -39,11 +40,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`antialiased`}>
-        {children}
-      </body>
-    </html>
-  );
+  return <ClientLayout>{children}</ClientLayout>;
 }

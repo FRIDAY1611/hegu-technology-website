@@ -1,4 +1,7 @@
-// 管理后台数据管理模块 - 简化版本
+// 管理后台数据管理模块 - 完整版本
+
+import { Product, products as initialProducts } from './products';
+export type { Product } from './products';
 
 // 数据类型定义
 export interface ProductData {
@@ -42,8 +45,16 @@ export interface LanguageText {
 
 export interface AdminSettings {
   siteName: string;
+  siteDescription: string;
   contactEmail: string;
+  contactPhone: string;
   defaultLanguage: string;
+  address: string;
+  socialLinks: {
+    facebook: string;
+    linkedin: string;
+    whatsapp: string;
+  };
 }
 
 // 存储键
@@ -55,9 +66,11 @@ const STORAGE_KEYS = {
   SETTINGS: 'hegu_admin_settings'
 };
 
-// 询盘管理
+// ========== 询盘管理 ==========
 export function initializeInquiries(): InquiryData[] {
-  const stored = typeof window !== 'undefined' ? localStorage.getItem(STORAGE_KEYS.INQUIRIES) : null;
+  if (typeof window === 'undefined') return [];
+  
+  const stored = localStorage.getItem(STORAGE_KEYS.INQUIRIES);
   if (stored) {
     return JSON.parse(stored);
   }
@@ -90,9 +103,7 @@ export function initializeInquiries(): InquiryData[] {
     }
   ];
 
-  if (typeof window !== 'undefined') {
-    localStorage.setItem(STORAGE_KEYS.INQUIRIES, JSON.stringify(sampleInquiries));
-  }
+  localStorage.setItem(STORAGE_KEYS.INQUIRIES, JSON.stringify(sampleInquiries));
   return sampleInquiries;
 }
 
@@ -119,6 +130,10 @@ export function updateInquiryStatus(id: string, status: InquiryData['status']): 
 }
 
 export function createInquiry(inquiry: Omit<InquiryData, 'id' | 'status' | 'createdAt'>): InquiryData {
+  if (typeof window === 'undefined') {
+    return { ...inquiry, id: '', status: 'unread', createdAt: '' };
+  }
+  
   const inquiries = getInquiries();
   const newInquiry: InquiryData = {
     ...inquiry,
@@ -127,15 +142,81 @@ export function createInquiry(inquiry: Omit<InquiryData, 'id' | 'status' | 'crea
     createdAt: new Date().toISOString()
   };
   inquiries.unshift(newInquiry);
-  if (typeof window !== 'undefined') {
-    localStorage.setItem(STORAGE_KEYS.INQUIRIES, JSON.stringify(inquiries));
-  }
+  localStorage.setItem(STORAGE_KEYS.INQUIRIES, JSON.stringify(inquiries));
   return newInquiry;
 }
 
-// 媒体管理
+// ========== 产品管理 ==========
+export function initializeProducts(): Product[] {
+  if (typeof window === 'undefined') return [];
+  
+  const stored = localStorage.getItem(STORAGE_KEYS.PRODUCTS);
+  if (stored) {
+    return JSON.parse(stored, (key, value) => {
+      if (key === 'createdAt') return new Date(value);
+      return value;
+    });
+  }
+
+  localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(initialProducts));
+  return initialProducts;
+}
+
+export function getProducts(): Product[] {
+  return initializeProducts();
+}
+
+export function getProduct(id: string): Product | undefined {
+  const products = getProducts();
+  return products.find(p => p.id === id);
+}
+
+export function updateProduct(id: string, updates: Partial<Product>): boolean {
+  if (typeof window === 'undefined') return false;
+  
+  const products = getProducts();
+  const index = products.findIndex(p => p.id === id);
+  if (index !== -1) {
+    products[index] = { ...products[index], ...updates };
+    localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(products));
+    return true;
+  }
+  return false;
+}
+
+export function createProduct(product: Omit<Product, 'id' | 'createdAt'>): Product {
+  if (typeof window === 'undefined') {
+    return { ...product, id: '', createdAt: new Date() };
+  }
+  
+  const products = getProducts();
+  const newProduct: Product = {
+    ...product,
+    id: `product-${Date.now()}`,
+    createdAt: new Date()
+  };
+  products.unshift(newProduct);
+  localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(products));
+  return newProduct;
+}
+
+export function deleteProduct(id: string): boolean {
+  if (typeof window === 'undefined') return false;
+  
+  const products = getProducts();
+  const filtered = products.filter(p => p.id !== id);
+  if (filtered.length < products.length) {
+    localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(filtered));
+    return true;
+  }
+  return false;
+}
+
+// ========== 媒体管理 ==========
 export function initializeMedia(): MediaFile[] {
-  const stored = typeof window !== 'undefined' ? localStorage.getItem(STORAGE_KEYS.MEDIA) : null;
+  if (typeof window === 'undefined') return [];
+  
+  const stored = localStorage.getItem(STORAGE_KEYS.MEDIA);
   if (stored) {
     return JSON.parse(stored);
   }
@@ -152,9 +233,7 @@ export function initializeMedia(): MediaFile[] {
     }
   ];
 
-  if (typeof window !== 'undefined') {
-    localStorage.setItem(STORAGE_KEYS.MEDIA, JSON.stringify(sampleMedia));
-  }
+  localStorage.setItem(STORAGE_KEYS.MEDIA, JSON.stringify(sampleMedia));
   return sampleMedia;
 }
 
@@ -162,9 +241,16 @@ export function getMedia(): MediaFile[] {
   return initializeMedia();
 }
 
-// 语言管理
-export function getLanguageTexts(): LanguageText {
-  return {
+// ========== 语言管理 ==========
+export function initializeLanguageTexts(): LanguageText {
+  if (typeof window === 'undefined') return {};
+  
+  const stored = localStorage.getItem(STORAGE_KEYS.LANGUAGES);
+  if (stored) {
+    return JSON.parse(stored);
+  }
+
+  const defaultTexts: LanguageText = {
     zh: {},
     en: {},
     es: {},
@@ -172,18 +258,88 @@ export function getLanguageTexts(): LanguageText {
     de: {},
     ar: {}
   };
+
+  localStorage.setItem(STORAGE_KEYS.LANGUAGES, JSON.stringify(defaultTexts));
+  return defaultTexts;
 }
 
-// 设置管理
+export function getLanguageTexts(): LanguageText {
+  return initializeLanguageTexts();
+}
+
+export function updateLanguageText(locale: string, key: string, value: string): boolean {
+  if (typeof window === 'undefined') return false;
+  
+  const texts = getLanguageTexts();
+  if (!texts[locale]) {
+    texts[locale] = {};
+  }
+  texts[locale][key] = value;
+  localStorage.setItem(STORAGE_KEYS.LANGUAGES, JSON.stringify(texts));
+  return true;
+}
+
+// ========== 设置管理 ==========
+const defaultSettings: AdminSettings = {
+  siteName: 'HEGU Technology',
+  siteDescription: '专业喷雾风扇制造商',
+  contactEmail: 'info@hegu-tech.com',
+  contactPhone: '+86-757-12345678',
+  defaultLanguage: 'en',
+  address: 'Zhongshan, Guangdong, China',
+  socialLinks: {
+    facebook: 'https://facebook.com/hegu-tech',
+    linkedin: 'https://linkedin.com/company/hegu-tech',
+    whatsapp: 'https://wa.me/861234567890'
+  }
+};
+
+export function initializeSettings(): AdminSettings {
+  if (typeof window === 'undefined') return defaultSettings;
+  
+  const stored = localStorage.getItem(STORAGE_KEYS.SETTINGS);
+  if (stored) {
+    return { ...defaultSettings, ...JSON.parse(stored) };
+  }
+
+  localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(defaultSettings));
+  return defaultSettings;
+}
+
 export function getSettings(): AdminSettings {
-  return {
-    siteName: 'HEGU Technology',
-    contactEmail: 'info@hegu-tech.com',
-    defaultLanguage: 'en'
-  };
+  return initializeSettings();
 }
 
-// 产品管理 - 简化版本
-export function getProducts(): any[] {
-  return [];
+export function updateSettings(settings: Partial<AdminSettings>): boolean {
+  if (typeof window === 'undefined') return false;
+  
+  const currentSettings = getSettings();
+  const newSettings = { ...currentSettings, ...settings };
+  localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(newSettings));
+  
+  // 触发自定义事件，通知所有组件设置已更新
+  window.dispatchEvent(new CustomEvent('settingsUpdated', { detail: newSettings }));
+  
+  return true;
 }
+
+// 获取设置的hook辅助函数
+export function useSettings() {
+  const [settings, setSettings] = useState<AdminSettings>(() => getSettings());
+  
+  useEffect(() => {
+    const handleSettingsUpdate = (e: CustomEvent<AdminSettings>) => {
+      setSettings(e.detail);
+    };
+    
+    window.addEventListener('settingsUpdated', handleSettingsUpdate as EventListener);
+    return () => {
+      window.removeEventListener('settingsUpdated', handleSettingsUpdate as EventListener);
+    };
+  }, []);
+  
+  return { settings, updateSettings };
+}
+
+// 导入缺失的hook
+import { useState, useEffect } from 'react';
