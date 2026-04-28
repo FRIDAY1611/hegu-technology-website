@@ -36,7 +36,11 @@ const getPageTexts = (locale: string) => {
         certificationsTitle: '工厂资质与产品认证',
         certificationsSubtitle: '严格的质量控制，完善的认证体系',
         factoryQualifications: '工厂资质',
+        factoryQualificationsSub: '专业标准',
+        factoryQualificationsDesc: '我们的产品遍布全球50多个国家。我们以提供可靠的喷雾风扇为荣，确保客户满意。',
         productCertifications: '产品认证',
+        productCertificationsSub: '全球标准',
+        productCertificationsDesc: '通过持续创新，我们在加湿器和喷雾风扇领域拥有100多项专利。我们的制造工厂通过了ISO 9001质量管理认证。',
         partnersTitle: '全球合作伙伴信赖之选',
         partnersSubtitle: '覆盖50多个国家，持续增长中',
         ctaTitle: '准备好改变您的冷却体验了吗？',
@@ -73,7 +77,11 @@ const getPageTexts = (locale: string) => {
         certificationsTitle: 'Calificaciones de Fábrica y Certificaciones de Productos',
         certificationsSubtitle: 'Control de calidad estricto, sistema de certificación completo',
         factoryQualifications: 'Calificaciones de Fábrica',
+        factoryQualificationsSub: 'Estándares Profesionales',
+        factoryQualificationsDesc: 'Con socios de distribución en todo el mundo, nuestros productos se pueden encontrar en más de 50 países. Nos enorgullecemos de proporcionar ventiladores de nebulización confiables para garantizar la satisfacción del cliente.',
         productCertifications: 'Certificaciones de Productos',
+        productCertificationsSub: 'Estándares Globales',
+        productCertificationsDesc: 'A través de la innovación continua, ahora tenemos más de 100 patentes en humidificadores y ventiladores de nebulización. Nuestra instalación de fabricación está certificada ISO 9001 para la gestión de calidad.',
         partnersTitle: 'Confiado por Socios en Todo el Mundo',
         partnersSubtitle: 'Más de 50 países y creciendo',
         ctaTitle: '¿Listo para Transformar su Experiencia de Enfriamiento?',
@@ -110,7 +118,11 @@ const getPageTexts = (locale: string) => {
         certificationsTitle: 'Qualifications d\'Usine et Certifications de Produits',
         certificationsSubtitle: 'Contrôle de qualité strict, système de certification complet',
         factoryQualifications: 'Qualifications d\'Usine',
+        factoryQualificationsSub: 'Normes Professionnelles',
+        factoryQualificationsDesc: 'Avec des partenaires de distribution dans le monde entier, nos produits peuvent être trouvés dans plus de 50 pays. Nous sommes fiers de fournir des ventilateurs à brume fiables pour garantir la satisfaction client.',
         productCertifications: 'Certifications de Produits',
+        productCertificationsSub: 'Normes Mondiales',
+        productCertificationsDesc: 'Grâce à l\'innovation continue, nous avons maintenant plus de 100 brevets sur les humidificateurs et les ventilateurs à brume. Notre installation de fabrication est certifiée ISO 9001 pour la gestion de la qualité.',
         partnersTitle: 'Fait Confiance par des Partenaires du Monde Entier',
         partnersSubtitle: 'Plus de 50 pays et en croissance',
         ctaTitle: 'Prêt à Transformer Votre Expérience de Refroidissement?',
@@ -147,7 +159,11 @@ const getPageTexts = (locale: string) => {
         certificationsTitle: 'Werkzeugqualifikationen und Produktzertifizierungen',
         certificationsSubtitle: 'Strenge Qualitätskontrolle, umfassendes Zertifizierungssystem',
         factoryQualifications: 'Werkzeugqualifikationen',
+        factoryQualificationsSub: 'Professionelle Standards',
+        factoryQualificationsDesc: 'Mit Vertriebspartnern auf der ganzen Welt sind unsere Produkte in über 50 Ländern zu finden. Wir sind stolz darauf, zuverlässige Nebelventilatoren zu liefern, um Kundenzufriedenheit zu gewährleisten.',
         productCertifications: 'Produktzertifizierungen',
+        productCertificationsSub: 'Globale Standards',
+        productCertificationsDesc: 'Durch kontinuierliche Innovation verfügen wir nun über mehr als 100 Patente für Luftbefeuchter und Nebelventilatoren. Unsere Fertigungsanlage ist ISO 9001 zertifiziert für Qualitätsmanagement.',
         partnersTitle: 'Von Partnern Weltweit Vertraut',
         partnersSubtitle: '50+ Länder und wachsend',
         ctaTitle: 'Bereit, Ihre Kühlerfahrung zu Transformieren?',
@@ -184,7 +200,11 @@ const getPageTexts = (locale: string) => {
         certificationsTitle: 'مؤهلات المصنع وشهادات المنتجات',
         certificationsSubtitle: 'رقابة جودة صارمة، نظام شهادة كامل',
         factoryQualifications: 'مؤهلات المصنع',
+        factoryQualificationsSub: 'معايير مهنية',
+        factoryQualificationsDesc: 'مع شركاء توزيع حول العالم، يمكن العثور على منتجاتنا في أكثر من 50 دولة. نحن فخورون بتقديم مراوح ضباب موثوقة لضمان رضا العملاء.',
         productCertifications: 'شهادات المنتجات',
+        productCertificationsSub: 'معايير عالمية',
+        productCertificationsDesc: 'من خلال الابتكار المستمر، لدينا الآن أكثر من 100 براءة اختراع في أجهزة الترطيب ومراوح الضباب. منشأتنا التصنيعية معتمدة ISO 9001 لإدارة الجودة.',
         partnersTitle: 'موثوق من قبل شركاء حول العالم',
         partnersSubtitle: 'أكثر من 50 دولة وينمو',
         ctaTitle: 'جاهز لتحويل تجربة التبريد لديك؟',
@@ -221,7 +241,11 @@ const getPageTexts = (locale: string) => {
         certificationsTitle: 'Factory Qualifications & Product Certifications',
         certificationsSubtitle: 'Strict quality control, comprehensive certification system',
         factoryQualifications: 'Factory Qualifications',
+        factoryQualificationsSub: 'Professional Standards',
+        factoryQualificationsDesc: 'With distribution partners around the world, our products can be found in over 50 countries. We pride ourselves in providing reliable mist fans to ensure customer satisfaction.',
         productCertifications: 'Product Certifications',
+        productCertificationsSub: 'Global Standards',
+        productCertificationsDesc: 'Through continuous innovation, we now have more than 100 patents on humidifiers and mist fans. Our manufacturing facility is ISO 9001 certified for quality management.',
         partnersTitle: 'Trusted by Partners Worldwide',
         partnersSubtitle: '50+ countries and growing',
         ctaTitle: 'Ready to Transform Your Cooling Experience?',
@@ -517,15 +541,14 @@ const CertificationsSection = () => {
                   </div>
                   <div>
                     <h3 className="text-2xl lg:text-3xl font-bold text-green-600">
-                      FACTORY QUALIFICATIONS
+                      {texts.factoryQualifications}
                     </h3>
-                    <p className="text-sm text-muted-foreground mt-1">Professional Standards</p>
+                    <p className="text-sm text-muted-foreground mt-1">{texts.factoryQualificationsSub}</p>
                   </div>
                 </div>
                 
                 <p className="text-muted-foreground mb-8 leading-relaxed">
-                  With distribution partners around the world, our products can be found in over 50 countries. 
-                  We pride ourselves in providing reliable mist fan to ensure customer satisfaction.
+                  {texts.factoryQualificationsDesc}
                 </p>
 
                 {/* 认证标志 - 占位符 */}
@@ -577,15 +600,14 @@ const CertificationsSection = () => {
                   </div>
                   <div>
                     <h3 className="text-2xl lg:text-3xl font-bold text-sky-600">
-                      PRODUCT CERTIFICATIONS
+                      {texts.productCertifications}
                     </h3>
-                    <p className="text-sm text-muted-foreground mt-1">Global Standards</p>
+                    <p className="text-sm text-muted-foreground mt-1">{texts.productCertificationsSub}</p>
                   </div>
                 </div>
                 
                 <p className="text-muted-foreground mb-8 leading-relaxed">
-                  Through continuous innovation, we now have more than 100 patents on humidifiers and mist fan. 
-                  Our manufacturing facility is ISO 9001 certified for quality management.
+                  {texts.productCertificationsDesc}
                 </p>
 
                 {/* 认证标志 - 占位符 */}
