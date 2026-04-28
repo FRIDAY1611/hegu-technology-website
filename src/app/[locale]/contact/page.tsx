@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Check, Facebook, Linkedin, MessageCircle, Mail, Phone, MapPin } from 'lucide-react';
 import { FadeIn } from '@/components/shared/FadeIn';
+import { createInquiry } from '@/lib/admin-data';
 
 export default function ContactPage() {
   const params = useParams();
@@ -16,8 +17,11 @@ export default function ContactPage() {
 
   const [formData, setFormData] = useState({
     name: '',
+    company: '',
     email: '',
-    product: '',
+    phone: '',
+    country: '',
+    productInterest: '',
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,16 +31,37 @@ export default function ContactPage() {
     e.preventDefault();
     setIsSubmitting(true);
     
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    setFormData({
-      name: '',
-      email: '',
-      product: '',
-      message: ''
-    });
+    try {
+      // 创建询盘记录，保存到localStorage
+      createInquiry({
+        name: formData.name,
+        company: formData.company,
+        email: formData.email,
+        phone: formData.phone,
+        country: formData.country,
+        productInterest: formData.productInterest,
+        message: formData.message
+      });
+      
+      // 模拟网络延迟
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+      setFormData({
+        name: '',
+        company: '',
+        email: '',
+        phone: '',
+        country: '',
+        productInterest: '',
+        message: ''
+      });
+    } catch (error) {
+      console.error('提交询盘失败:', error);
+      setIsSubmitting(false);
+      alert(isZh ? '提交失败，请稍后重试' : 'Submit failed, please try again later');
+    }
   };
 
   const socialLinks = [
@@ -93,35 +118,65 @@ export default function ContactPage() {
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div>
-                    <Input
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder={isZh ? '您的姓名' : 'Your name'}
-                      className="h-14 text-lg rounded-full px-6"
-                    />
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <Input
+                        required
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        placeholder={isZh ? '您的姓名 *' : 'Your Name *'}
+                        className="h-12 text-base rounded-full px-5"
+                      />
+                    </div>
+                    <div>
+                      <Input
+                        value={formData.company}
+                        onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                        placeholder={isZh ? '公司名称' : 'Company Name'}
+                        className="h-12 text-base rounded-full px-5"
+                      />
+                    </div>
                   </div>
 
-                  <div>
-                    <Input
-                      required
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder={isZh ? '邮箱地址' : 'Email address'}
-                      className="h-14 text-lg rounded-full px-6"
-                    />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <Input
+                        required
+                        type="email"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        placeholder={isZh ? '邮箱地址 *' : 'Email Address *'}
+                        className="h-12 text-base rounded-full px-5"
+                      />
+                    </div>
+                    <div>
+                      <Input
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        placeholder={isZh ? '电话号码' : 'Phone Number'}
+                        className="h-12 text-base rounded-full px-5"
+                      />
+                    </div>
                   </div>
 
-                  <div>
-                    <Input
-                      value={formData.product}
-                      onChange={(e) => setFormData({ ...formData, product: e.target.value })}
-                      placeholder={isZh ? '产品 / 数量' : 'Product / Quantity'}
-                      className="h-14 text-lg rounded-full px-6"
-                    />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <Input
+                        value={formData.country}
+                        onChange={(e) => setFormData({ ...formData, country: e.target.value })}
+                        placeholder={isZh ? '国家/地区' : 'Country/Region'}
+                        className="h-12 text-base rounded-full px-5"
+                      />
+                    </div>
+                    <div>
+                      <Input
+                        value={formData.productInterest}
+                        onChange={(e) => setFormData({ ...formData, productInterest: e.target.value })}
+                        placeholder={isZh ? '感兴趣的产品' : 'Interested Products'}
+                        className="h-12 text-base rounded-full px-5"
+                      />
+                    </div>
                   </div>
 
                   <div>
@@ -129,9 +184,9 @@ export default function ContactPage() {
                       required
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      placeholder={isZh ? '留言' : 'Message'}
-                      rows={6}
-                      className="text-lg rounded-3xl px-6 py-4 resize-y"
+                      placeholder={isZh ? '留言 *' : 'Message *'}
+                      rows={5}
+                      className="text-base rounded-2xl px-5 py-4 resize-y"
                     />
                   </div>
 
