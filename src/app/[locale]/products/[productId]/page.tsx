@@ -358,7 +358,7 @@ export default function ProductDetailPage() {
                 <Textarea
                   required
                   placeholder={isZh ? '请告诉我们您的需求...' : 'Tell us about your requirements...'}
-                  rows={4}
+                  rows={7}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 />
