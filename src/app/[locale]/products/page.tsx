@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useSearchParams, useRouter } from 'next/navigation';
-import { getAllProducts } from '@/lib/products';
+import { useProducts } from '@/contexts/ProductsContext';
 import ProductCard from '@/components/shared/ProductCard';
 import { FadeIn } from '@/components/shared/FadeIn';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -86,7 +86,7 @@ export default function AllProductsPage() {
   const router = useRouter();
   const locale = params.locale as string;
   const texts = getPageTexts(locale);
-  const allProducts = getAllProducts();
+  const { products: allProducts } = useProducts();
 
   // 从URL参数获取初始系列，默认为'all'
   const getInitialSeries = (): SeriesType => {
