@@ -13,6 +13,7 @@ import { FadeIn } from '@/components/shared/FadeIn';
 import ProductCard from '@/components/shared/ProductCard';
 import { useProducts } from '@/contexts/ProductsContext';
 import { useSettings } from '@/contexts/SettingsContext';
+import { createInquiry } from '@/lib/admin-data';
 
 const getPageTexts = (locale: string) => {
   switch (locale) {
@@ -695,7 +696,10 @@ const ContactSection = () => {
   const { settings, isLoading } = useSettings();
   const [formData, setFormData] = useState({
     name: '',
+    company: '',
     email: '',
+    phone: '',
+    country: '',
     product: '',
     message: ''
   });
@@ -706,16 +710,39 @@ const ContactSection = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    setFormData({
-      name: '',
-      email: '',
-      product: '',
-      message: ''
-    });
+    try {
+      // 真正创建询盘
+      await createInquiry({
+        name: formData.name,
+        company: formData.company,
+        email: formData.email,
+        phone: formData.phone,
+        country: formData.country,
+        productInterest: formData.product,
+        message: formData.message
+      });
+      
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+      setFormData({
+        name: '',
+        company: '',
+        email: '',
+        phone: '',
+        country: '',
+        product: '',
+        message: ''
+      });
+      
+      // 3秒后重置表单状态
+      setTimeout(() => {
+        setIsSubmitted(false);
+      }, 3000);
+    } catch (error) {
+      console.error('提交询盘失败:', error);
+      setIsSubmitting(false);
+      alert('提交失败，请稍后重试');
+    }
   };
 
   // 如果设置还在加载中，不显示内容
@@ -827,34 +854,64 @@ const ContactSection = () => {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  <div>
-                    <Input
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder={texts.yourName}
-                      className="h-14 text-lg rounded-full px-6"
-                    />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <Input
+                        required
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        placeholder={texts.yourName}
+                        className="h-14 text-lg rounded-full px-6"
+                      />
+                    </div>
+                    <div>
+                      <Input
+                        value={formData.company}
+                        onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                        placeholder="Company"
+                        className="h-14 text-lg rounded-full px-6"
+                      />
+                    </div>
                   </div>
 
-                  <div>
-                    <Input
-                      required
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder={texts.emailAddress}
-                      className="h-14 text-lg rounded-full px-6"
-                    />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <Input
+                        required
+                        type="email"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        placeholder={texts.emailAddress}
+                        className="h-14 text-lg rounded-full px-6"
+                      />
+                    </div>
+                    <div>
+                      <Input
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        placeholder="Phone"
+                        className="h-14 text-lg rounded-full px-6"
+                      />
+                    </div>
                   </div>
 
-                  <div>
-                    <Input
-                      value={formData.product}
-                      onChange={(e) => setFormData({ ...formData, product: e.target.value })}
-                      placeholder={texts.productQuantity}
-                      className="h-14 text-lg rounded-full px-6"
-                    />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <Input
+                        value={formData.country}
+                        onChange={(e) => setFormData({ ...formData, country: e.target.value })}
+                        placeholder="Country"
+                        className="h-14 text-lg rounded-full px-6"
+                      />
+                    </div>
+                    <div>
+                      <Input
+                        value={formData.product}
+                        onChange={(e) => setFormData({ ...formData, product: e.target.value })}
+                        placeholder={texts.productQuantity}
+                        className="h-14 text-lg rounded-full px-6"
+                      />
+                    </div>
                   </div>
 
                   <div>
@@ -863,7 +920,7 @@ const ContactSection = () => {
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       placeholder={texts.message}
-                      rows={6}
+                      rows={10}
                       className="text-lg rounded-3xl px-6 py-4 resize-y"
                     />
                   </div>
