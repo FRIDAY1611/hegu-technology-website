@@ -3,11 +3,28 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { getProducts, getInquiries, getSettings } from '@/lib/admin-data';
 
 const AdminDashboard = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [adminEmail, setAdminEmail] = useState('');
+  const [stats, setStats] = useState({
+    productCount: 0,
+    inquiryCount: 0,
+    unreadInquiryCount: 0
+  });
   const router = useRouter();
+
+  const loadStats = () => {
+    const products = getProducts();
+    const inquiries = getInquiries();
+    
+    setStats({
+      productCount: products.length,
+      inquiryCount: inquiries.length,
+      unreadInquiryCount: inquiries.filter(i => i.status === 'unread').length
+    });
+  };
 
   useEffect(() => {
     // 检查登录状态
@@ -19,8 +36,23 @@ const AdminDashboard = () => {
     } else {
       setIsLoggedIn(true);
       setAdminEmail(email);
+      loadStats();
     }
   }, [router]);
+
+  useEffect(() => {
+    const handleDataUpdated = () => {
+      loadStats();
+    };
+
+    window.addEventListener('productsUpdated', handleDataUpdated);
+    window.addEventListener('inquiriesUpdated', handleDataUpdated);
+    
+    return () => {
+      window.removeEventListener('productsUpdated', handleDataUpdated);
+      window.removeEventListener('inquiriesUpdated', handleDataUpdated);
+    };
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('isAdminLoggedIn');
@@ -82,7 +114,7 @@ const AdminDashboard = () => {
                 </svg>
               </div>
             </div>
-            <h3 className="text-2xl font-bold text-foreground">13</h3>
+            <h3 className="text-2xl font-bold text-foreground">{stats.productCount}</h3>
             <p className="text-sm text-muted-foreground">产品总数</p>
           </div>
 
@@ -94,8 +126,20 @@ const AdminDashboard = () => {
                 </svg>
               </div>
             </div>
-            <h3 className="text-2xl font-bold text-foreground">2</h3>
+            <h3 className="text-2xl font-bold text-foreground">{stats.inquiryCount}</h3>
             <p className="text-sm text-muted-foreground">询盘数</p>
+          </Link>
+
+          <Link href="/admin/inquiries" className="bg-card/80 backdrop-blur-xl border border-border/50 rounded-2xl p-6 hover:shadow-lg transition-all block">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-amber-500/10 rounded-xl flex items-center justify-center">
+                <svg className="w-6 h-6 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                </svg>
+              </div>
+            </div>
+            <h3 className="text-2xl font-bold text-foreground">{stats.unreadInquiryCount}</h3>
+            <p className="text-sm text-muted-foreground">未读询盘</p>
           </Link>
 
           <div className="bg-card/80 backdrop-blur-xl border border-border/50 rounded-2xl p-6 hover:shadow-lg transition-all">
