@@ -1,70 +1,68 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { readData, writeData, generateId } from '@/lib/server/storage';
-import type { AdminUser, AuthSession, ApiResponse } from '@/lib/server/types';
-import { initAllData } from '@/lib/server/init-data';
+import { NextRequest, NextResponse } from "next/server";
+import { getAdminByEmail, createSession, deleteExpiredSessions } from "@/lib/server/db";
+import crypto from "crypto";
 
-// 初始化数据
-initAllData();
+const SESSION_TOKEN_LENGTH = 64;
+const SESSION_EXPIRES_HOURS = 24;
 
 export async function POST(request: NextRequest) {
   try {
     const { email, password } = await request.json();
-
+    
     if (!email || !password) {
-      return NextResponse.json<ApiResponse>({
-        success: false,
-        error: 'Email and password are required'
-      }, { status: 400 });
+      return NextResponse.json(
+        { error: "邮箱和密码不能为空" },
+        { status: 400 }
+      );
     }
-
-    const admins = readData<AdminUser[]>('admins', []);
-    const admin = admins.find(a => a.email === email);
-
+    
+    // 删除过期会话
+    await deleteExpiredSessions();
+    
+    // 获取管理员
+    const admin = await getAdminByEmail(email);
     if (!admin) {
-      return NextResponse.json<ApiResponse>({
-        success: false,
-        error: 'Invalid credentials'
-      }, { status: 401 });
+      return NextResponse.json(
+        { error: "邮箱或密码错误" },
+        { status: 401 }
+      );
     }
-
-    // 简单的密码验证（生产环境应该使用bcrypt）
-    if (admin.passwordHash !== password) {
-      return NextResponse.json<ApiResponse>({
-        success: false,
-        error: 'Invalid credentials'
-      }, { status: 401 });
+    
+    // 简单的密码验证（实际项目中应该使用bcrypt等加密）
+    // 这里使用简单的明文比较，仅作演示
+    if (admin.hashed_password !== password) {
+      return NextResponse.json(
+        { error: "邮箱或密码错误" },
+        { status: 401 }
+      );
     }
-
+    
+    // 生成会话token
+    const token = crypto.randomBytes(SESSION_TOKEN_LENGTH).toString("hex");
+    const expiresAt = new Date();
+    expiresAt.setHours(expiresAt.getHours() + SESSION_EXPIRES_HOURS);
+    
     // 创建会话
-    const session: AuthSession = {
-      id: generateId(),
-      userId: admin.id,
-      token: generateId(),
-      expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() // 24小时
-    };
-
-    // 保存会话
-    const sessions = readData<AuthSession[]>('sessions', []);
-    sessions.push(session);
-    writeData('sessions', sessions);
-
-    return NextResponse.json<ApiResponse<{ token: string; user: { id: string; email: string; name: string } }>>({
+    const session = await createSession({
+      token,
+      admin_id: admin.id,
+      expires_at: expiresAt.toISOString()
+    });
+    
+    return NextResponse.json({
       success: true,
-      data: {
-        token: session.token,
-        user: {
-          id: admin.id,
-          email: admin.email,
-          name: admin.name
-        }
+      token: session.token,
+      admin: {
+        id: admin.id,
+        email: admin.email,
+        name: admin.name
       }
     });
-
   } catch (error) {
-    console.error('Login error:', error);
-    return NextResponse.json<ApiResponse>({
-      success: false,
-      error: 'Internal server error'
-    }, { status: 500 });
+    console.error("登录失败:", error);
+    return NextResponse.json(
+      { error: "登录失败，请稍后重试" },
+      { status: 500 }
+    );
   }
 }
