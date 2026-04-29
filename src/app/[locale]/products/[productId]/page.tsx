@@ -12,6 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { FadeIn } from '@/components/shared/FadeIn';
 import { useProducts } from '@/contexts/ProductsContext';
+import { createInquiry } from '@/lib/admin-data';
 
 const FeatureIcon = ({ feature }: { feature: string }) => {
   const iconMap: Record<string, React.ReactNode> = {
@@ -76,6 +77,18 @@ export default function ProductDetailPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // 创建询盘记录
+    createInquiry({
+      name: formData.name,
+      company: formData.company || '',
+      email: formData.email,
+      phone: '',
+      country: '',
+      productInterest: product?.model || '',
+      message: formData.message
+    });
+    
     setFormSubmitted(true);
     setTimeout(() => {
       setIsQuoteDialogOpen(false);

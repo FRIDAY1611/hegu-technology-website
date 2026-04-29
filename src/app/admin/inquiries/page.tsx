@@ -26,6 +26,15 @@ const AdminInquiries = () => {
     }
   }, [router]);
 
+  useEffect(() => {
+    const handleInquiriesUpdated = () => {
+      loadInquiries();
+    };
+    
+    window.addEventListener('inquiriesUpdated', handleInquiriesUpdated);
+    return () => window.removeEventListener('inquiriesUpdated', handleInquiriesUpdated);
+  }, []);
+
   const handleStatusChange = (id: string, status: InquiryData['status']) => {
     updateInquiryStatus(id, status);
     loadInquiries();

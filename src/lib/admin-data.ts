@@ -143,6 +143,10 @@ export function createInquiry(inquiry: Omit<InquiryData, 'id' | 'status' | 'crea
   };
   inquiries.unshift(newInquiry);
   localStorage.setItem(STORAGE_KEYS.INQUIRIES, JSON.stringify(inquiries));
+  
+  // 触发询盘数据更新事件
+  window.dispatchEvent(new CustomEvent('inquiriesUpdated'));
+  
   return newInquiry;
 }
 
