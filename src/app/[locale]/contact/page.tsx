@@ -192,7 +192,7 @@ export default function ContactPage() {
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       placeholder={isZh ? '留言 *' : 'Message *'}
-                      rows={5}
+                      rows={10}
                       className="text-base rounded-2xl px-5 py-4 resize-y"
                     />
                   </div>
