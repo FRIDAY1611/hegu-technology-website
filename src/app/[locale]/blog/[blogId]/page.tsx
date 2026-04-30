@@ -5,18 +5,21 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
 // 定义博客类型
-interface BlogPost {
-  id: number;
-  title: string;
+interface Post {
+  id: string;
+  title: any;
   slug: string;
-  content: string;
-  excerpt: string;
-  coverImage: string | null;
-  author: string;
-  status: 'draft' | 'published';
-  publishedAt: Date | null;
-  createdAt: Date;
-  updatedAt: Date;
+  excerpt: any;
+  content: any;
+  cover_image: string | null;
+  author: string | null;
+  category: string;
+  tags: any;
+  is_published: boolean;
+  published_at: string | null;
+  views: number;
+  created_at: string;
+  updated_at: string;
 }
 
 const BlogDetailPage = () => {
@@ -24,23 +27,28 @@ const BlogDetailPage = () => {
   const locale = params.locale as string;
   const blogId = params.blogId as string;
   
-  const [blog, setBlog] = useState<BlogPost | null>(null);
+  const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    loadBlog();
+    loadPost();
   }, [blogId]);
 
-  const loadBlog = async () => {
+  const loadPost = async () => {
     try {
-      const response = await fetch(`/api/blogs/${blogId}`);
+      const response = await fetch(`/api/blogs?id=${blogId}`);
       if (response.ok) {
-        const data = await response.json();
-        if (data.status !== 'published') {
-          setNotFound(true);
+        const result = await response.json();
+        if (result.success) {
+          const data = result.data;
+          if (!data.is_published) {
+            setNotFound(true);
+          } else {
+            setPost(data);
+          }
         } else {
-          setBlog(data);
+          setNotFound(true);
         }
       } else {
         setNotFound(true);
@@ -53,7 +61,31 @@ const BlogDetailPage = () => {
     }
   };
 
-  const formatDate = (date: Date | null) => {
+  const getTitle = (post: Post) => {
+    if (typeof post.title === 'string') return post.title;
+    if (typeof post.title === 'object') {
+      return post.title[locale] || post.title.en || post.title.zh || 'Untitled';
+    }
+    return 'Untitled';
+  };
+
+  const getExcerpt = (post: Post) => {
+    if (typeof post.excerpt === 'string') return post.excerpt;
+    if (typeof post.excerpt === 'object') {
+      return post.excerpt[locale] || post.excerpt.en || post.excerpt.zh || '';
+    }
+    return '';
+  };
+
+  const getContent = (post: Post) => {
+    if (typeof post.content === 'string') return post.content;
+    if (typeof post.content === 'object') {
+      return post.content[locale] || post.content.en || post.content.zh || '';
+    }
+    return '';
+  };
+
+  const formatDate = (date: string | null) => {
     if (!date) return '';
     return new Date(date).toLocaleDateString(locale === 'zh' ? 'zh-CN' : 'en-US', {
       year: 'numeric',
@@ -73,7 +105,7 @@ const BlogDetailPage = () => {
     );
   }
 
-  if (notFound || !blog) {
+  if (notFound || !post) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
@@ -98,6 +130,8 @@ const BlogDetailPage = () => {
     );
   }
 
+  const content = getContent(post);
+
   return (
     <div className="min-h-screen bg-background">
       {/* Back Button */}
@@ -121,34 +155,34 @@ const BlogDetailPage = () => {
           {/* Header */}
           <header className="text-center mb-12">
             <div className="flex items-center justify-center gap-4 mb-6">
-              {blog.author && (
+              {post.author && (
                 <span className="text-muted-foreground">
-                  {blog.author}
+                  {post.author}
                 </span>
               )}
-              {blog.publishedAt && (
+              {(post.published_at || post.created_at) && (
                 <span className="text-muted-foreground">
-                  {formatDate(blog.publishedAt)}
+                  {formatDate(post.published_at || post.created_at)}
                 </span>
               )}
             </div>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-              {blog.title}
+              {getTitle(post)}
             </h1>
-            {blog.excerpt && (
+            {getExcerpt(post) && (
               <p className="text-xl text-muted-foreground">
-                {blog.excerpt}
+                {getExcerpt(post)}
               </p>
             )}
           </header>
 
           {/* Cover Image */}
-          {blog.coverImage && (
+          {post.cover_image && (
             <div className="mb-12">
               <div className="aspect-video bg-muted rounded-2xl overflow-hidden">
                 <img 
-                  src={blog.coverImage} 
-                  alt={blog.title}
+                  src={post.cover_image} 
+                  alt={getTitle(post)}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -157,10 +191,9 @@ const BlogDetailPage = () => {
 
           {/* Content */}
           <div className="prose prose-lg dark:prose-invert max-w-none">
-            <div 
-              className="text-foreground leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: blog.content.replace(/\n/g, '<br />') }}
-            />
+            <div className="text-foreground leading-relaxed whitespace-pre-wrap">
+              {content}
+            </div>
           </div>
 
           {/* Footer */}
@@ -168,7 +201,7 @@ const BlogDetailPage = () => {
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="text-muted-foreground">
                 {locale === 'zh' ? '最后更新：' : 'Last updated: '}
-                {formatDate(blog.updatedAt)}
+                {formatDate(post.updated_at)}
               </div>
               <Link
                 href={`/${locale}/blog`}

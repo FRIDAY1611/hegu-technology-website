@@ -12,26 +12,29 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 
-type BlogPost = {
+type Post = {
   id: string;
-  title: string;
+  title: any;
   slug: string;
-  excerpt: string | null;
-  content: string | null;
+  excerpt: any;
+  content: any;
   cover_image: string | null;
   author: string | null;
-  published: boolean;
+  category: string;
+  tags: any;
+  is_published: boolean;
   published_at: string | null;
+  views: number;
   created_at: string;
   updated_at: string;
 };
 
 export default function BlogAdminPage() {
   const router = useRouter();
-  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
+  const [editingPost, setEditingPost] = useState<Post | null>(null);
   const [formData, setFormData] = useState({
     title: '',
     slug: '',
@@ -39,7 +42,9 @@ export default function BlogAdminPage() {
     content: '',
     cover_image: '',
     author: '',
-    published: false
+    category: 'news',
+    tags: '',
+    is_published: false
   });
   const [saving, setSaving] = useState(false);
 
@@ -66,17 +71,28 @@ export default function BlogAdminPage() {
     }
   };
 
-  const handleOpenDialog = (post?: BlogPost) => {
+  const handleOpenDialog = (post?: Post) => {
     if (post) {
       setEditingPost(post);
+      // 处理多语言字段，这里简化为取英文或直接使用
+      const title = typeof post.title === 'string' ? post.title : 
+                   (typeof post.title === 'object' ? (post.title.en || post.title.zh || '') : '');
+      const excerpt = typeof post.excerpt === 'string' ? post.excerpt : 
+                     (typeof post.excerpt === 'object' ? (post.excerpt.en || post.excerpt.zh || '') : '');
+      const content = typeof post.content === 'string' ? post.content : 
+                     (typeof post.content === 'object' ? (post.content.en || post.content.zh || '') : '');
+      const tags = Array.isArray(post.tags) ? post.tags.join(', ') : '';
+      
       setFormData({
-        title: post.title,
+        title,
         slug: post.slug,
-        excerpt: post.excerpt || '',
-        content: post.content || '',
+        excerpt,
+        content,
         cover_image: post.cover_image || '',
         author: post.author || '',
-        published: post.published
+        category: post.category || 'news',
+        tags,
+        is_published: post.is_published
       });
     } else {
       setEditingPost(null);
@@ -87,7 +103,9 @@ export default function BlogAdminPage() {
         content: '',
         cover_image: '',
         author: '',
-        published: false
+        category: 'news',
+        tags: '',
+        is_published: false
       });
     }
     setDialogOpen(true);
@@ -101,6 +119,46 @@ export default function BlogAdminPage() {
 
     setSaving(true);
     try {
+      // 构建多语言数据结构
+      const titleData = {
+        zh: formData.title,
+        en: formData.title,
+        es: formData.title,
+        fr: formData.title,
+        de: formData.title,
+        ar: formData.title
+      };
+      const excerptData = {
+        zh: formData.excerpt,
+        en: formData.excerpt,
+        es: formData.excerpt,
+        fr: formData.excerpt,
+        de: formData.excerpt,
+        ar: formData.excerpt
+      };
+      const contentData = {
+        zh: formData.content,
+        en: formData.content,
+        es: formData.content,
+        fr: formData.content,
+        de: formData.content,
+        ar: formData.content
+      };
+      const tagsArray = formData.tags.split(',').map(t => t.trim()).filter(t => t);
+
+      const dataToSave = {
+        title: titleData,
+        slug: formData.slug,
+        excerpt: excerptData,
+        content: contentData,
+        cover_image: formData.cover_image || null,
+        author: formData.author || null,
+        category: formData.category,
+        tags: tagsArray,
+        is_published: formData.is_published,
+        published_at: formData.is_published ? new Date().toISOString() : null
+      };
+
       const url = editingPost 
         ? `/api/blogs?id=${editingPost.id}` 
         : '/api/blogs';
@@ -111,7 +169,7 @@ export default function BlogAdminPage() {
         method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ...formData,
+          ...dataToSave,
           ...(editingPost && { id: editingPost.id })
         })
       });
@@ -158,6 +216,12 @@ export default function BlogAdminPage() {
     setFormData(prev => ({ ...prev, slug }));
   };
 
+  const getTitle = (post: Post) => {
+    if (typeof post.title === 'string') return post.title;
+    if (typeof post.title === 'object') return post.title.zh || post.title.en || 'Untitled';
+    return 'Untitled';
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 p-8 flex items-center justify-center">
@@ -195,12 +259,13 @@ export default function BlogAdminPage() {
                   <div className="flex items-start justify-between">
                     <div>
                       <div className="flex items-center gap-3 mb-2">
-                        <CardTitle className="text-xl">{post.title}</CardTitle>
-                        {post.published ? (
+                        <CardTitle className="text-xl">{getTitle(post)}</CardTitle>
+                        {post.is_published ? (
                           <Badge className="bg-green-500">已发布</Badge>
                         ) : (
                           <Badge variant="secondary">草稿</Badge>
                         )}
+                        <Badge variant="outline">{post.category}</Badge>
                       </div>
                       <div className="flex items-center gap-4 text-sm text-gray-500">
                         <div className="flex items-center gap-1">
@@ -210,6 +275,10 @@ export default function BlogAdminPage() {
                         <div className="flex items-center gap-1">
                           <Calendar className="w-4 h-4" />
                           {new Date(post.created_at).toLocaleDateString('zh-CN')}
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Eye className="w-4 h-4" />
+                          {post.views} 浏览
                         </div>
                       </div>
                     </div>
@@ -223,11 +292,6 @@ export default function BlogAdminPage() {
                     </div>
                   </div>
                 </CardHeader>
-                {post.excerpt && (
-                  <CardContent>
-                    <p className="text-gray-600">{post.excerpt}</p>
-                  </CardContent>
-                )}
               </Card>
             ))
           )}
@@ -277,6 +341,26 @@ export default function BlogAdminPage() {
                   />
                 </div>
               </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="category">分类</Label>
+                  <Input
+                    id="category"
+                    value={formData.category}
+                    onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
+                    placeholder="news, blog, article"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="tags">标签（逗号分隔）</Label>
+                  <Input
+                    id="tags"
+                    value={formData.tags}
+                    onChange={(e) => setFormData(prev => ({ ...prev, tags: e.target.value }))}
+                    placeholder="标签1, 标签2, 标签3"
+                  />
+                </div>
+              </div>
               <div>
                 <Label htmlFor="cover_image">封面图片URL</Label>
                 <Input
@@ -302,17 +386,17 @@ export default function BlogAdminPage() {
                   id="content"
                   value={formData.content}
                   onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
-                  placeholder="文章内容（支持Markdown）"
+                  placeholder="文章内容"
                   rows={15}
                 />
               </div>
               <div className="flex items-center gap-3">
                 <Switch
-                  id="published"
-                  checked={formData.published}
-                  onCheckedChange={(checked) => setFormData(prev => ({ ...prev, published: checked }))}
+                  id="is_published"
+                  checked={formData.is_published}
+                  onCheckedChange={(checked) => setFormData(prev => ({ ...prev, is_published: checked }))}
                 />
-                <Label htmlFor="published">立即发布</Label>
+                <Label htmlFor="is_published">立即发布</Label>
               </div>
             </div>
           </div>

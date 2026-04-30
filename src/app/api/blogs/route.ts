@@ -1,24 +1,35 @@
 import { NextResponse } from 'next/server';
-import { getSupabaseServiceClient } from '@/storage/database/supabase-client';
-import { Database, Json } from '@/storage/database/types';
+import { getSupabaseClient } from '@/storage/database/supabase-client';
 
-type BlogPost = Database['public']['Tables']['blog_posts']['Row'];
-type InsertBlogPost = Database['public']['Tables']['blog_posts']['Insert'];
-type UpdateBlogPost = Database['public']['Tables']['blog_posts']['Update'];
-
-// 获取所有博客文章
-export async function GET() {
+// 获取所有博客文章或单个文章
+export async function GET(request: Request) {
   try {
-    const supabase = getSupabaseServiceClient();
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+    const supabase = getSupabaseClient();
     
-    const { data, error } = await supabase
-      .from('blog_posts')
-      .select('*')
-      .order('created_at', { ascending: false });
-    
-    if (error) throw error;
-    
-    return NextResponse.json({ success: true, data: data || [] });
+    if (id) {
+      // 获取单个文章
+      const { data, error } = await supabase
+        .from('posts')
+        .select('*')
+        .eq('id', id)
+        .single();
+      
+      if (error) throw error;
+      
+      return NextResponse.json({ success: true, data });
+    } else {
+      // 获取所有文章
+      const { data, error } = await supabase
+        .from('posts')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      
+      return NextResponse.json({ success: true, data: data || [] });
+    }
   } catch (error: any) {
     console.error('Error fetching blog posts:', error);
     return NextResponse.json(
@@ -32,11 +43,11 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const supabase = getSupabaseServiceClient();
+    const supabase = getSupabaseClient();
     
     const { data, error } = await supabase
-      .from('blog_posts')
-      .insert([body as InsertBlogPost])
+      .from('posts')
+      .insert([body])
       .select()
       .single();
     
@@ -57,11 +68,11 @@ export async function PUT(request: Request) {
   try {
     const body = await request.json();
     const { id, ...updateData } = body;
-    const supabase = getSupabaseServiceClient();
+    const supabase = getSupabaseClient();
     
     const { data, error } = await supabase
-      .from('blog_posts')
-      .update(updateData as UpdateBlogPost)
+      .from('posts')
+      .update(updateData)
       .eq('id', id)
       .select()
       .single();
@@ -91,10 +102,10 @@ export async function DELETE(request: Request) {
       );
     }
     
-    const supabase = getSupabaseServiceClient();
+    const supabase = getSupabaseClient();
     
     const { error } = await supabase
-      .from('blog_posts')
+      .from('posts')
       .delete()
       .eq('id', id);
     

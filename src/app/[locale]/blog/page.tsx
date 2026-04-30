@@ -3,40 +3,45 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { use } from 'react';
 
 // 定义博客类型
-interface BlogPost {
-  id: number;
-  title: string;
+interface Post {
+  id: string;
+  title: any;
   slug: string;
-  content: string;
-  excerpt: string;
-  coverImage: string | null;
-  author: string;
-  status: 'draft' | 'published';
-  publishedAt: Date | null;
-  createdAt: Date;
-  updatedAt: Date;
+  excerpt: any;
+  content: any;
+  cover_image: string | null;
+  author: string | null;
+  category: string;
+  tags: any;
+  is_published: boolean;
+  published_at: string | null;
+  views: number;
+  created_at: string;
+  updated_at: string;
 }
 
 const BlogPage = () => {
   const params = useParams();
   const locale = params.locale as string;
   
-  const [blogs, setBlogs] = useState<BlogPost[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadBlogs();
+    loadPosts();
   }, []);
 
-  const loadBlogs = async () => {
+  const loadPosts = async () => {
     try {
       const response = await fetch('/api/blogs');
       if (response.ok) {
-        const data = await response.json();
-        setBlogs(data.filter((blog: BlogPost) => blog.status === 'published'));
+        const result = await response.json();
+        if (result.success) {
+          // 只显示已发布的文章
+          setPosts(result.data.filter((post: Post) => post.is_published));
+        }
       }
     } catch (error) {
       console.error('加载博客失败:', error);
@@ -45,7 +50,23 @@ const BlogPage = () => {
     }
   };
 
-  const formatDate = (date: Date | null) => {
+  const getTitle = (post: Post) => {
+    if (typeof post.title === 'string') return post.title;
+    if (typeof post.title === 'object') {
+      return post.title[locale] || post.title.en || post.title.zh || 'Untitled';
+    }
+    return 'Untitled';
+  };
+
+  const getExcerpt = (post: Post) => {
+    if (typeof post.excerpt === 'string') return post.excerpt;
+    if (typeof post.excerpt === 'object') {
+      return post.excerpt[locale] || post.excerpt.en || post.excerpt.zh || '';
+    }
+    return '';
+  };
+
+  const formatDate = (date: string | null) => {
     if (!date) return '';
     return new Date(date).toLocaleDateString(locale === 'zh' ? 'zh-CN' : 'en-US', {
       year: 'numeric',
@@ -72,7 +93,9 @@ const BlogPage = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-              {locale === 'zh' ? '博客动态' : 'Blog'}
+              {locale === 'zh' ? '新闻动态' : locale === 'es' ? 'Noticias' : 
+               locale === 'fr' ? 'Actualités' : locale === 'de' ? 'Neuigkeiten' : 
+               locale === 'ar' ? 'الأخبار' : 'Blog'}
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               {locale === 'zh' 
@@ -86,7 +109,7 @@ const BlogPage = () => {
       {/* Blog List */}
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          {blogs.length === 0 ? (
+          {posts.length === 0 ? (
             <div className="text-center py-16">
               <div className="text-6xl mb-4">📝</div>
               <h2 className="text-2xl font-semibold text-foreground mb-4">
@@ -98,22 +121,22 @@ const BlogPage = () => {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {blogs.map((blog) => (
+              {posts.map((post) => (
                 <Link 
-                  key={blog.id}
-                  href={`/${locale}/blog/${blog.id}`}
+                  key={post.id}
+                  href={`/${locale}/blog/${post.id}`}
                   className="group bg-card border border-border rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300"
                 >
-                  {blog.coverImage && (
+                  {post.cover_image && (
                     <div className="aspect-video bg-muted overflow-hidden">
                       <img 
-                        src={blog.coverImage} 
-                        alt={blog.title}
+                        src={post.cover_image} 
+                        alt={getTitle(post)}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     </div>
                   )}
-                  {!blog.coverImage && (
+                  {!post.cover_image && (
                     <div className="aspect-video bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
                       <svg className="w-16 h-16 text-primary/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
@@ -122,22 +145,22 @@ const BlogPage = () => {
                   )}
                   <div className="p-6">
                     <div className="flex items-center gap-3 mb-4">
-                      {blog.author && (
+                      {post.author && (
                         <span className="text-sm text-muted-foreground">
-                          {blog.author}
+                          {post.author}
                         </span>
                       )}
-                      {blog.publishedAt && (
+                      {(post.published_at || post.created_at) && (
                         <span className="text-sm text-muted-foreground">
-                          {formatDate(blog.publishedAt)}
+                          {formatDate(post.published_at || post.created_at)}
                         </span>
                       )}
                     </div>
                     <h3 className="text-xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors">
-                      {blog.title}
+                      {getTitle(post)}
                     </h3>
                     <p className="text-muted-foreground line-clamp-3">
-                      {blog.excerpt || blog.content.substring(0, 150)}
+                      {getExcerpt(post)}
                     </p>
                     <div className="mt-6">
                       <span className="inline-flex items-center text-primary font-medium group-hover:underline">
