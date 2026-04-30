@@ -107,3 +107,31 @@ export const sessions = pgTable(
     index("sessions_expires_at_idx").on(table.expires_at),
   ]
 );
+
+// 博客/新闻表
+export const posts = pgTable(
+  "posts",
+  {
+    id: varchar("id", { length: 36 }).primaryKey().default(sql`gen_random_uuid()`),
+    title: jsonb("title").notNull(), // 多语言标题 { zh: "...", en: "...", ... }
+    slug: varchar("slug", { length: 255 }).notNull().unique(),
+    excerpt: jsonb("excerpt").notNull(), // 多语言摘要
+    content: jsonb("content").notNull(), // 多语言内容
+    cover_image: varchar("cover_image", { length: 500 }),
+    author: varchar("author", { length: 255 }),
+    category: varchar("category", { length: 100 }).default("news").notNull(), // news, blog, article
+    tags: jsonb("tags").default(sql`'[]'`).notNull(),
+    is_published: boolean("is_published").default(true).notNull(),
+    published_at: timestamp("published_at", { withTimezone: true }),
+    views: integer("views").default(0).notNull(),
+    created_at: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    updated_at: timestamp("updated_at", { withTimezone: true }),
+  },
+  (table) => [
+    index("posts_slug_idx").on(table.slug),
+    index("posts_category_idx").on(table.category),
+    index("posts_is_published_idx").on(table.is_published),
+    index("posts_published_at_idx").on(table.published_at),
+    index("posts_created_at_idx").on(table.created_at),
+  ]
+);
