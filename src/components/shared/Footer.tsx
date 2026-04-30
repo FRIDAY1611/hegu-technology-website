@@ -20,6 +20,7 @@ const getFooterTexts = (locale: string) => {
         industrialFans: '工业风扇',
         home: '首页',
         about: '关于我们',
+        blog: '新闻动态',
         contactLink: '联系我们',
         rights: '保留所有权利。'
       };
@@ -37,6 +38,7 @@ const getFooterTexts = (locale: string) => {
         industrialFans: 'Ventiladores Industriales',
         home: 'Inicio',
         about: 'Sobre Nosotros',
+        blog: 'Noticias',
         contactLink: 'Contacto',
         rights: 'Todos los derechos reservados.'
       };
@@ -54,6 +56,7 @@ const getFooterTexts = (locale: string) => {
         industrialFans: 'Ventilateurs Industriels',
         home: 'Accueil',
         about: 'À Propos',
+        blog: 'Actualités',
         contactLink: 'Contact',
         rights: 'Tous droits réservés.'
       };
@@ -71,6 +74,7 @@ const getFooterTexts = (locale: string) => {
         industrialFans: 'Industrieventilatoren',
         home: 'Startseite',
         about: 'Über Uns',
+        blog: 'Neuigkeiten',
         contactLink: 'Kontakt',
         rights: 'Alle Rechte vorbehalten.'
       };
@@ -88,6 +92,7 @@ const getFooterTexts = (locale: string) => {
         industrialFans: 'مراوح صناعية',
         home: 'الرئيسية',
         about: 'من نحن',
+        blog: 'الأخبار',
         contactLink: 'اتصل بنا',
         rights: 'جميع الحقوق محفوظة.'
       };
@@ -105,6 +110,7 @@ const getFooterTexts = (locale: string) => {
         industrialFans: 'Industrial Fans',
         home: 'Home',
         about: 'About Us',
+        blog: 'Blog',
         contactLink: 'Contact',
         rights: 'All rights reserved.'
       };
@@ -129,6 +135,7 @@ const Footer = () => {
   const companyLinks = [
     { label: texts.home, href: `/${locale}` },
     { label: texts.about, href: `/${locale}/about` },
+    { label: texts.blog, href: `/${locale}/blog` },
     { label: texts.contactLink, href: `/${locale}/contact` },
     { label: texts.admin, href: '/admin' }
   ];

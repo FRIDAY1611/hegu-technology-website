@@ -214,6 +214,21 @@ const AdminDashboard = () => {
             </div>
           </Link>
 
+          <Link href="/admin/blogs" className="bg-card/80 backdrop-blur-xl border border-border/50 rounded-2xl p-6 hover:shadow-lg transition-all block">
+            <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+              <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+              </svg>
+              博客管理
+            </h3>
+            <p className="text-sm text-muted-foreground mb-4">
+              管理博客文章、新闻动态、内容发布
+            </p>
+            <div className="w-full px-4 py-2 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-all text-sm font-medium text-center">
+              进入博客管理 →
+            </div>
+          </Link>
+
           <Link href="/admin/settings" className="bg-card/80 backdrop-blur-xl border border-border/50 rounded-2xl p-6 hover:shadow-lg transition-all block">
             <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
               <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
